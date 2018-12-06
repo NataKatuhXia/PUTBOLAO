@@ -8,11 +8,13 @@ package bolao.util;
 import bolao.model.bean.Equipe;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,14 +44,28 @@ public class LoadUtil {
         return new String(encoded, encoding);
     }
 
-    public static void main(String[] args) {
-
-        Equipe times = Equipe.build("Json/ListaTimes");
-        
-        List<Equipe> equipes = times.getEquipes();
-
-        for (Equipe equipe : equipes) {
-            System.out.println("Time: " + equipe.getEquipe()+ ", codigo: " + equipe.getIdentificador());
+    public static <E> void writerFile(String nomeArquivo, Collection<E> lista) throws IOException {
+        Gson gson = new Gson();
+        FileWriter writeFile = null;
+        String json = gson.toJson(lista);
+        try {
+            writeFile = new FileWriter(nomeArquivo);
+            //Escreve no arquivo conteudo do Objeto JSON
+            writeFile.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        writeFile.close();
     }
+
+//    public static void main(String[] args) {
+//
+//        Equipe times = Equipe.build();
+//
+//        List<Equipe> equipes = times.getEquipes();
+//
+//        for (Equipe equipe : equipes) {
+//            System.out.println("Time: " + equipe.getEquipe() + ", codigo: " + equipe.getIdentificador());
+//        }
+//    }
 }

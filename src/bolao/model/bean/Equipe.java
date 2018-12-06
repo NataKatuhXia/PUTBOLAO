@@ -20,11 +20,11 @@ public class Equipe {
     private String nome;
     private String identificador;
 
-    public static Equipe build(String id) {
+    public static Equipe build() {
         Equipe equipe = new Equipe();
         try {
 
-            List<Equipe> equipes = LoadUtil.loadListObjects(id, Equipe[].class);
+            List<Equipe> equipes = LoadUtil.loadListObjects("Json/ListaTimes", Equipe[].class);
 
             equipe.setEquipes(equipes);
 

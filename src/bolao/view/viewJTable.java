@@ -331,7 +331,7 @@ public class viewJTable extends javax.swing.JFrame {
             Aposta aposta = new Aposta(txtIdentificador.getText(), Integer.parseInt(txtPlacarA.getText()), Integer.parseInt(txtPlacarB.getText()));
 
             ApostaDAO produtodao = new ApostaDAO();
-            produtodao.update(aposta);
+//            produtodao.update(aposta);
 
             txtIdentificador.setText("");
             txtPlacarA.setText("");

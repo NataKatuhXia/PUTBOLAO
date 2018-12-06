@@ -12,6 +12,20 @@ package bolao.model.bean;
 public class Bolao {
 
     private String identificador;
+    private int apostadores;
+
+    public Bolao(String identificador, int apostadores) {
+        this.identificador = identificador;
+        this.apostadores = apostadores;
+    }
+
+    public int getApostadores() {
+        return apostadores;
+    }
+
+    public void setApostadores(int apostadores) {
+        this.apostadores = apostadores;
+    }
 
     public String getIdentificador() {
         return identificador;

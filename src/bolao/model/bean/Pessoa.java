@@ -36,6 +36,7 @@ public abstract class Pessoa implements Observer {
 
     @Override
     public void update(Map<Integer, Integer> placar) {
+        
         this.idJogo = ControlBolao.idPartida;
         this.placar = placar;
 

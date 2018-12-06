@@ -6,6 +6,7 @@
 package bolao.model.bean;
 
 import bolao.util.Command;
+import java.util.Date;
 
 /**
  *
@@ -13,15 +14,43 @@ import bolao.util.Command;
  */
 public class Jogo {
 
+    private String identificador;
+    private int apostadores;
+    private String resultado;
+    private String data;
+
     Command slot;
 
     public Jogo() {
 
     }
 
+    public Jogo(String identificador, int apostadores, String resultado, String data) {
+        this.identificador = identificador;
+        this.apostadores = apostadores;
+        this.resultado = resultado;
+        this.data = data;
+    }
+
     public void setCommand(Command command) {
         slot = command;
         slot.execute();
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public int getApostadores() {
+        return apostadores;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public String getData() {
+        return data;
     }
 
 }

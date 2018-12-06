@@ -5,9 +5,10 @@
  */
 package bolao.model.dao;
 
-import bolao.model.bean.Aposta;
+import bolao.model.bean.Jogo;
 import connection.ConnectionFactory;
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,18 +22,16 @@ import javax.swing.JOptionPane;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class ApostaDAO {
+public class JogoDAO {
 
-    public void create(Aposta aposta) {
+    public void create(Jogo jogo) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO aposta (identificador,placarA,placarB)VALUES(?,?,?)");
-            stmt.setString(1, aposta.getIdentificador());
-            stmt.setInt(2, aposta.getPlacarA());
-            stmt.setDouble(3, aposta.getPlacarB());
+            stmt = con.prepareStatement("INSERT INTO aposta (identificador)VALUES(?)");
+            stmt.setString(1, jogo.getIdentificador());
 
             stmt.executeUpdate();
 
@@ -44,22 +43,22 @@ public class ApostaDAO {
         }
     }
 
-    public List<Aposta> read() {
+    public List<Jogo> read() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         ResultSet rs = null;
-        List<Aposta> apostas = new ArrayList<>();
+        List<Jogo> jogos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta order by identificador");
+            stmt = con.prepareStatement("SELECT * FROM aposta order by data");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
+                Jogo jogo = new Jogo(rs.getString("identificador"), rs.getInt("apostadores"), rs.getString("resultado"), rs.getString("data"));
 
-                apostas.add(aposta);
+                jogos.add(jogo);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,26 +66,30 @@ public class ApostaDAO {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
 
-        return apostas;
+        return jogos;
     }
 
-    public List<Aposta> readForDesc(String identificador) {
+    public List<Jogo> readForDesc(String filtro, String identificador) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         ResultSet rs = null;
-        List<Aposta> apostas = new ArrayList<>();
+        List<Jogo> jogos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by identificador");
+            if (filtro.equals("time")) {
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by data");
+            } else if (filtro.equals("data")) {
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by data");
+            }
             stmt.setString(1, "%" + identificador + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
+                Jogo jogo = new Jogo(rs.getString("identificador"), rs.getInt("apostadores"), rs.getString("resultado"), rs.getString("data"));
 
-                apostas.add(aposta);
+                jogos.add(jogo);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,46 +97,27 @@ public class ApostaDAO {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
 
-        return apostas;
+        return jogos;
     }
 
-    public void Update(Aposta aposta) {
+    public void Update(Jogo jogo) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("Update aposta SET identificador = ? ,placarA = ? ,placarB = ? WHERE ID = ?");
+            stmt = con.prepareStatement("Update aposta SET apostadores = ? ,data = ? ,resultado = ? WHERE identificador = ?");
 
-            stmt.setString(1, aposta.getIdentificador());
-            stmt.setInt(2, aposta.getPlacarA());
-            stmt.setDouble(3, aposta.getPlacarB());
+            stmt.setInt(1, jogo.getApostadores());
+            stmt.setString(2, (String) jogo.getData());
+            stmt.setString(3, jogo.getResultado());
+            stmt.setString(4, jogo.getIdentificador());
 
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt);
-        }
-    }
-
-    public void delete(Aposta aposta) {
-
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
-
-        try {
-            stmt = con.prepareStatement("DELETE FROM aposta WHERE identificador = ?");
-
-            stmt.setString(1, aposta.getIdentificador());
-
-            stmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir " + ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }

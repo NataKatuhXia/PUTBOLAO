@@ -5,6 +5,9 @@
  */
 package bolao.model.bean;
 
+import bolao.controler.ValidationField;
+import bolao.model.dao.PessoaDAO;
+
 /**
  *
  * @author RAFAELDEOLIVEIRABAHI
@@ -12,24 +15,54 @@ package bolao.model.bean;
 public class User {
 
     private static Pessoa pessoa;
+    private static boolean acesso;
     private volatile static User usuario;
 
-    private User() {
+    private User(String user, String senha) {
+
+        acesso = true;
+
+        ValidationField.resultFields.add(user);
+        ValidationField.resultFields.add(senha);
+
+        PessoaDAO usuariodao = new PessoaDAO();
+
+        if (((usuariodao.checkLogin(user, senha)) != null) && (new ValidationField().execute())) {
+
+            User.setUsuario(usuariodao.checkLogin(user, senha));
+
+        } else {
+            acesso = false;
+        }
 
     }
 
-    public static void setUsuario(Pessoa pessoa) {
+    private static void setUsuario(Pessoa pessoa) {
         User.pessoa = pessoa;
-        
-        usuario = new User();
+
     }
 
-    public static User getInstance() {
+    public static Pessoa getPessoa() {
+
+        return pessoa;
+
+    }
+
+    public static User getInstance(String user, String senha) {
 
         if (usuario == null) {
-            usuario = new User();
+            usuario = new User(user, senha);
+            if (!acesso) {
+                usuario = null;
+            }
         }
 
         return usuario;
     }
+
+    public static void deslogarUser() {
+        pessoa = null;
+        usuario = null;
+    }
+
 }

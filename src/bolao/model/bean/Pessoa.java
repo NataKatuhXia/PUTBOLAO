@@ -5,9 +5,8 @@
  */
 package bolao.model.bean;
 
-import bolao.controler.ControlBolao;
+import bolao.model.dao.ApostaDAO;
 import bolao.util.Observer;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,12 +32,18 @@ public abstract class Pessoa implements Observer {
      * @param senha
      * @return
      */
-    protected abstract Pessoa build(String nome, String user, String senha);
+    protected abstract Pessoa createAccount(String nome, String user, String senha);
 
     @Override
     public void update(Partida partida) {
 
         System.out.println("Jogo: " + partida.getJogo() + " - " + partida.getPlacarA() + " x " + partida.getPlacarB());
+    }
+
+    public static void createAposta(Aposta aposta) {
+        ApostaDAO apostadao = new ApostaDAO();
+
+        apostadao.create(aposta);
     }
 
     public void setContaADM(boolean contaADM) {

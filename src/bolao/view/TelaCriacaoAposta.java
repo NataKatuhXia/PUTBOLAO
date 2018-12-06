@@ -8,7 +8,7 @@ package bolao.view;
 import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
-import bolao.model.dao.ApostaDAO;
+import bolao.model.bean.Pessoa;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
@@ -142,13 +142,12 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
-    
+
         String identificador = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
         Aposta aposta = new Aposta(identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
-        
-        ApostaDAO apostadao = new ApostaDAO();
-        
-        apostadao.create(aposta);
+
+        Pessoa.createAposta(aposta);
+
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**

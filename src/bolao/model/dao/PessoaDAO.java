@@ -45,9 +45,9 @@ public class PessoaDAO {
             }
             if (check) {
                 if (rs.getBoolean("adm")) {
-                    pessoa = new Administrador().build(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
+                    pessoa = new Administrador().createAccount(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
                 } else {
-                    pessoa = new Apostador().build(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
+                    pessoa = new Apostador().createAccount(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
                 }
             } else {
                 pessoa = null;

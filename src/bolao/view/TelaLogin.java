@@ -158,19 +158,13 @@ public class TelaLogin extends javax.swing.JDialog {
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
 
-        ValidationField.resultFields.add(usuario);
-        ValidationField.resultFields.add(senha);
+        if (User.getInstance(usuario, senha) != null) {
 
-        PessoaDAO usuariodao = new PessoaDAO();
-
-        if (!(usuariodao.checkLogin(usuario, senha) == null) && (new ValidationField().execute())) {
-
-            User.setUsuario(usuariodao.checkLogin(usuario, senha));
             this.dispose();
             new viewJTable().setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(null, "Dados informados estão incorretos.");
+            JOptionPane.showMessageDialog(null, "Usuario nao encontrado");
         }
 
     }//GEN-LAST:event_jButtonEntrarActionPerformed

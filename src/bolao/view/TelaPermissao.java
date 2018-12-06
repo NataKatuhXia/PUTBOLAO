@@ -8,6 +8,13 @@ package bolao.view;
 import bolao.controler.GetProperties;
 import static bolao.controler.GetProperties.PROP;
 import bolao.controler.ValidationField;
+import bolao.model.bean.Administrador;
+import bolao.model.bean.User;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**
@@ -233,23 +240,26 @@ public class TelaPermissao extends javax.swing.JFrame {
         String gols = jTextMAX_GOLS.getText();
         String qntdUser = jTextQNTD_User.getText();
 
-        ValidationField.resultFields.add(driver);
-        ValidationField.resultFields.add(url);
-        ValidationField.resultFields.add(usuario);
-        ValidationField.resultFields.add(senha);
-        ValidationField.resultFields.add(gols);
+        Map<String, String> permissoes = new HashMap<>();
 
-        if (new ValidationField().execute()) {
-            GetProperties.store("MAX_GOLS", gols, "Numero de Gols");
-            GetProperties.store("DRIVER_DATE", driver, "Local Driver Banco");
-            GetProperties.store("URL_DATE", url, "URL Banco");
-            GetProperties.store("USER_DATE", usuario, "Usuario Banco");
-            GetProperties.store("PASSWORD_DATE", senha, "Senha Banco");
-            GetProperties.store("QNTD_USER_APOSTA", senha, "Quantidade usuario aposta");
+        permissoes.put("driver", driver);
+        permissoes.put("url", url);
+        permissoes.put("usuarioBanco", usuario);
+        permissoes.put("senhaBanco", senha);
+        permissoes.put("maximoGols", gols);
+        permissoes.put("userAposta", qntdUser);
 
-            this.dispose();
+        if (User.getPessoa().isContaADM()) {
+
+            if (new Administrador().modifyPermissions(permissoes)) {
+
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Preecha todos os campos corretamente.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Preecha todos os campos corretamente.");
+            JOptionPane.showMessageDialog(null, "Você não possui permissão para realizar esta ação.");
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 

@@ -5,6 +5,10 @@
  */
 package bolao.model.bean;
 
+import bolao.controler.GetProperties;
+import bolao.controler.ValidationField;
+import java.util.Map;
+
 /**
  *
  * @author RAFAELDEOLIVEIRABAHI
@@ -12,15 +16,43 @@ package bolao.model.bean;
 public class Administrador extends Pessoa {
 
     @Override
-    public Pessoa build(String nome, String user, String senha) {
-        Pessoa pessoa = new Administrador();
+    public Pessoa createAccount(String nome, String user, String senha) {
 
-        pessoa.setNome(nome);
-        pessoa.setUsuario(user);
-        pessoa.setSenha(senha);
-        pessoa.setContaADM(true);
+        ValidationField.resultFields.add(nome);
+        ValidationField.resultFields.add(user);
+        ValidationField.resultFields.add(senha);
 
-        return pessoa;
+        if (new ValidationField().execute()) {
+            Pessoa pessoa = new Administrador();
+
+            pessoa.setNome(nome);
+            pessoa.setUsuario(user);
+            pessoa.setSenha(senha);
+            pessoa.setContaADM(true);
+
+            return pessoa;
+        } else {
+            return null;
+        }
+    }
+
+    public static boolean modifyPermissions(Map<String, String> permissoes) {
+
+        ValidationField.resultFields.addAll(permissoes.keySet());
+
+        if (new ValidationField().execute()) {
+            GetProperties.store("MAX_GOLS", permissoes.get("maximoGols"), "Numero de Gols");
+            GetProperties.store("DRIVER_DATE", permissoes.get("driver"), "Local Driver Banco");
+            GetProperties.store("URL_DATE", permissoes.get("url"), "URL Banco");
+            GetProperties.store("USER_DATE", permissoes.get("usuarioBanco"), "Usuario Banco");
+            GetProperties.store("PASSWORD_DATE", permissoes.get("senhaBanco"), "Senha Banco");
+            GetProperties.store("QNTD_USER_APOSTA", permissoes.get("userAposta"), "Quantidade usuario aposta");
+
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     private void deleteBolao() {

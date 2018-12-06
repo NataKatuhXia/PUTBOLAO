@@ -176,22 +176,15 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
 
-        ValidationField.resultFields.add(nome);
-        ValidationField.resultFields.add(usuario);
-        ValidationField.resultFields.add(senha);
-
-        if (new ValidationField().execute()) {
-
-            Pessoa pessoa = new Apostador().build(nome, usuario, senha);
-
-            PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.create(pessoa);
+        if (new Apostador().createAccount(nome, usuario, senha) != null) {
 
             this.dispose();
             new TelaLogin(new javax.swing.JFrame(), true).setVisible(true);
+
         } else {
             JOptionPane.showMessageDialog(null, "Preecha todos os campos corretamente.");
         }
+
     }//GEN-LAST:event_jButtonCadastrar1ActionPerformed
 
     /**

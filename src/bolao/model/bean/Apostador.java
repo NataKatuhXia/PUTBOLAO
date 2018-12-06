@@ -5,6 +5,9 @@
  */
 package bolao.model.bean;
 
+import bolao.controler.ValidationField;
+import bolao.model.dao.PessoaDAO;
+
 /**
  *
  * @author RAFAELDEOLIVEIRABAHI
@@ -14,15 +17,28 @@ public class Apostador extends Pessoa {
     private Aposta aposta;
 
     @Override
-    public Pessoa build(String nome, String user, String senha) {
-        Pessoa pessoa = new Apostador();
-        pessoa.setNome(nome);
-        pessoa.setUsuario(user);
-        pessoa.setSenha(senha);
+    public Pessoa createAccount(String nome, String user, String senha) {
 
-        pessoa.setContaADM(false);
+        ValidationField.resultFields.add(nome);
+        ValidationField.resultFields.add(user);
+        ValidationField.resultFields.add(senha);
 
-        return pessoa;
+        if (new ValidationField().execute()) {
+
+            Pessoa pessoa = new Apostador();
+            pessoa.setNome(nome);
+            pessoa.setUsuario(user);
+            pessoa.setSenha(senha);
+            pessoa.setContaADM(false);
+
+            PessoaDAO pessoadao = new PessoaDAO();
+            pessoadao.create(pessoa);
+
+            return pessoa;
+        } else {
+            return null;
+        }
+
     }
 
     public Aposta getAposta() {

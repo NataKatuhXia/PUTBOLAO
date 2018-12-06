@@ -5,6 +5,8 @@
  */
 package bolao.model.dao;
 
+import bolao.model.bean.Administrador;
+import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
 import connection.ConnectionFactory;
 import java.sql.Connection;
@@ -20,8 +22,10 @@ import javax.swing.JOptionPane;
  * @author RAFAELDEOLIVEIRABAHI
  */
 public class PessoaDAO {
+    
+    Pessoa pessoa;
 
-    public boolean checkLogin(String usuario, String senha) {
+    public Pessoa checkLogin(String usuario, String senha) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -39,13 +43,21 @@ public class PessoaDAO {
                 check = true;
 
             }
+            if (check) {
+                if (rs.getBoolean("adm")) {
+                    pessoa = new Administrador().build(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
+                } else {
+                    pessoa = new Apostador().build(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
+                }
+            } else {
+                pessoa = null;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
-
-        return check;
+        return pessoa;
     }
 
     public void create(Pessoa pessoa) {

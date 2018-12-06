@@ -18,6 +18,7 @@ public abstract class Pessoa implements Observer {
     private String nome;
     private String usuario;
     private String senha;
+    private String pontos;
 
     private boolean contaADM;
 

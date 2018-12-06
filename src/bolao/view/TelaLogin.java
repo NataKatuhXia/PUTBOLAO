@@ -6,6 +6,7 @@
 package bolao.view;
 
 import bolao.controler.ValidationField;
+import bolao.model.bean.User;
 import javax.swing.JOptionPane;
 import bolao.model.dao.PessoaDAO;
 
@@ -162,7 +163,9 @@ public class TelaLogin extends javax.swing.JDialog {
 
         PessoaDAO usuariodao = new PessoaDAO();
 
-        if (usuariodao.checkLogin(usuario, senha) && new ValidationField().execute()) {
+        if (!(usuariodao.checkLogin(usuario, senha) == null) && (new ValidationField().execute())) {
+
+            User.setUsuario(usuariodao.checkLogin(usuario, senha));
             this.dispose();
             new viewJTable().setVisible(true);
 

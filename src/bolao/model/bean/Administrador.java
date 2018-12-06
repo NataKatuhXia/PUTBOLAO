@@ -14,10 +14,10 @@ public class Administrador extends Pessoa {
     @Override
     public Pessoa build(String nome, String user, String senha) {
         Pessoa pessoa = new Administrador();
+
         pessoa.setNome(nome);
         pessoa.setUsuario(user);
         pessoa.setSenha(senha);
-
         pessoa.setContaADM(true);
 
         return pessoa;

@@ -97,13 +97,13 @@ public class ApostaDAO {
         return apostas;
     }
 
-    public void Update(Aposta aposta) {
+    public void update(Aposta aposta) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("Update aposta SET identificador = ? ,placarA = ? ,placarB = ? WHERE ID = ?");
+            stmt = con.prepareStatement("UPDATE aposta SET identificador = ? ,placarA = ? ,placarB = ? WHERE ID = ?");
 
             stmt.setString(1, aposta.getIdentificador());
             stmt.setInt(2, aposta.getPlacarA());

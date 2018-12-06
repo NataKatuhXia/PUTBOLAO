@@ -106,7 +106,7 @@ public class JogoDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("Update aposta SET apostadores = ? ,data = ? ,resultado = ? WHERE identificador = ?");
+            stmt = con.prepareStatement("UPDATE aposta SET apostadores = ? ,data = ? ,resultado = ? WHERE identificador = ?");
 
             stmt.setInt(1, jogo.getApostadores());
             stmt.setString(2, (String) jogo.getData());

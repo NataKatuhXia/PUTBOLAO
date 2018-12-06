@@ -104,7 +104,7 @@ public class BolaoDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("Update aposta SET apostadores = ? WHERE identificador = ?");
+            stmt = con.prepareStatement("UPDATE aposta SET apostadores = ? WHERE identificador = ?");
 
             stmt.setInt(1, bolao.getApostadores());
             stmt.setString(2, bolao.getIdentificador());

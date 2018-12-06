@@ -184,8 +184,8 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
 
             Pessoa pessoa = new Apostador().build(nome, usuario, senha);
 
-            PessoaDAO apostadao = new PessoaDAO();
-            apostadao.create(pessoa);
+            PessoaDAO pessoadao = new PessoaDAO();
+            pessoadao.create(pessoa);
 
             this.dispose();
             new TelaLogin(new javax.swing.JFrame(), true).setVisible(true);

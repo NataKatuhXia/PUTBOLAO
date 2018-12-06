@@ -1,0 +1,82 @@
+[
+    {
+        "nome": "America Mineiro",
+        "identificador": "01"
+    },
+    {
+        "nome": "Atletico Mineiro",
+        "identificador": "02"
+    },
+    {
+        "nome": "Atletico Paranaense",
+        "identificador": "03"
+    },
+    {
+        "nome": "Bahia",
+        "identificador": "04"
+    },
+    {
+        "nome": "Botafogo",
+        "identificador": "05"
+    },
+    {
+        "nome": "Ceara",
+        "identificador": "06"
+    },
+    {
+        "nome": "Chapecoense",
+        "identificador": "07"
+    },
+    {
+        "nome": "Corinthians",
+        "identificador": "08"
+    },
+    {
+        "nome": "Cruzeiro",
+        "identificador": "09"
+    },
+    {
+        "nome": "Flamengo",
+        "identificador": 10
+    },
+    {
+        "nome": "Fluminense",
+        "identificador": 11
+    },
+    {
+        "nome": "Gremio",
+        "identificador": 12
+    },
+    {
+        "nome": "Internacional",
+        "identificador": 13
+    },
+    {
+        "nome": "Palmeiras",
+        "identificador": 14
+    },
+    {
+        "nome": "Parana",
+        "identificador": 15
+    },
+    {
+        "nome": "Santos",
+        "identificador": 16
+    },
+    {
+        "nome": "Sao Paulo",
+        "identificador": 17
+    },
+    {
+        "nome": "Sport",
+        "identificador": 18
+    },
+    {
+        "nome": "Vasco da Gama",
+        "identificador": 19
+    },
+    {
+        "nome": "Vitoria",
+        "identificador": 20
+    }
+]

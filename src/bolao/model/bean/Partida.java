@@ -5,11 +5,15 @@
  */
 package bolao.model.bean;
 
+import java.util.List;
+
 /**
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
 public class Partida {
+
+    static List<Partida> partidas;
 
     private String jogo;
     private String placarA;

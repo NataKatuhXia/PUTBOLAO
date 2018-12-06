@@ -5,6 +5,7 @@
  */
 package bolao.view;
 
+import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.dao.ApostaDAO;
@@ -36,7 +37,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         image = new javax.swing.JLabel();
         jLabelTimeA = new javax.swing.JLabel();
-        jLabelTimeA1 = new javax.swing.JLabel();
+        jLabelTimeB = new javax.swing.JLabel();
         SpinnerModel smA = new SpinnerNumberModel(0, 0, Integer.parseInt(PROP.getProperty("MAX_GOLS")), 1); //default value,lower bound,upper bound,increment by
         jSpinnerPlacarA = new javax.swing.JSpinner(smA);
         SpinnerModel smB = new SpinnerNumberModel(0, 0, Integer.parseInt(PROP.getProperty("MAX_GOLS")), 1); //default value,lower bound,upper bound,increment by
@@ -54,8 +55,8 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         jLabelTimeA.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabelTimeA.setText("Time A");
 
-        jLabelTimeA1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabelTimeA1.setText("Time B");
+        jLabelTimeB.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabelTimeB.setText("Time B");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -99,7 +100,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jSpinnerPlacarB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jLabelTimeA1)
+                .addComponent(jLabelTimeB)
                 .addGap(66, 66, 66))
         );
         jPanel1Layout.setVerticalGroup(
@@ -108,7 +109,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
                 .addComponent(image)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelTimeA1)
+                    .addComponent(jLabelTimeB)
                     .addComponent(jLabelTimeA)
                     .addComponent(jSpinnerPlacarA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerPlacarB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,7 +143,8 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
     
-        Aposta aposta = new Aposta("", Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
+        String identificador = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
+        Aposta aposta = new Aposta(identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
         
         ApostaDAO apostadao = new ApostaDAO();
         
@@ -190,7 +192,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelTimeA;
-    private javax.swing.JLabel jLabelTimeA1;
+    private javax.swing.JLabel jLabelTimeB;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerPlacarA;
     private javax.swing.JSpinner jSpinnerPlacarB;

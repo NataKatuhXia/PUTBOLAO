@@ -7,6 +7,7 @@ package bolao.model.bean;
 
 import bolao.controler.ControlBolao;
 import bolao.util.Observer;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,12 +36,9 @@ public abstract class Pessoa implements Observer {
     protected abstract Pessoa build(String nome, String user, String senha);
 
     @Override
-    public void update(Map<Integer, Integer> placar) {
-        
-        this.idJogo = ControlBolao.idPartida;
-        this.placar = placar;
+    public void update(Partida partida) {
 
-        System.out.println("Jogo: " + idJogo + " - " + placar.keySet() + " x " + placar.values());
+        System.out.println("Jogo: " + partida.getJogo() + " - " + partida.getPlacarA() + " x " + partida.getPlacarB());
     }
 
     public void setContaADM(boolean contaADM) {

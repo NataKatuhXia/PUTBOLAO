@@ -35,7 +35,7 @@ public class ControlTime {
     public static String parseIdentificador(String timeA, String timeB) { // Nome dos times são as Keys
         StringBuilder nomes = new StringBuilder();
 
-        nomes.append(times.get(timeA)).append(times.get(timeB));
+        nomes.append(/*times.get(timeA)*/"88").append(/*times.get(timeB)*/ "77");
 
         return nomes.toString();
     }

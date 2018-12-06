@@ -8,10 +8,12 @@ package bolao.controler;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.Jogo;
+import bolao.model.bean.Partida;
 import bolao.util.Subject;
 import bolao.util.Command;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,9 +24,11 @@ import java.util.Random;
 public class ControlBolao implements Subject, Command {
 
     private static final String MAX_GOLS = PROP.getProperty("MAX_GOLS");
+    private Partida partida;
+
     private Jogo jogo;
     private ArrayList observers;
-    public static String idPartida = "0000";
+    public static String idPartida;
     private Map<Integer, Integer> placar;
 
     public ControlBolao() {
@@ -46,6 +50,12 @@ public class ControlBolao implements Subject, Command {
         int i = observers.indexOf(pessoa);
         if (i >= 0) {
             observers.remove(pessoa);
+            /* 
+            Fazer uma consulta no banco trazendo todos os usuarios que fizeram os boloes naquela partida
+            Caso o bolao tenha acertado o placar busca todos os apostadores que apostaram nesse bolao e da um update
+            Comando DAO trazendo os boloes
+            E outro trazendo os apostadores
+             */
         }
     }
 
@@ -54,7 +64,7 @@ public class ControlBolao implements Subject, Command {
 
         for (int i = 0; i < observers.size(); i++) {
             Pessoa pessoa = (Pessoa) observers.get(i);
-            pessoa.update(placar);
+            pessoa.update(partida);
         }
     }
 
@@ -62,39 +72,27 @@ public class ControlBolao implements Subject, Command {
         notifyObservers();
     }
 
-    public void setMeasurements(String idJogo, Map<Integer, Integer> placar) {
-        ControlBolao.idPartida = idJogo;
-        this.placar = placar;
-
+    public void setMeasurements(Partida partidas) {
+        measurementsChanged();
     }
 
     @Override
     public void execute() {
-        String identificador = generateIdJogo();
-        Map<Integer, Integer> placares = generatePlacar();
 
-        setMeasurements(identificador, placares);
-
-        measurementsChanged();
+        setMeasurements(generatePartidas());
 
     }
 
-    private String generateIdJogo() {
-        int identificador = Integer.parseInt(ControlBolao.idPartida);
-        identificador++;
-        ControlBolao.idPartida = String.valueOf(identificador);
-
-        return idPartida;
-    }
-
-    private Map<Integer, Integer> generatePlacar() {
+    private int generatePlacar() {
         Random gerador = new Random();
 
-        Map<Integer, Integer> placares = new HashMap<>();
-        int timeA = gerador.nextInt(Integer.parseInt(MAX_GOLS));
-        int timeB = gerador.nextInt(Integer.parseInt(MAX_GOLS));
-        placares.put(timeA, timeB);
+        int valor = gerador.nextInt(Integer.parseInt(MAX_GOLS));
 
-        return placares;
+        return valor;
+    }
+
+    private Partida generatePartidas() {
+
+        return new Partida("", "", "");
     }
 }

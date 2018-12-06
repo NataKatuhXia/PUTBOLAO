@@ -5,16 +5,11 @@
  */
 package bolao.view;
 
-import bolao.controler.GetProperties;
 import static bolao.controler.GetProperties.PROP;
-import bolao.controler.ValidationField;
 import bolao.model.bean.Administrador;
 import bolao.model.bean.User;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**
@@ -61,6 +56,7 @@ public class TelaPermissao extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -251,7 +247,7 @@ public class TelaPermissao extends javax.swing.JFrame {
 
         if (User.getPessoa().isContaADM()) {
 
-            if (new Administrador().modifyPermissions(permissoes)) {
+            if (Administrador.modifyPermissions(permissoes)) {
 
                 this.dispose();
 
@@ -295,10 +291,8 @@ public class TelaPermissao extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaPermissao().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaPermissao().setVisible(true);
         });
     }
 

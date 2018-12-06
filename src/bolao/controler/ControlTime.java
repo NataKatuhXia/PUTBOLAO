@@ -21,10 +21,24 @@ import java.util.logging.Logger;
  */
 public class ControlTime {
 
-    private static Map<String, String> times;
+    public static Map<String, String> times = new HashMap<>();
 
-    private ControlTime() {
+    public ControlTime() {
 
+        if (times.size() == 0) {
+            loadLista();
+        }
+
+    }
+
+    private void loadLista() {
+        Equipe equipe = Equipe.build();
+
+        List<Equipe> equipes = equipe.getEquipes();
+
+        for (Equipe aux : equipes) {
+            times.put(aux.getIdentificador(), aux.getEquipe());
+        }
     }
 
     public static Map<String, String> getInstance() {
@@ -79,19 +93,23 @@ public class ControlTime {
 
     public static void main(String args[]) {
 
-        Map<String, String> example = new HashMap<>();
-
-        /*
-              * Vamos adicionar alguns valores a nossa lista
-              * */
-        example.put("K1", new String("V1"));
-        example.put("K2", new String("V2"));
-        example.put("K3", new String("V3"));
-        example.put("K4", new String("V4"));
-        example.put("K5", new String("V5"));
-
-        for (String key : example.keySet()) {
-            System.out.println(key);
+//        Map<String, String> example = new HashMap<>();
+//
+//        /*
+//              * Vamos adicionar alguns valores a nossa lista
+//              * */
+//        example.put("K1", new String("V1"));
+//        example.put("K2", new String("V2"));
+//        example.put("K3", new String("V3"));
+//        example.put("K4", new String("V4"));
+//        example.put("K5", new String("V5"));
+//
+//        for (String key : example.keySet()) {
+//            System.out.println(key);
+//        }
+//        System.out.println(new ControlTime().times.size());
+        for (String time : new ControlTime().times.values()) {
+            System.out.println(time);
         }
 
     }

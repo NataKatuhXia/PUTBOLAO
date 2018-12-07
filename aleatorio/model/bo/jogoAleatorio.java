@@ -7,12 +7,13 @@ import model.vo.Jogo;
 
 public class jogoAleatorio {
 	
-	private String[] times = {"Palmeiras","Bahia","Vitoria","Flamengo","Corinthians"}; //vetor de times.
+	private String[] times = {"Palmeiras","Bahia","Vitoria","Flamengo","Corinthians","Gremio","Fluminense"}; //vetor de times.
 	private ArrayList<Jogo> jogos = new ArrayList<Jogo>(); //lista de jogos gerados aleatoriamente.
+	private Jogo partida;
 
 	public jogoAleatorio(int vezes, int max) { 
 		for(int i = 0; i < vezes; i++) { // vezes eh o numeros de partidas a serem geradas.
-			Jogo partida = new Jogo(); 
+			partida = new Jogo(); 
 			int A = returnRandom(times.length);
 			partida.setTimeA(times[A]);
 			int B = A;
@@ -26,9 +27,22 @@ public class jogoAleatorio {
 		}  
 	}
 	
+	public jogoAleatorio(int max) {  //versao de torneio.
+		for(int a = 0; a < times.length; a++) {
+			for(int b = a+1; b < times.length; b++) {
+				partida = new Jogo();
+				partida.setTimeA(times[a]);
+				partida.setTimeB(times[b]);
+				partida.setPlacarTimeA(returnRandom(max)); 
+				partida.setPlacarTimeB(returnRandom(max));
+				jogos.add(partida);
+			}
+		}  
+	}
+	
 	public void imprimeJogos() {
 		for(Jogo obj: this.jogos) {
-			System.out.printf("%s %d X %s %d\n",obj.getTimeA(),obj.getPlacarTimeA(),obj.getTimeB(),obj.getPlacarTimeB());
+			System.out.printf("%s %d X %d %s\n",obj.getTimeA(),obj.getPlacarTimeA(),obj.getPlacarTimeB(),obj.getTimeB());
 		}
 	}
 	

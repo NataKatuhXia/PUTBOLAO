@@ -6,6 +6,7 @@
 package bolao.model.bean;
 
 import bolao.controler.ValidationField;
+import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.PessoaDAO;
 
 /**
@@ -43,12 +44,10 @@ public class Apostador extends Pessoa {
 
     }
 
-    public Aposta getAposta() {
-        return aposta;
-    }
+    public static void createAposta(Aposta aposta) {
+        ApostaDAO apostadao = new ApostaDAO();
 
-    public void setAposta(Aposta aposta) {
-        this.aposta = aposta;
+        apostadao.create(aposta);
     }
 
 }

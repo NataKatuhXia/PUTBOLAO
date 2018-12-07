@@ -5,11 +5,6 @@
  */
 package bolao.execucao;
 
-import bolao.controler.ControlBolao;
-import bolao.model.bean.Administrador;
-import bolao.model.bean.Apostador;
-import bolao.model.bean.Jogo;
-import bolao.model.bean.Pessoa;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -29,9 +24,13 @@ public class Main {
 //        bolao.registerObserver(administrador);
 //        jogo.setCommand(bolao);
 //        jogo.setCommand(bolao);
-        Date data = new Date();
-        DateFormat formataData = DateFormat.getDateInstance();
-        System.out.println("Data atual com formatação: " + formataData.format(data));
+//        Date data = new Date();
+//        DateFormat formataData = DateFormat.getDateInstance();
+//        System.out.println("Data atual com formatação: " + formataData.format(data));
+
+            boolean teste = true;
+            
+            System.out.println(String.valueOf(teste));
 
     }
 }

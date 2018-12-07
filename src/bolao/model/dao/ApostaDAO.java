@@ -29,14 +29,15 @@ public class ApostaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO aposta (identificador,placarA,placarB)VALUES(?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO aposta (identificador,placarA,placarB,usuario)VALUES(?,?,?,?)");
             stmt.setString(1, aposta.getIdentificador());
             stmt.setInt(2, aposta.getPlacarA());
             stmt.setDouble(3, aposta.getPlacarB());
+            stmt.setString(4, aposta.getUsuario());
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+            JOptionPane.showMessageDialog(null, "Aposta criada com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar " + ex);
         } finally {
@@ -57,7 +58,7 @@ public class ApostaDAO {
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
 
                 apostas.add(aposta);
             }
@@ -84,7 +85,7 @@ public class ApostaDAO {
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
 
                 apostas.add(aposta);
             }

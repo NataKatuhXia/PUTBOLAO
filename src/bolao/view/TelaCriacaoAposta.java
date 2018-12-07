@@ -8,8 +8,11 @@ package bolao.view;
 import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
+import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
+import bolao.model.bean.User;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
@@ -144,10 +147,15 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String identificador = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
-        Aposta aposta = new Aposta(identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
 
-        Pessoa.createAposta(aposta);
+        if (!User.getPessoa().isContaADM() || PROP.getProperty("ADM_APOSTA").equals("true")) {
+            Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
 
+            Apostador.createAposta(aposta);
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Você não tem permissão para fazer uma aposta!");
+        }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**

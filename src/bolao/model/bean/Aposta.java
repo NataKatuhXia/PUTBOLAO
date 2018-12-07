@@ -11,11 +11,13 @@ package bolao.model.bean;
  */
 public class Aposta {
 
+    private String usuario;
     private String identificador;
     private int placarA;
     private int plcarB;
 
-    public Aposta(String identificador, int placarA, int plcarB) {
+    public Aposta(String usuario, String identificador, int placarA, int plcarB) {
+        this.usuario = usuario;
         this.identificador = identificador;
         this.placarA = placarA;
         this.plcarB = plcarB;
@@ -23,6 +25,14 @@ public class Aposta {
 
     public Aposta() {
 
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getIdentificador() {

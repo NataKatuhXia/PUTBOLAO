@@ -41,12 +41,6 @@ public abstract class Pessoa implements Observer {
         System.out.println("Jogo: " + partida.getJogo() + " - " + partida.getPlacarA() + " x " + partida.getPlacarB());
     }
 
-    public static void createAposta(Aposta aposta) {
-        ApostaDAO apostadao = new ApostaDAO();
-
-        apostadao.create(aposta);
-    }
-
     public void setContaADM(boolean contaADM) {
         this.contaADM = contaADM;
     }

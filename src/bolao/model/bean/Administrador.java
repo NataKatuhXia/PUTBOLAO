@@ -10,6 +10,7 @@ import bolao.controler.GetProperties;
 import bolao.controler.ValidationField;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
+import bolao.view.TelaCriacaoAposta;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +59,7 @@ public class Administrador extends Pessoa {
             GetProperties.store("USER_DATE", permissoes.get("usuarioBanco"), "Usuario Banco");
             GetProperties.store("PASSWORD_DATE", permissoes.get("senhaBanco"), "Senha Banco");
             GetProperties.store("QNTD_USER_APOSTA", permissoes.get("userAposta"), "Quantidade usuario aposta");
+            GetProperties.store("ADM_APOSTA", permissoes.get("adm_aposta"), "Parametro para Administrador fazer aposta");
 
             return true;
         } else {
@@ -66,8 +68,8 @@ public class Administrador extends Pessoa {
 
     }
 
-    private void deleteBolao() {
-
+    private void deleteBolao(String idJogo) {
+        /* Fazer bolao */
     }
 
     private void deleteUser(Pessoa pessoa) {
@@ -116,14 +118,19 @@ public class Administrador extends Pessoa {
     public static void main(String[] args) {
 
         Administrador usuariodao = new Administrador();
-        Jogo jogo = new Jogo("1903", 2, "", "");
-        Jogo jogo2 = new Jogo("1920", 4, "", "");
 
-        JogoDAO jogodao = new JogoDAO();
-        jogodao.create(jogo);
-        jogodao.create(jogo2);
+        User.getInstance("rafael", "123");
 
-        usuariodao.generareAllResult();
+        new TelaCriacaoAposta().setVisible(true);
+//        
+//        Jogo jogo = new Jogo("1903", 2, "", "");
+//        Jogo jogo2 = new Jogo("1920", 4, "", "");
+//
+//        JogoDAO jogodao = new JogoDAO();
+//        jogodao.create(jogo);
+//        jogodao.create(jogo2);
+//
+//        usuariodao.generareAllResult();
 
     }
 }

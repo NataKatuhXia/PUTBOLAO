@@ -132,6 +132,14 @@ public class Administrador extends Pessoa {
 
     }
 
+    private boolean generateNewPartidas() {
+
+        return new ControlBolao().generatePartidas();
+        
+        /* modelar mais aqui */
+
+    }
+
     public static void main(String[] args) {
 
 //        Administrador usuariodao = new Administrador();

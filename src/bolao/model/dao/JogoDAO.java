@@ -30,7 +30,7 @@ public class JogoDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO jogo (identificador)VALUES(?)");
+            stmt = con.prepareStatement("INSERT INTO jogo (identificador) VALUES(?)");
             stmt.setString(1, jogo.getIdentificador());
 
             stmt.executeUpdate();
@@ -77,6 +77,8 @@ public class JogoDAO {
         try {
             if (comando.equals("Gerar resultados totais")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null");
+            } else if (comando.equals("Todos")) {
+                stmt = con.prepareStatement("SELECT * FROM jogo");
             }
             rs = stmt.executeQuery();
 

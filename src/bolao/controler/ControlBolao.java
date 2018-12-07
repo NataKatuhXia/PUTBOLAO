@@ -12,6 +12,7 @@ import bolao.model.bean.Jogo;
 import bolao.model.bean.Partida;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
+import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import bolao.util.Subject;
 import bolao.util.Command;
@@ -50,17 +51,12 @@ public class ControlBolao implements Subject, Command {
 
     @Override
     public void removeObserver(String usuario) {
+
         int i = observers.indexOf(usuario);
         if (i >= 0) {
             observers.remove(usuario);
             PessoaDAO pessoa = new PessoaDAO();
             pessoa.delete(usuario);
-            /* 
-            Fazer uma consulta no banco trazendo todos os usuarios que fizeram os boloes naquela partida
-            Caso o bolao tenha acertado o placar busca todos os apostadores que apostaram nesse bolao e da um update
-            Comando DAO trazendo os boloes
-            E outro trazendo os apostadores
-             */
         }
     }
 
@@ -70,6 +66,7 @@ public class ControlBolao implements Subject, Command {
         for (int i = 0; i < observers.size(); i++) {
             PessoaDAO pessoa = new PessoaDAO();
             pessoa.update("vencendor", observers.get(i).toString());
+            removeObserver(observers.get(i).toString());
         }
     }
 
@@ -120,9 +117,20 @@ public class ControlBolao implements Subject, Command {
         return valor;
     }
 
-    private Partida generatePartidas() {
+    public boolean generatePartidas() {
+        JogoDAO jogodado = new JogoDAO();
 
-        return new Partida("", "");
+        boolean gerar = true;
+        List<Jogo> jogos = jogodado.searchAll("Todos");
+
+        for (Jogo jogo : jogos) {
+
+            if (null == jogo.getResultado()) {
+                gerar = false;
+                break;
+            }
+        }
+        return gerar;
     }
 
     public static boolean validationAposta(String identificador, String usuario) {
@@ -144,12 +152,23 @@ public class ControlBolao implements Subject, Command {
         return result;
     }
 
-//    public static void main(String[] args) {
-//
-//
+    public static void main(String[] args) {
+
 //        User.getInstance("teste", "321");
-//
 //        new TelaCriacaoAposta().setVisible(true);
+//        JogoDAO jogodado = new JogoDAO();
+//        Jogo aux = new Jogo("Test", 0, "", "");
+//        jogodado.create(aux);
 //
-//    }
+//        boolean gerar = true;
+//        List<Jogo> jogos = jogodado.searchAll("Todos");
+//
+//        for (Jogo jogo : jogos) {
+//            if (null == jogo.getResultado()) {
+//                System.out.println("salve");
+//            } else {
+//                System.out.println("Teste");
+//            }
+//        }
+    }
 }

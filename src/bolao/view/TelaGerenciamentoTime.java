@@ -9,8 +9,6 @@ import bolao.controler.ControlTime;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
@@ -175,7 +173,7 @@ public class TelaGerenciamentoTime extends javax.swing.JFrame {
 
         Map<JLabel, JTextField> campos = new HashMap<>();
 
-        for (String time : new ControlTime().times.values()) {
+        for (String time : ControlTime.times.values()) {
 
             JLabel jlabel = new JLabel("Time " + i);
             jlabel.setBounds(30, y, 40, 28);
@@ -188,7 +186,7 @@ public class TelaGerenciamentoTime extends javax.swing.JFrame {
             y += 50;
             i++;
         }
-        
+
         jPanel2.setSize(1000, 1000);
 
         for (JLabel campo : campos.keySet()) {
@@ -198,6 +196,6 @@ public class TelaGerenciamentoTime extends javax.swing.JFrame {
         jScrollPaneTimes.setColumnHeaderView(jPanel2);
         jScrollPaneTimes.setSize(1000, 1000);
         jScrollPaneTimes.setBackground(new java.awt.Color(255, 255, 255));
-       add(jScrollPaneTimes);
+        add(jScrollPaneTimes);
     }
 }

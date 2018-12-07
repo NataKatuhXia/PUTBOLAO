@@ -7,19 +7,15 @@ package bolao.controler;
 
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
-import bolao.model.bean.Pessoa;
 import bolao.model.bean.Jogo;
 import bolao.model.bean.Partida;
-import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import bolao.util.Subject;
 import bolao.util.Command;
-import bolao.view.TelaCriacaoAposta;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -29,11 +25,9 @@ import java.util.Random;
 public class ControlBolao implements Subject, Command {
 
     private static final String MAX_GOLS = PROP.getProperty("MAX_GOLS");
-    private Partida partida;
 
     private Jogo jogo;
     private ArrayList observers;
-    private Map<Integer, Integer> placar;
 
     public ControlBolao() {
         observers = new ArrayList<>();
@@ -123,11 +117,13 @@ public class ControlBolao implements Subject, Command {
         boolean gerar = true;
         List<Jogo> jogos = jogodado.searchAll("Todos");
 
-        for (Jogo jogo : jogos) {
+        if (jogos.isEmpty()) {
+            for (Jogo jogo : jogos) {
 
-            if (null == jogo.getResultado()) {
-                gerar = false;
-                break;
+                if (null == jogo.getResultado()) {
+                    gerar = false;
+                    break;
+                }
             }
         }
         return gerar;
@@ -152,8 +148,7 @@ public class ControlBolao implements Subject, Command {
         return result;
     }
 
-    public static void main(String[] args) {
-
+//    public static void main(String[] args) {
 //        User.getInstance("teste", "321");
 //        new TelaCriacaoAposta().setVisible(true);
 //        JogoDAO jogodado = new JogoDAO();
@@ -170,5 +165,5 @@ public class ControlBolao implements Subject, Command {
 //                System.out.println("Teste");
 //            }
 //        }
-    }
+//    }
 }

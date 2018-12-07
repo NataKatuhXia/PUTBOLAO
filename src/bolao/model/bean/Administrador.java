@@ -6,6 +6,7 @@
 package bolao.model.bean;
 
 import bolao.controler.ControlBolao;
+import bolao.controler.ControlTime;
 import bolao.controler.GetProperties;
 import bolao.controler.ValidationField;
 import bolao.model.dao.ApostaDAO;
@@ -13,9 +14,13 @@ import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -94,7 +99,7 @@ public class Administrador extends Pessoa {
 
         JogoDAO jogodado = new JogoDAO();
 
-        Jogo jogo = jogodado.searchJogo(idJogo);
+        Jogo jogo = jogodado.searchJogo("Gerar Resultado", idJogo);
         ControlBolao bolao = new ControlBolao(jogo);
 
         Date data = new Date();
@@ -134,14 +139,36 @@ public class Administrador extends Pessoa {
 
     private boolean generateNewPartidas() {
 
-        return new ControlBolao().generatePartidas();
-        
-        /* modelar mais aqui */
+        if (new ControlBolao().generatePartidas()) {
 
+            List<String> times = new ArrayList<>();
+
+            for (String time : ControlTime.getInstance().values()) {
+                times.add(time);
+            }
+            Collections.shuffle(times);
+
+            for (ListIterator<String> iterator = times.listIterator(); iterator.hasNext();) {
+                String timeA = iterator.next();
+                iterator.remove();
+                String timeB = iterator.next();
+                iterator.remove();
+                String identificador = ControlTime.parseIdentificador(timeA, timeB);
+
+                Jogo jogo = new Jogo(identificador, 0, "", "");
+
+                JogoDAO jogadao = new JogoDAO();
+                jogadao.create(jogo);
+            }
+            JOptionPane.showMessageDialog(null, "Jogos criados com sucesso!");
+        }
+
+        return new ControlBolao().generatePartidas();
+
+        /* modelar mais aqui */
     }
 
-    public static void main(String[] args) {
-
+//    public static void main(String[] args) {
 //        Administrador usuariodao = new Administrador();
 //        User.getInstance("rafael", "123");
 //        
@@ -152,5 +179,5 @@ public class Administrador extends Pessoa {
 //        jogodao.create(jogo);
 //
 //        usuariodao.generareAllResult();
-    }
+//    }
 }

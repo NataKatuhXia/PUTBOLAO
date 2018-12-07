@@ -35,7 +35,6 @@ public class JogoDAO {
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Jogo criado com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar " + ex);
         } finally {
@@ -43,7 +42,7 @@ public class JogoDAO {
         }
     }
 
-    public Jogo searchJogo(String identificador) {
+    public Jogo searchJogo(String comando, String identificador) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -51,7 +50,11 @@ public class JogoDAO {
         Jogo jogo = null;
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM jogo WHERE identificador = ?");
+            if (comando.equals("Gerar Resultado")) {
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE identificador = ? and resultado is null");
+            } else {
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE identificador = ?");
+            }
             stmt.setString(1, identificador);
             rs = stmt.executeQuery();
 

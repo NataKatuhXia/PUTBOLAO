@@ -23,9 +23,9 @@ public class ControlTime {
 
     public static Map<String, String> times = new HashMap<>();
 
-    public ControlTime() {
+    private ControlTime() {
 
-        if (times.size() == 0) {
+        if (times.isEmpty()) {
             loadLista();
         }
 
@@ -42,7 +42,7 @@ public class ControlTime {
     }
 
     public static Map<String, String> getInstance() {
-        if (times == null) {
+        if (times.isEmpty()) {
             new ControlTime().loadLista();
         }
 
@@ -52,9 +52,22 @@ public class ControlTime {
     public static String parseIdentificador(String timeA, String timeB) { // Nome dos times são as Keys
         StringBuilder nomes = new StringBuilder();
 
-        nomes.append(times.get(timeA)).append(times.get(timeB));
+        String equipeA = null;
+        String equipeB = null;
 
-        return nomes.toString();
+        for (String time : new ControlTime().times.keySet()) {
+            if (times.get(time).equals(timeA)) {
+
+                equipeA = time;
+
+            } else if (times.get(time).equals(timeB)) {
+
+                equipeB = time;
+
+            }
+        }
+
+        return equipeA + equipeB;
     }
 
     public static String parseTime(String codigo) { // Codigo é o value do Map
@@ -89,8 +102,7 @@ public class ControlTime {
         }
     }
 
-    public static void main(String args[]) {
-
+//    public static void main(String args[]) {
 //        Map<String, String> example = new HashMap<>();
 //
 //        /*
@@ -102,13 +114,14 @@ public class ControlTime {
 //        example.put("K4", new String("V4"));
 //        example.put("K5", new String("V5"));
 //
-//        for (String key : example.keySet()) {
-//            System.out.println(key);
-//        }
+////        for (String key : example.keySet()) {
+////            System.out.println(key);
+////        }
 //        System.out.println(new ControlTime().times.size());
-//        for (String time : new ControlTime().times.values()) {
-//            System.out.println(time);
+//
+//        for (String time : new ControlTime().times.keySet()) {
+//            System.out.println(times.get(time));
 //        }
-
-    }
+//
+//    }
 }

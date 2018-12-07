@@ -15,6 +15,7 @@ public class Aposta {
     private String identificador;
     private int placarA;
     private int plcarB;
+    private String status;
 
     public Aposta(String usuario, String identificador, int placarA, int plcarB) {
         this.usuario = usuario;
@@ -25,6 +26,14 @@ public class Aposta {
 
     public Aposta() {
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getUsuario() {

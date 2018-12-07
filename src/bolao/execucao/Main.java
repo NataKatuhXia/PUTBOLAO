@@ -27,10 +27,14 @@ public class Main {
 //        Date data = new Date();
 //        DateFormat formataData = DateFormat.getDateInstance();
 //        System.out.println("Data atual com formatação: " + formataData.format(data));
-
-            boolean teste = true;
-            
-            System.out.println(String.valueOf(teste));
+//
+//            boolean teste = true;
+//            
+//            System.out.println(String.valueOf(teste));
+        String frase = "4x3";
+        String array[] = new String[2];
+        array = frase.split("x");
+        System.out.println(array[0] + " - " + array[1]); 
 
     }
 }

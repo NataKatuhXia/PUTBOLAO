@@ -8,10 +8,11 @@ package bolao.model.bean;
 import bolao.controler.ControlBolao;
 import bolao.controler.GetProperties;
 import bolao.controler.ValidationField;
+import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
-import bolao.view.TelaCriacaoAposta;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,8 @@ public class Administrador extends Pessoa {
             GetProperties.store("PASSWORD_DATE", permissoes.get("senhaBanco"), "Senha Banco");
             GetProperties.store("QNTD_USER_APOSTA", permissoes.get("userAposta"), "Quantidade usuario aposta");
             GetProperties.store("ADM_APOSTA", permissoes.get("adm_aposta"), "Parametro para Administrador fazer aposta");
+            GetProperties.store("PONTOS_VITORIA", permissoes.get("pontos_vitoria"), "Valor de pontos para vencedores");
+            GetProperties.store("PONTOS_APOSTA", permissoes.get("pontos_aposta"), "Valor de pontos para realizar uma aposta");
 
             return true;
         } else {
@@ -69,13 +72,21 @@ public class Administrador extends Pessoa {
     }
 
     private void deleteBolao(String idJogo) {
-        /* Fazer bolao */
+        List<Aposta> apostas = new ArrayList<>();
+        ApostaDAO apostadao = new ApostaDAO();
+
+        apostas = apostadao.readForDesc("idJogo");
+
+        for (Aposta aposta : apostas) {
+            apostadao.delete(aposta);
+        }
+
     }
 
     private void deleteUser(Pessoa pessoa) {
 
         PessoaDAO dao = new PessoaDAO();
-        dao.delete(pessoa);
+        dao.delete(pessoa.getUsuario());
 
     }
 
@@ -94,12 +105,15 @@ public class Administrador extends Pessoa {
 
         jogodado.update(jogo);
 
+        Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
+        bolao.setMeasurements(partida);
+
     }
 
     private void generareAllResult() {
         JogoDAO jogodado = new JogoDAO();
 
-        List<Jogo> jogos = jogodado.searchAll();
+        List<Jogo> jogos = jogodado.searchAll("Gerar resultados totais");
 
         for (Jogo jogo : jogos) {
             ControlBolao bolao = new ControlBolao(jogo);
@@ -111,26 +125,24 @@ public class Administrador extends Pessoa {
             jogo.setData(formataData.format(data));
 
             jogodado.update(jogo);
+
+            Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
+            bolao.setMeasurements(partida);
         }
 
     }
 
     public static void main(String[] args) {
 
-        Administrador usuariodao = new Administrador();
-
-        User.getInstance("rafael", "123");
-
-        new TelaCriacaoAposta().setVisible(true);
+//        Administrador usuariodao = new Administrador();
+//        User.getInstance("rafael", "123");
 //        
-//        Jogo jogo = new Jogo("1903", 2, "", "");
-//        Jogo jogo2 = new Jogo("1920", 4, "", "");
+//       Jogo jogo = new Jogo("8877", 2, "", "");
 //
 //        JogoDAO jogodao = new JogoDAO();
+//        
 //        jogodao.create(jogo);
-//        jogodao.create(jogo2);
 //
 //        usuariodao.generareAllResult();
-
     }
 }

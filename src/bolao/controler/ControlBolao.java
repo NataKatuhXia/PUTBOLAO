@@ -6,13 +6,17 @@
 package bolao.controler;
 
 import static bolao.controler.GetProperties.PROP;
+import bolao.model.bean.Aposta;
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.Jogo;
 import bolao.model.bean.Partida;
+import bolao.model.bean.User;
+import bolao.model.dao.ApostaDAO;
+import bolao.model.dao.PessoaDAO;
 import bolao.util.Subject;
 import bolao.util.Command;
+import bolao.view.TelaCriacaoAposta;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -28,7 +32,6 @@ public class ControlBolao implements Subject, Command {
 
     private Jogo jogo;
     private ArrayList observers;
-    public static String idPartida;
     private Map<Integer, Integer> placar;
 
     public ControlBolao() {
@@ -41,15 +44,17 @@ public class ControlBolao implements Subject, Command {
     }
 
     @Override
-    public void registerObserver(Pessoa pessoa) {
-        observers.add(pessoa);
+    public void registerObserver(String usuario) {
+        observers.add(usuario);
     }
 
     @Override
-    public void removeObserver(Pessoa pessoa) {
-        int i = observers.indexOf(pessoa);
+    public void removeObserver(String usuario) {
+        int i = observers.indexOf(usuario);
         if (i >= 0) {
-            observers.remove(pessoa);
+            observers.remove(usuario);
+            PessoaDAO pessoa = new PessoaDAO();
+            pessoa.delete(usuario);
             /* 
             Fazer uma consulta no banco trazendo todos os usuarios que fizeram os boloes naquela partida
             Caso o bolao tenha acertado o placar busca todos os apostadores que apostaram nesse bolao e da um update
@@ -63,17 +68,35 @@ public class ControlBolao implements Subject, Command {
     public void notifyObservers() {
 
         for (int i = 0; i < observers.size(); i++) {
-            Pessoa pessoa = (Pessoa) observers.get(i);
-            pessoa.update(partida);
+            PessoaDAO pessoa = new PessoaDAO();
+            pessoa.update("vencendor", observers.get(i).toString());
         }
     }
 
-    public void measurementsChanged() {
+    public void measurementsChanged(String jogo, String placarA, String placarB) {
+
+        List<Aposta> apostas = new ArrayList<>();
+
+        ApostaDAO apostadao = new ApostaDAO();
+        String resultado = placarA + "x" + placarB;
+        apostas = apostadao.read("Todos", jogo, resultado);
+
+        for (Aposta aposta : apostas) {
+            if (String.valueOf(aposta.getPlacarA()).equals(placarA) && String.valueOf(aposta.getPlacarB()).equals(placarB)) {
+                aposta.setStatus("Venceu");
+                registerObserver(aposta.getUsuario());
+            } else {
+                aposta.setStatus("Perdeu");
+            }
+            apostadao.update(aposta);
+
+        }
+
         notifyObservers();
     }
 
-    public void setMeasurements(Partida partidas) {
-        measurementsChanged();
+    public void setMeasurements(Partida partida) {
+        measurementsChanged(partida.getJogo(), partida.getPlacarA(), partida.getPlacarB());
     }
 
     @Override
@@ -84,7 +107,7 @@ public class ControlBolao implements Subject, Command {
 
         String resultado = String.valueOf(y) + "x";
         resultado += String.valueOf(x);
-        
+
         return resultado;
 //        setMeasurements(generatePartidas());
     }
@@ -99,6 +122,34 @@ public class ControlBolao implements Subject, Command {
 
     private Partida generatePartidas() {
 
-        return new Partida("", "", "");
+        return new Partida("", "");
     }
+
+    public static boolean validationAposta(String identificador, String usuario) {
+
+        ApostaDAO apostadao = new ApostaDAO();
+
+        boolean result = true;
+
+        List<Aposta> apostas = new ArrayList<>();
+        apostas = apostadao.readForDesc(identificador);
+
+        for (Aposta aposta : apostas) {
+            if (aposta.getUsuario().equals(usuario)) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+//    public static void main(String[] args) {
+//
+//
+//        User.getInstance("teste", "321");
+//
+//        new TelaCriacaoAposta().setVisible(true);
+//
+//    }
 }

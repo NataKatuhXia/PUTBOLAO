@@ -19,10 +19,13 @@ public class Partida {
     private String placarA;
     private String placarB;
 
-    public Partida(String jogo, String placarA, String placarB) {
+    public Partida(String jogo, String placar) {
         this.jogo = jogo;
-        this.placarA = placarA;
-        this.placarB = placarB;
+
+        String array[] = new String[2];
+        array = placar.split("x");
+        this.placarA = array[0];
+        this.placarB = array[1];
     }
 
     public String getJogo() {

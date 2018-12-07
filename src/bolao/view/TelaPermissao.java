@@ -55,10 +55,14 @@ public class TelaPermissao extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabelMAXGols = new javax.swing.JLabel();
         jTextMAX_GOLS = new javax.swing.JTextField();
-        jLabelMAXGols1 = new javax.swing.JLabel();
+        jLabelMAXUser = new javax.swing.JLabel();
         jTextQNTD_User = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jCheckBoxAdmAposta = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldPontosVitoria = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextFieldPontosAposta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -108,6 +112,8 @@ public class TelaPermissao extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabelMAXGols.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelMAXGols.setText("Maximo de Gols:");
 
@@ -117,8 +123,8 @@ public class TelaPermissao extends javax.swing.JFrame {
             }
         });
 
-        jLabelMAXGols1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabelMAXGols1.setText("Quantidade de usuarios no bolão:");
+        jLabelMAXUser.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabelMAXUser.setText("Quantidade de usuarios no bolão:");
 
         jTextQNTD_User.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +142,24 @@ public class TelaPermissao extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel9.setText("Pontos por vitória:");
+
+        jTextFieldPontosVitoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPontosVitoriaActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel10.setText("Pontos para realizar uma aposta:");
+
+        jTextFieldPontosAposta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPontosApostaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -144,14 +168,18 @@ public class TelaPermissao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelMAXGols)
-                    .addComponent(jLabelMAXGols1)
+                    .addComponent(jLabelMAXUser)
                     .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCheckBoxAdmAposta)
-                            .addComponent(jTextQNTD_User, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextMAX_GOLS, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextQNTD_User, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addComponent(jTextMAX_GOLS, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addComponent(jTextFieldPontosVitoria)
+                            .addComponent(jTextFieldPontosAposta))))
                 .addContainerGap(268, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -162,14 +190,22 @@ public class TelaPermissao extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextMAX_GOLS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelMAXGols1)
+                .addComponent(jLabelMAXUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextQNTD_User, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxAdmAposta)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldPontosVitoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldPontosAposta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -243,10 +279,10 @@ public class TelaPermissao extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSalvar)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,6 +321,8 @@ public class TelaPermissao extends javax.swing.JFrame {
         String gols = jTextMAX_GOLS.getText();
         String qntdUser = jTextQNTD_User.getText();
         Boolean adm_aposta = jCheckBoxAdmAposta.isSelected();
+        String pontosVitoria = jTextFieldPontosVitoria.getText();
+        String pontosAposta = jTextFieldPontosAposta.getText();
 
         Map<String, String> permissoes = new HashMap<>();
 
@@ -295,6 +333,8 @@ public class TelaPermissao extends javax.swing.JFrame {
         permissoes.put("maximoGols", gols);
         permissoes.put("userAposta", qntdUser);
         permissoes.put("adm_aposta", String.valueOf(adm_aposta));
+        permissoes.put("pontos_vitoria", pontosVitoria);
+        permissoes.put("pontos_aposta", pontosAposta);
 
         if (User.getPessoa().isContaADM()) {
 
@@ -317,6 +357,14 @@ public class TelaPermissao extends javax.swing.JFrame {
     private void jCheckBoxAdmApostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAdmApostaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxAdmApostaActionPerformed
+
+    private void jTextFieldPontosVitoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPontosVitoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPontosVitoriaActionPerformed
+
+    private void jTextFieldPontosApostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPontosApostaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPontosApostaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,6 +405,7 @@ public class TelaPermissao extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JCheckBox jCheckBoxAdmAposta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -364,14 +413,17 @@ public class TelaPermissao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelMAXGols;
-    private javax.swing.JLabel jLabelMAXGols1;
+    private javax.swing.JLabel jLabelMAXUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextDriver;
+    private javax.swing.JTextField jTextFieldPontosAposta;
+    private javax.swing.JTextField jTextFieldPontosVitoria;
     private javax.swing.JTextField jTextMAX_GOLS;
     private javax.swing.JTextField jTextQNTD_User;
     private javax.swing.JTextField jTextURL;
@@ -386,6 +438,8 @@ public class TelaPermissao extends javax.swing.JFrame {
         jTextMAX_GOLS.setText(PROP.getProperty("MAX_GOLS"));
         jTextQNTD_User.setText(PROP.getProperty("QNTD_USER_APOSTA"));
         jCheckBoxAdmAposta.setSelected(Boolean.parseBoolean(PROP.getProperty("ADM_APOSTA")));
+        jTextFieldPontosVitoria.setText(PROP.getProperty("PONTOS_VITORIA"));
+        jTextFieldPontosAposta.setText(PROP.getProperty("PONTOS_APOSTA"));
 
     }
 }

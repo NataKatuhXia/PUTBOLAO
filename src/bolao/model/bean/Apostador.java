@@ -44,10 +44,14 @@ public class Apostador extends Pessoa {
 
     }
 
-    public static void createAposta(Aposta aposta) {
+    public static void createAposta(Aposta aposta, Pessoa usuario) {
         ApostaDAO apostadao = new ApostaDAO();
-
+        PessoaDAO pessoadao = new PessoaDAO();
+        
         apostadao.create(aposta);
+        pessoadao.update("Realizar aposta", usuario.getUsuario());
+        
+        
     }
 
 }

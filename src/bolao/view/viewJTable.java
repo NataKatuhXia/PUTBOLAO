@@ -33,13 +33,13 @@ public class viewJTable extends javax.swing.JFrame {
         modelo.setNumRows(0);
         ApostaDAO PDao = new ApostaDAO();
 
-        for (Aposta aposta : PDao.read()) {
-            modelo.addRow(new Object[]{
-                aposta.getIdentificador(),
-                aposta.getPlacarA(),
-                aposta.getPlacarB()
-            });
-        }
+//        for (Aposta aposta : PDao.read()) {
+//            modelo.addRow(new Object[]{
+//                aposta.getIdentificador(),
+//                aposta.getPlacarA(),
+//                aposta.getPlacarB()
+//            });
+//        }
     }
 
     public void readJTableForDesc(String descricao) {

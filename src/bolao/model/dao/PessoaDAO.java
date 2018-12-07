@@ -5,7 +5,9 @@
  */
 package bolao.model.dao;
 
+import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Administrador;
+import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
 import connection.ConnectionFactory;
@@ -109,7 +111,7 @@ public class PessoaDAO {
         }
     }
 
-    public void delete(Pessoa pessoa) {
+    public void delete(String usuario) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -117,7 +119,7 @@ public class PessoaDAO {
         try {
             stmt = con.prepareStatement("DELETE FROM pessoa WHERE usuario = ?");
 
-            stmt.setString(1, pessoa.getUsuario());
+            stmt.setString(1, usuario);
 
             stmt.executeUpdate();
 
@@ -126,6 +128,31 @@ public class PessoaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao excluir " + ex);
         } catch (NullPointerException ax) {
             JOptionPane.showMessageDialog(null, "Usuario nao encontrado");
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+
+    public void update(String comando, String usuario) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            if (comando.equals("vencendor")) {
+                stmt = con.prepareStatement("UPDATE pessoa SET pontos = pontos + ? WHERE usuario = ?");
+                stmt.setInt(1, Integer.parseInt(PROP.getProperty("PONTOS_VITORIA")));
+                stmt.setString(2, usuario);
+            } else if (comando.equals("Realizar aposta")) {
+                stmt = con.prepareStatement("UPDATE pessoa SET pontos = pontos - ? WHERE usuario = ?");
+                stmt.setInt(1, Integer.parseInt(PROP.getProperty("PONTOS_APOSTA")));
+                stmt.setString(2, usuario);
+            }
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }

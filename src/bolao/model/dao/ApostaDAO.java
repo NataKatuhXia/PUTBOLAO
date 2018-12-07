@@ -32,7 +32,7 @@ public class ApostaDAO {
             stmt = con.prepareStatement("INSERT INTO aposta (identificador,placarA,placarB,usuario)VALUES(?,?,?,?)");
             stmt.setString(1, aposta.getIdentificador());
             stmt.setInt(2, aposta.getPlacarA());
-            stmt.setDouble(3, aposta.getPlacarB());
+            stmt.setInt(3, aposta.getPlacarB());
             stmt.setString(4, aposta.getUsuario());
 
             stmt.executeUpdate();
@@ -45,7 +45,7 @@ public class ApostaDAO {
         }
     }
 
-    public List<Aposta> read() {
+    public List<Aposta> read(String comando, String identificador, String resultado) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -53,7 +53,18 @@ public class ApostaDAO {
         List<Aposta> apostas = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta order by identificador");
+            if (comando.equals("Todos")) {
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? order by identificador");
+                stmt.setString(1, identificador);
+            } else if (comando.equals("Vencedores")) {
+                String array[] = new String[2];
+                array = resultado.split("x");
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and placara = ? and placarb = ? order by identificador");
+
+                stmt.setString(1, identificador);
+                stmt.setInt(2, Integer.parseInt(array[0]));
+                stmt.setInt(3, Integer.parseInt(array[1]));
+            }
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -79,8 +90,8 @@ public class ApostaDAO {
         List<Aposta> apostas = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by identificador");
-            stmt.setString(1, "%" + identificador + "%");
+            stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? order by identificador");
+            stmt.setString(1, identificador);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -104,11 +115,10 @@ public class ApostaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE aposta SET identificador = ? ,placarA = ? ,placarB = ? WHERE ID = ?");
+            stmt = con.prepareStatement("UPDATE aposta SET status = ? WHERE identificador = ?");
 
-            stmt.setString(1, aposta.getIdentificador());
-            stmt.setInt(2, aposta.getPlacarA());
-            stmt.setDouble(3, aposta.getPlacarB());
+            stmt.setString(1, aposta.getStatus());
+            stmt.setString(2, aposta.getIdentificador());
 
             stmt.executeUpdate();
 

@@ -13,9 +13,9 @@ import bolao.model.bean.Pessoa;
  */
 public interface Subject {
 
-    public void registerObserver(Pessoa pessoa);
+    public void registerObserver(String pessoa);
     
-    public void removeObserver(Pessoa pessoa);
+    public void removeObserver(String pessoa);
 
     public void notifyObservers();
 

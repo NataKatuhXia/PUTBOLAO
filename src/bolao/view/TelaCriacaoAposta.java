@@ -5,12 +5,14 @@
  */
 package bolao.view;
 
+import bolao.controler.ControlBolao;
 import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
+import bolao.model.dao.ApostaDAO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
@@ -147,14 +149,18 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String identificador = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
-
-        if (!User.getPessoa().isContaADM() || PROP.getProperty("ADM_APOSTA").equals("true")) {
-            Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
-
-            Apostador.createAposta(aposta);
+        
+        if (ControlBolao.validationAposta(identificador, User.getPessoa().getUsuario())) {
+            if (!User.getPessoa().isContaADM() || PROP.getProperty("ADM_APOSTA").equals("true")) {
+                Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
+                
+                Apostador.createAposta(aposta, User.getPessoa());
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Você não tem permissão para fazer uma aposta!");
+            }
         } else {
-
-            JOptionPane.showMessageDialog(null, "Você não tem permissão para fazer uma aposta!");
+            JOptionPane.showMessageDialog(null, "Você já realizou uma aposta neste jogo!");
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 

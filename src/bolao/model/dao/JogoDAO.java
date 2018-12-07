@@ -67,7 +67,7 @@ public class JogoDAO {
         return jogo;
     }
 
-    public List<Jogo> searchAll() {
+    public List<Jogo> searchAll(String comando) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -75,7 +75,9 @@ public class JogoDAO {
         List<Jogo> jogos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM jogo order by identificador");
+            if (comando.equals("Gerar resultados totais")) {
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null");
+            }
             rs = stmt.executeQuery();
 
             while (rs.next()) {

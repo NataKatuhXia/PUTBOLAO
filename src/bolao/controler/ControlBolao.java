@@ -77,10 +77,16 @@ public class ControlBolao implements Subject, Command {
     }
 
     @Override
-    public void execute() {
+    public String execute() {
 
-        setMeasurements(generatePartidas());
+        int y = generatePlacar();
+        int x = generatePlacar();
 
+        String resultado = String.valueOf(y) + "x";
+        resultado += String.valueOf(x);
+        
+        return resultado;
+//        setMeasurements(generatePartidas());
     }
 
     private int generatePlacar() {

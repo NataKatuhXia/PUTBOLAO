@@ -11,6 +11,6 @@ package bolao.util;
  */
 public interface Command {
 
-    public void execute();
+    public String execute();
 
 }

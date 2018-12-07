@@ -22,10 +22,37 @@ import javax.swing.JOptionPane;
  * @author RAFAELDEOLIVEIRABAHI
  */
 public class PessoaDAO {
-    
+
     Pessoa pessoa;
 
-    public Pessoa checkLogin(String usuario, String senha) {
+    public static boolean validationLogin(String usuario) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        ResultSet rs = null;
+        boolean check = true;
+        try {
+            stmt = con.prepareStatement("SELECT * FROM pessoa WHERE usuario = ?");
+            stmt.setString(1, usuario);
+
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                /* Usuario nao liberado por isso false */
+                check = false;
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return check;
+    }
+
+    public Pessoa checkLogin(String comando, String usuario, String senha) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -45,9 +72,9 @@ public class PessoaDAO {
             }
             if (check) {
                 if (rs.getBoolean("adm")) {
-                    pessoa = new Administrador().createAccount(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
+                    pessoa = new Administrador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
                 } else {
-                    pessoa = new Apostador().createAccount(rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
+                    pessoa = new Apostador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"));
                 }
             } else {
                 pessoa = null;
@@ -77,6 +104,28 @@ public class PessoaDAO {
             JOptionPane.showMessageDialog(null, "Salvo com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+
+    public void delete(Pessoa pessoa) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM pessoa WHERE usuario = ?");
+
+            stmt.setString(1, pessoa.getUsuario());
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir " + ex);
+        } catch (NullPointerException ax) {
+            JOptionPane.showMessageDialog(null, "Usuario nao encontrado");
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }

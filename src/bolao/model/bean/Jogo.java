@@ -53,4 +53,20 @@ public class Jogo {
         return data;
     }
 
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+    public void setApostadores(int apostadores) {
+        this.apostadores = apostadores;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
 }

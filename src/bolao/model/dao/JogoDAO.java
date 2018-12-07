@@ -30,17 +30,41 @@ public class JogoDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO aposta (identificador)VALUES(?)");
+            stmt = con.prepareStatement("INSERT INTO jogo (identificador)VALUES(?)");
             stmt.setString(1, jogo.getIdentificador());
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+            JOptionPane.showMessageDialog(null, "Jogo criado com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar " + ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+
+    public Jogo searchJogo(String identificador) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        ResultSet rs = null;
+        Jogo jogo = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM jogo WHERE identificador = ?");
+            stmt.setString(1, identificador);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                jogo = new Jogo(rs.getString("identificador"), rs.getInt("apostadores"), rs.getString("resultado"), rs.getString("date"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JogoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return jogo;
     }
 
     public List<Jogo> read() {
@@ -51,7 +75,7 @@ public class JogoDAO {
         List<Jogo> jogos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta order by data");
+            stmt = con.prepareStatement("SELECT * FROM jogo order by data");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -61,7 +85,7 @@ public class JogoDAO {
                 jogos.add(jogo);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JogoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
@@ -78,9 +102,9 @@ public class JogoDAO {
 
         try {
             if (filtro.equals("time")) {
-                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by data");
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE identificador LIKE ? order by data");
             } else if (filtro.equals("data")) {
-                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by data");
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE identificador LIKE ? order by data");
             }
             stmt.setString(1, "%" + identificador + "%");
             rs = stmt.executeQuery();
@@ -92,7 +116,7 @@ public class JogoDAO {
                 jogos.add(jogo);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JogoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
@@ -100,13 +124,13 @@ public class JogoDAO {
         return jogos;
     }
 
-    public void Update(Jogo jogo) {
+    public void update(Jogo jogo) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE aposta SET apostadores = ? ,data = ? ,resultado = ? WHERE identificador = ?");
+            stmt = con.prepareStatement("UPDATE jogo SET apostadores = ? ,date = ? ,resultado = ? WHERE identificador = ?");
 
             stmt.setInt(1, jogo.getApostadores());
             stmt.setString(2, (String) jogo.getData());

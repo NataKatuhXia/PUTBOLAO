@@ -27,12 +27,13 @@ public abstract class Pessoa implements Observer {
 
     /**
      *
+     * @param comando
      * @param nome
      * @param user
      * @param senha
      * @return
      */
-    protected abstract Pessoa createAccount(String nome, String user, String senha);
+    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha);
 
     @Override
     public void update(Partida partida) {

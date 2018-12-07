@@ -6,6 +6,8 @@
 package bolao.view;
 
 import bolao.model.bean.Apostador;
+import bolao.model.bean.User;
+import bolao.model.dao.PessoaDAO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -171,13 +173,17 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
 
-        if (new Apostador().createAccount(nome, usuario, senha) != null) {
+        if (PessoaDAO.validationLogin(usuario)) {
+            if ((new Apostador().createAccount("Cadastro", nome, usuario, senha) != null)) {
 
-            this.dispose();
-            new TelaLogin(new javax.swing.JFrame(), true).setVisible(true);
+                this.dispose();
+                new TelaLogin(new javax.swing.JFrame(), true).setVisible(true);
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Preecha todos os campos corretamente.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Preecha todos os campos corretamente.");
+            JOptionPane.showMessageDialog(null, "Usuario ja cadastrado.");
         }
 
     }//GEN-LAST:event_jButtonCadastrar1ActionPerformed

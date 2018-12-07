@@ -5,10 +5,9 @@
  */
 package bolao.view;
 
-import bolao.controler.ValidationField;
 import bolao.model.bean.User;
 import javax.swing.JOptionPane;
-import bolao.model.dao.PessoaDAO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -44,7 +43,7 @@ public class TelaLogin extends javax.swing.JDialog {
         txtSenha = new javax.swing.JPasswordField();
         jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel();
+        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
         jButtonCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -76,8 +75,6 @@ public class TelaLogin extends javax.swing.JDialog {
                 jButtonSairActionPerformed(evt);
             }
         });
-
-        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bolao/view/Simbolo.jpg"))); // NOI18N
 
         jButtonCreate.setText("Criar conta");
         jButtonCreate.addActionListener(new java.awt.event.ActionListener() {

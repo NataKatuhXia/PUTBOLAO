@@ -9,6 +9,7 @@ import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Pessoa;
+import javax.swing.ImageIcon;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
@@ -35,7 +36,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        image = new javax.swing.JLabel();
+        image = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
         jLabelTimeA = new javax.swing.JLabel();
         jLabelTimeB = new javax.swing.JLabel();
         SpinnerModel smA = new SpinnerNumberModel(0, 0, Integer.parseInt(PROP.getProperty("MAX_GOLS")), 1); //default value,lower bound,upper bound,increment by
@@ -50,8 +51,6 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bolao/view/Simbolo.jpg"))); // NOI18N
 
         jLabelTimeA.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabelTimeA.setText("Time A");

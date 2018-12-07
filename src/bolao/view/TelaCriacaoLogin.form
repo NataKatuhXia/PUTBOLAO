@@ -133,11 +133,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jImage">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/bolao/view/Simbolo.jpg"/>
-            </Property>
-          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JLabel(new ImageIcon(&quot;view\\Simbolo.jpg&quot;))"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUsuario">
           <Events>

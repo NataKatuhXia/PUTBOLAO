@@ -5,13 +5,9 @@
  */
 package bolao.view;
 
-import bolao.controler.ValidationField;
 import bolao.model.bean.Apostador;
-import bolao.model.bean.Pessoa;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import bolao.model.dao.PessoaDAO;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -46,7 +42,7 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         txtNome = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel();
+        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
         txtUsuario = new javax.swing.JTextField();
         jUsuario1 = new javax.swing.JLabel();
         jButtonCadastrar1 = new javax.swing.JButton();
@@ -73,8 +69,6 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
                 jButtonSairActionPerformed(evt);
             }
         });
-
-        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bolao/view/Simbolo.jpg"))); // NOI18N
 
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

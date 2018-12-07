@@ -67,7 +67,7 @@ public class JogoDAO {
         return jogo;
     }
 
-    public List<Jogo> read() {
+    public List<Jogo> searchAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -75,12 +75,12 @@ public class JogoDAO {
         List<Jogo> jogos = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM jogo order by data");
+            stmt = con.prepareStatement("SELECT * FROM jogo order by identificador");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                Jogo jogo = new Jogo(rs.getString("identificador"), rs.getInt("apostadores"), rs.getString("resultado"), rs.getString("data"));
+                Jogo jogo = new Jogo(rs.getString("identificador"), rs.getInt("apostadores"), rs.getString("resultado"), rs.getString("date"));
 
                 jogos.add(jogo);
             }

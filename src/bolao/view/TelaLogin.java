@@ -43,7 +43,7 @@ public class TelaLogin extends javax.swing.JDialog {
         txtSenha = new javax.swing.JPasswordField();
         jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
+        jImage = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
         jButtonCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

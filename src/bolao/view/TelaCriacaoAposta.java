@@ -47,7 +47,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        image = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
+        image = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
         jLabelTimeA = new javax.swing.JLabel();
         jLabelTimeB = new javax.swing.JLabel();
         SpinnerModel smA = new SpinnerNumberModel(0, 0, Integer.parseInt(PROP.getProperty("MAX_GOLS")), 1); //default value,lower bound,upper bound,increment by

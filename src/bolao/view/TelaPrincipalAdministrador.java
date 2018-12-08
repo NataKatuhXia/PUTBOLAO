@@ -24,14 +24,14 @@ import javax.swing.table.TableRowSorter;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class TelaPrincipalApostador extends javax.swing.JFrame {
+public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
 
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipalApostador() {
+    public TelaPrincipalAdministrador() {
         initComponents();
 
         ControlTime.getInstance();
@@ -120,7 +120,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableInformacaoUsuario = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
-        ImageFundo = new javax.swing.JLabel(new ImageIcon("view\\ImageFundo.jpg"));
+        ImageFundo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -195,7 +195,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Identificador", "Placar", "Status"
+                "Identificador", "Usuario", "Pontuação"
             }
         ) {
             Class[] types = new Class [] {
@@ -333,21 +333,23 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipalApostador().setVisible(true);
+                new TelaPrincipalAdministrador().setVisible(true);
             }
         });
     }

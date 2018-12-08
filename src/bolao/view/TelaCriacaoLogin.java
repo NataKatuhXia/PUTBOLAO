@@ -45,7 +45,7 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         txtNome = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
+        jImage = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
         txtUsuario = new javax.swing.JTextField();
         jUsuario1 = new javax.swing.JLabel();
         jButtonCadastrar1 = new javax.swing.JButton();

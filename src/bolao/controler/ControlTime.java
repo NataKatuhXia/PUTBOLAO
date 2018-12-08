@@ -72,10 +72,20 @@ public class ControlTime {
 
     public static String parseTime(String codigo) { // Codigo é o value do Map
         String timeCodigo = null;
+        String timeA = (codigo.substring(0, 2));
+        String timeB = (codigo.substring(2, 4));
 
         for (String time : times.keySet()) {
-            if (times.get(time).equals(codigo)) {
-                timeCodigo = time;
+            if (time.equals(timeA)) {
+                timeCodigo = times.get(time);
+                break;
+            }
+        }
+
+        for (String time : times.keySet()) {
+            if (time.equals(timeB)) {
+                timeCodigo += " x " + times.get(time);
+                break;
             }
         }
 

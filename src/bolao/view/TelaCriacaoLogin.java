@@ -5,6 +5,7 @@
  */
 package bolao.view;
 
+import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.User;
 import bolao.model.dao.PessoaDAO;
@@ -172,9 +173,11 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         String nome = txtNome.getText();
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
+        
+        String pontuacao = PROP.getProperty("PONTUACAO_INICIAL_USER");
 
         if (PessoaDAO.validationLogin(usuario)) {
-            if ((new Apostador().createAccount("Cadastro", nome, usuario, senha) != null)) {
+            if ((new Apostador().createAccount("Cadastro", nome, usuario, senha, pontuacao) != null)) {
 
                 this.dispose();
                 new TelaLogin(new javax.swing.JFrame(), true).setVisible(true);

@@ -69,7 +69,7 @@ public class ApostaDAO {
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"), rs.getString("status"));
 
                 apostas.add(aposta);
             }
@@ -96,7 +96,7 @@ public class ApostaDAO {
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"), rs.getString("status"));
 
                 apostas.add(aposta);
             }
@@ -148,5 +148,32 @@ public class ApostaDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+
+    public List<Aposta> readForUser(String usuario) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        ResultSet rs = null;
+        List<Aposta> apostas = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM aposta WHERE usuario = ? order by status");
+            stmt.setString(1, usuario);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"), rs.getString("status"));
+
+                apostas.add(aposta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return apostas;
     }
 }

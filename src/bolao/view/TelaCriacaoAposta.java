@@ -12,6 +12,7 @@ import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.User;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -24,9 +25,16 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCriacaoAposta
+     * @param identificador // Identificador da partida
+     * @param p
      */
-    public TelaCriacaoAposta() {
+    public TelaCriacaoAposta(String identificador, JFrame p) {
+
+        this.parent = p;
         initComponents();
+        String[] array = identificador.split(" x ");
+        jLabelTimeA.setText(array[0]);
+        jLabelTimeB.setText(array[1]);
     }
 
     /**
@@ -56,9 +64,11 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabelTimeA.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabelTimeA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTimeA.setText("Time A");
 
         jLabelTimeB.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabelTimeB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTimeB.setText("Time B");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -84,13 +94,8 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(image)
-                .addGap(104, 104, 104))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jLabelTimeA)
-                .addGap(18, 18, 18)
+                .addComponent(jLabelTimeA, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonCancelar)
@@ -102,22 +107,25 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jSpinnerPlacarB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabelTimeB)
-                .addGap(66, 66, 66))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelTimeB, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(image)
-                .addGap(28, 28, 28)
+                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTimeB)
                     .addComponent(jLabelTimeA)
                     .addComponent(jSpinnerPlacarA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerPlacarB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonCancelar))
@@ -141,20 +149,29 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
 
         String identificador = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
-        
+
         if (ControlBolao.validationAposta(identificador, User.getPessoa().getUsuario())) {
             if (!User.getPessoa().isContaADM() || PROP.getProperty("ADM_APOSTA").equals("true")) {
-                Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()));
-                
+                Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()), "A definir");
+
                 Apostador.createAposta(aposta, User.getPessoa());
+
+                TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
+                frame.setInformacoes();// Atribui os valores atuais
+                frame.repaint();
+                frame.setVisible(true);  // agora torna ele visivel
+
+                this.dispose();
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(null, "Você não tem permissão para fazer uma aposta!");
             }
         } else {
@@ -192,11 +209,12 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCriacaoAposta().setVisible(true);
+                new TelaCriacaoAposta("", null).setVisible(true);
             }
         });
     }
 
+    private javax.swing.JFrame parent;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel image;
     private javax.swing.JButton jButtonCancelar;

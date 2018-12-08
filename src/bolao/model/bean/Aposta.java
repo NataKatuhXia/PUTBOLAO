@@ -17,11 +17,12 @@ public class Aposta {
     private int plcarB;
     private String status;
 
-    public Aposta(String usuario, String identificador, int placarA, int plcarB) {
+    public Aposta(String usuario, String identificador, int placarA, int plcarB, String status) {
         this.usuario = usuario;
         this.identificador = identificador;
         this.placarA = placarA;
         this.plcarB = plcarB;
+        this.status = status;
     }
 
     public Aposta() {

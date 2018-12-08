@@ -14,7 +14,6 @@ import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -29,11 +28,12 @@ import javax.swing.JOptionPane;
 public class Administrador extends Pessoa {
 
     @Override
-    public Pessoa createAccount(String comando, String nome, String user, String senha) {
+    public Pessoa createAccount(String comando, String nome, String user, String senha, String pontos) {
 
         ValidationField.resultFields.add(nome);
         ValidationField.resultFields.add(user);
         ValidationField.resultFields.add(senha);
+        ValidationField.resultFields.add(pontos);
 
         if (new ValidationField().execute()) {
             Pessoa pessoa = new Administrador();
@@ -41,6 +41,7 @@ public class Administrador extends Pessoa {
             pessoa.setNome(nome);
             pessoa.setUsuario(user);
             pessoa.setSenha(senha);
+            pessoa.setPontos(pontos);
             pessoa.setContaADM(true);
 
             if (comando.equals("Cadastro")) {
@@ -68,6 +69,11 @@ public class Administrador extends Pessoa {
             GetProperties.store("ADM_APOSTA", permissoes.get("adm_aposta"), "Parametro para Administrador fazer aposta");
             GetProperties.store("PONTOS_VITORIA", permissoes.get("pontos_vitoria"), "Valor de pontos para vencedores");
             GetProperties.store("PONTOS_APOSTA", permissoes.get("pontos_aposta"), "Valor de pontos para realizar uma aposta");
+            GetProperties.store("PONTUACAO_INICIAL_USER", permissoes.get("pontos_inicial"), "Valor de pontos para novos usuarios");
+
+            for (String key : permissoes.keySet()) {
+                permissoes.remove(key);
+            }
 
             return true;
         } else {
@@ -102,11 +108,7 @@ public class Administrador extends Pessoa {
         Jogo jogo = jogodado.searchJogo("Gerar Resultado", idJogo);
         ControlBolao bolao = new ControlBolao(jogo);
 
-        Date data = new Date();
-        DateFormat formataData = DateFormat.getDateInstance();
-
         jogo.setResultado(bolao.execute());
-        jogo.setData(formataData.format(data));
 
         jogodado.update(jogo);
 
@@ -123,11 +125,7 @@ public class Administrador extends Pessoa {
         for (Jogo jogo : jogos) {
             ControlBolao bolao = new ControlBolao(jogo);
 
-            Date data = new Date();
-            DateFormat formataData = DateFormat.getDateInstance();
-
             jogo.setResultado(bolao.execute());
-            jogo.setData(formataData.format(data));
 
             jogodado.update(jogo);
 
@@ -157,6 +155,10 @@ public class Administrador extends Pessoa {
 
                 Jogo jogo = new Jogo(identificador, 0, "", "");
 
+                Date data = new Date();
+                DateFormat formataData = DateFormat.getDateInstance();
+                jogo.setData(formataData.format(data));
+
                 JogoDAO jogadao = new JogoDAO();
                 jogadao.create(jogo);
             }
@@ -168,8 +170,10 @@ public class Administrador extends Pessoa {
         /* modelar mais aqui */
     }
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 //        Administrador usuariodao = new Administrador();
+//
+//        usuariodao.generateNewPartidas();
 //        User.getInstance("rafael", "123");
 //        
 //       Jogo jogo = new Jogo("8877", 2, "", "");
@@ -179,5 +183,9 @@ public class Administrador extends Pessoa {
 //        jogodao.create(jogo);
 //
 //        usuariodao.generareAllResult();
-//    }
+//
+//        String teste = "Texte1 x Teste2";
+//        String[] array = teste.split(" x ");
+//        System.out.println(array[0]);
+    }
 }

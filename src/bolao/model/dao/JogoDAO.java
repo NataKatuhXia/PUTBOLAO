@@ -30,8 +30,9 @@ public class JogoDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO jogo (identificador) VALUES(?)");
+            stmt = con.prepareStatement("INSERT INTO jogo (identificador,date) VALUES(?,?)");
             stmt.setString(1, jogo.getIdentificador());
+            stmt.setString(2, jogo.getData());
 
             stmt.executeUpdate();
 
@@ -82,6 +83,8 @@ public class JogoDAO {
                 stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null");
             } else if (comando.equals("Todos")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo");
+            } else if (comando.equals("Gerar Abertos para Usuario")) {
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null");
             }
             rs = stmt.executeQuery();
 
@@ -147,6 +150,26 @@ public class JogoDAO {
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+
+    public void update(String comando, String identificador) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            if (comando.equals("Realizar aposta")) {
+                stmt = con.prepareStatement("UPDATE jogo SET apostadores = apostadores + 1 WHERE identificador = ?");
+            }
+            stmt.setString(1, identificador);
+
+            stmt.executeUpdate();
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
         } finally {

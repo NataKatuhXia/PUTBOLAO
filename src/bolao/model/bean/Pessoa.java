@@ -22,9 +22,6 @@ public abstract class Pessoa implements Observer {
 
     private boolean contaADM;
 
-    private String idJogo;
-    private Map<Integer, Integer> placar;
-
     /**
      *
      * @param comando
@@ -33,7 +30,7 @@ public abstract class Pessoa implements Observer {
      * @param senha
      * @return
      */
-    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha);
+    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, String ponto);
 
     @Override
     public void update(Partida partida) {
@@ -43,6 +40,14 @@ public abstract class Pessoa implements Observer {
 
     public void setContaADM(boolean contaADM) {
         this.contaADM = contaADM;
+    }
+
+    public void setPontos(String pontos) {
+        this.pontos = pontos;
+    }
+
+    public String getPontos() {
+        return pontos;
     }
 
     public boolean isContaADM() {

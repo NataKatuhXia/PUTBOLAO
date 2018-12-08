@@ -328,7 +328,7 @@ public class viewJTable extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTProdutos.getSelectedRow() != -1) {
             // TODO add your handling code here:
-            Aposta aposta = new Aposta("", txtIdentificador.getText(), Integer.parseInt(txtPlacarA.getText()), Integer.parseInt(txtPlacarB.getText()));
+//            Aposta aposta = new Aposta("", txtIdentificador.getText(), Integer.parseInt(txtPlacarA.getText()), Integer.parseInt(txtPlacarB.getText()));
 
             ApostaDAO produtodao = new ApostaDAO();
 //            produtodao.update(aposta);

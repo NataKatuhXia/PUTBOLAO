@@ -63,6 +63,8 @@ public class TelaPermissao extends javax.swing.JFrame {
         jTextFieldPontosVitoria = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldPontosAposta = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextFieldPontInicial = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -160,6 +162,9 @@ public class TelaPermissao extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel11.setText("Pontuação Inicial para novos usuários:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -172,6 +177,7 @@ public class TelaPermissao extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
+                    .addComponent(jLabel11)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -179,7 +185,8 @@ public class TelaPermissao extends javax.swing.JFrame {
                             .addComponent(jTextQNTD_User, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                             .addComponent(jTextMAX_GOLS, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                             .addComponent(jTextFieldPontosVitoria)
-                            .addComponent(jTextFieldPontosAposta))))
+                            .addComponent(jTextFieldPontosAposta)
+                            .addComponent(jTextFieldPontInicial))))
                 .addContainerGap(268, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -205,7 +212,11 @@ public class TelaPermissao extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldPontosAposta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldPontInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -323,6 +334,7 @@ public class TelaPermissao extends javax.swing.JFrame {
         Boolean adm_aposta = jCheckBoxAdmAposta.isSelected();
         String pontosVitoria = jTextFieldPontosVitoria.getText();
         String pontosAposta = jTextFieldPontosAposta.getText();
+        String pontuacaoInicial = jTextFieldPontInicial.getText();
 
         Map<String, String> permissoes = new HashMap<>();
 
@@ -335,6 +347,7 @@ public class TelaPermissao extends javax.swing.JFrame {
         permissoes.put("adm_aposta", String.valueOf(adm_aposta));
         permissoes.put("pontos_vitoria", pontosVitoria);
         permissoes.put("pontos_aposta", pontosAposta);
+        permissoes.put("pontos_inicial", pontuacaoInicial);
 
         if (User.getPessoa().isContaADM()) {
 
@@ -406,6 +419,7 @@ public class TelaPermissao extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxAdmAposta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -422,6 +436,7 @@ public class TelaPermissao extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextDriver;
+    private javax.swing.JTextField jTextFieldPontInicial;
     private javax.swing.JTextField jTextFieldPontosAposta;
     private javax.swing.JTextField jTextFieldPontosVitoria;
     private javax.swing.JTextField jTextMAX_GOLS;

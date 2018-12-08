@@ -159,7 +159,7 @@ public class TelaLogin extends javax.swing.JDialog {
         if (User.getInstance(usuario, senha) != null) {
 
             this.dispose();
-            new viewJTable().setVisible(true);
+            new TelaPrincipalApostador().setVisible(true);
 
         } else {
             JOptionPane.showMessageDialog(null, "Usuario nao encontrado");

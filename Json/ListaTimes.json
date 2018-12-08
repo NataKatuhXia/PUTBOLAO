@@ -1,14 +1,14 @@
 [
     {
-        "nome": "America Mineiro",
+        "nome": "America M.",
         "identificador": "01"
     },
     {
-        "nome": "Atletico Mineiro",
+        "nome": "Atletico M.",
         "identificador": "02"
     },
     {
-        "nome": "Atletico Paranaense",
+        "nome": "Atletico P.",
         "identificador": "03"
     },
     {
@@ -72,7 +72,7 @@
         "identificador": 18
     },
     {
-        "nome": "Vasco da Gama",
+        "nome": "Vasco",
         "identificador": 19
     },
     {

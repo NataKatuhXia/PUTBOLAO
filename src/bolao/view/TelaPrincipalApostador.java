@@ -173,6 +173,20 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableJogosAbertos);
+        if (jTableJogosAbertos.getColumnModel().getColumnCount() > 0) {
+            jTableJogosAbertos.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableJogosAbertos.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableJogosAbertos.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTableJogosAbertos.getColumnModel().getColumn(1).setMinWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(2).setMinWidth(250);
+            jTableJogosAbertos.getColumnModel().getColumn(2).setPreferredWidth(250);
+            jTableJogosAbertos.getColumnModel().getColumn(2).setMaxWidth(250);
+            jTableJogosAbertos.getColumnModel().getColumn(3).setMinWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(3).setMaxWidth(100);
+        }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

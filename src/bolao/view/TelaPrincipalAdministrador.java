@@ -8,6 +8,7 @@ package bolao.view;
 import bolao.controler.ControlTime;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
+import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
@@ -77,25 +78,24 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
     }
 
     private void readJTableInformacao() {
-        modelo = (DefaultTableModel) jTableInformacaoUsuario.getModel();
+        modelo = (DefaultTableModel) jTableRanking.getModel();
         modelo.setNumRows(0);
 
-        ApostaDAO apostadao = new ApostaDAO();
-        List<Aposta> apostas = apostadao.readForUser(User.getPessoa().getUsuario());
+        PessoaDAO pessoadao = new PessoaDAO();
+        List<Pessoa> pessoas = pessoadao.ranking();
 
-        for (Aposta aposta : apostas) {
+        for (Pessoa pessoa : pessoas) {
             modelo.addRow(new Object[]{
-                aposta.getIdentificador(),
-                String.valueOf(aposta.getPlacarA() + " x " + aposta.getPlacarB()),
-                aposta.getStatus()
+                pessoa.getNome(),
+                pessoa.getUsuario(),
+                pessoa.getPontos()
 
             });
         }
 
         jLabelName.setText(User.getPessoa().getNome());
-        PessoaDAO pessoadao = new PessoaDAO();
-        String pontos = pessoadao.checkLogin("", User.getPessoa().getUsuario(), User.getPessoa().getSenha()).getPontos();
-        jLabelPontuacao.setText("Pontuação Atual: " + pontos);
+        
+        jLabelPontuacao.setText("Ranking");
 
     }
 
@@ -118,9 +118,9 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jLabelName = new javax.swing.JLabel();
         jLabelPontuacao = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableInformacaoUsuario = new javax.swing.JTable();
+        jTableRanking = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
-        ImageFundo = new javax.swing.JLabel();
+        ImageFundo = new javax.swing.JLabel(new ImageIcon("view\\ImageFundo.jpg"));
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -173,6 +173,9 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableJogosAbertos);
+        if (jTableJogosAbertos.getColumnModel().getColumnCount() > 0) {
+            jTableJogosAbertos.getColumnModel().getColumn(0).setPreferredWidth(3);
+        }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -181,13 +184,13 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jLabelName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelName.setText("<Nome do Usuario>");
 
-        jLabelPontuacao.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabelPontuacao.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabelPontuacao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPontuacao.setText("<Pontuação>");
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTableInformacaoUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        jTableRanking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -195,7 +198,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Identificador", "Usuario", "Pontuação"
+                "Nome", "Usuario", "Pontuação"
             }
         ) {
             Class[] types = new Class [] {
@@ -213,8 +216,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableInformacaoUsuario.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTableInformacaoUsuario);
+        jTableRanking.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableRanking);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -239,8 +242,6 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        ImageFundo.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -370,7 +371,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableInformacaoUsuario;
     private javax.swing.JTable jTableJogosAbertos;
+    private javax.swing.JTable jTableRanking;
     // End of variables declaration//GEN-END:variables
 }

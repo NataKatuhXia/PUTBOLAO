@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -156,5 +158,33 @@ public class PessoaDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+
+    public List<Pessoa> ranking() {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        ResultSet rs = null;
+
+        List<Pessoa> pessoas = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM pessoa WHERE adm = false order by pontos desc");
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Pessoa apostador = new Apostador().createAccount( "Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+
+                pessoas.add(apostador);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return pessoas;
     }
 }

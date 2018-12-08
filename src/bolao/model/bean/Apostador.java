@@ -38,8 +38,6 @@ public class Apostador extends Pessoa {
             if (comando.equals("Cadastro")) {
                 PessoaDAO pessoadao = new PessoaDAO();
                 pessoadao.create(pessoa);
-            } else if (comando.equals("Consulta")){
-                
             }
 
             return pessoa;

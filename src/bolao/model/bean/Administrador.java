@@ -173,7 +173,7 @@ public class Administrador extends Pessoa {
     public static void main(String[] args) {
         Administrador usuariodao = new Administrador();
 
-        usuariodao.generateNewPartidas();
+        usuariodao.generateResult("2018");
 //        User.getInstance("rafael", "123");
 //        
 //       Jogo jogo = new Jogo("8877", 2, "", "");

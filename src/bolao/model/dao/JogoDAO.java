@@ -80,11 +80,11 @@ public class JogoDAO {
 
         try {
             if (comando.equals("Gerar resultados totais")) {
-                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null");
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null order by apostadores desc");
             } else if (comando.equals("Todos")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo");
             } else if (comando.equals("Gerar Abertos para Usuario")) {
-                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null");
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null order by apostadores desc");
             }
             rs = stmt.executeQuery();
 

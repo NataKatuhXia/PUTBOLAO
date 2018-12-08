@@ -20,7 +20,7 @@ public class TelaLogin extends javax.swing.JDialog {
      */
     public String login;
     public String senha;
-
+    
     public TelaLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -41,10 +41,10 @@ public class TelaLogin extends javax.swing.JDialog {
         jSenha = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
-        jButtonEntrar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
+        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
         jButtonCreate = new javax.swing.JButton();
+        jButtonEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
@@ -62,13 +62,6 @@ public class TelaLogin extends javax.swing.JDialog {
             }
         });
 
-        jButtonEntrar.setText("Entrar");
-        jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEntrarActionPerformed(evt);
-            }
-        });
-
         jButtonSair.setText("Sair");
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +73,13 @@ public class TelaLogin extends javax.swing.JDialog {
         jButtonCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCreateActionPerformed(evt);
+            }
+        });
+
+        jButtonEntrar.setText("Entrar");
+        jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEntrarActionPerformed(evt);
             }
         });
 
@@ -155,12 +155,16 @@ public class TelaLogin extends javax.swing.JDialog {
         // TODO add your handling code here:
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
-
+        
         if (User.getInstance(usuario, senha) != null) {
-
+            
             this.dispose();
-            new TelaPrincipalApostador().setVisible(true);
-
+            if (User.getPessoa().isContaADM()) {
+                new TelaPrincipalAdministrador().setVisible(true);
+            } else {
+                new TelaPrincipalApostador().setVisible(true);
+            }
+            
         } else {
             JOptionPane.showMessageDialog(null, "Usuario nao encontrado");
         }

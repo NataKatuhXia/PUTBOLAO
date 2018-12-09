@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bolao.view;
+package bolao.view.apostador;
 
 import bolao.view.apostador.TelaPrincipalApostador;
 import bolao.controler.ControlBolao;
@@ -184,10 +184,11 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
                 TelaPrincipalApostador framePrincipalApostador = (TelaPrincipalApostador) principal;
                 framePrincipalApostador.setInformacoes();// Atribui os valores atuais
+                framePrincipalApostador.setVisible(true);
 
                 TelaListaAposta frame = (TelaListaAposta) list;
                 frame.setInformacoes();// Atribui os valores atuais
-
+                frame.setVisible(true);
 
                 this.dispose();
 

@@ -71,7 +71,7 @@ public class JogoDAO {
         return jogo;
     }
 
-    public List<Jogo> searchAll(String comando) {
+    public List<Jogo> searchAll(String comando, String day) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -80,10 +80,11 @@ public class JogoDAO {
 
         try {
             if (comando.equals("Gerar resultados totais")) {
-                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null order by apostadores desc");
-            } else if (comando.equals("Todos")) {
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null and date = ? order by apostadores desc");
+                stmt.setString(1, day);
+            } else if (comando.equals("Todos") && day == null) {
                 stmt = con.prepareStatement("SELECT * FROM jogo");
-            } else if (comando.equals("Gerar Abertos para Usuario")) {
+            } else if (comando.equals("Gerar Abertos para Usuario") && day == null) {
                 stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null order by apostadores desc");
             }
             rs = stmt.executeQuery();

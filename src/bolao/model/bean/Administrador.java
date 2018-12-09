@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -120,7 +121,13 @@ public class Administrador extends Pessoa {
     private void generareAllResult() {
         JogoDAO jogodado = new JogoDAO();
 
-        List<Jogo> jogos = jogodado.searchAll("Gerar resultados totais");
+        DateFormat formataData = DateFormat.getDateInstance();
+        GregorianCalendar gc = new GregorianCalendar();
+
+        gc.add(GregorianCalendar.DATE, 0);
+        Date data = gc.getTime();
+
+        List<Jogo> jogos = jogodado.searchAll("Gerar resultados totais", formataData.format(data));
 
         int cont = 0;
         for (Jogo jogo : jogos) {
@@ -151,6 +158,9 @@ public class Administrador extends Pessoa {
             }
             Collections.shuffle(times);
 
+            int cont = 0;
+            int day = 1;
+
             for (ListIterator<String> iterator = times.listIterator(); iterator.hasNext();) {
                 String timeA = iterator.next();
                 iterator.remove();
@@ -160,8 +170,20 @@ public class Administrador extends Pessoa {
 
                 Jogo jogo = new Jogo(identificador, 0, "", "");
 
-                Date data = new Date();
                 DateFormat formataData = DateFormat.getDateInstance();
+                GregorianCalendar gc = new GregorianCalendar();
+                if (cont < 5) {
+                    gc.add(GregorianCalendar.DATE, day);
+                    cont++;
+                } else {
+                    day++;
+                    cont = 0;
+                    gc.add(GregorianCalendar.DATE, day);
+
+                }
+
+                Date data = gc.getTime();
+
                 jogo.setData(formataData.format(data));
 
                 JogoDAO jogadao = new JogoDAO();

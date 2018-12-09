@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -43,7 +44,7 @@ public class Main {
 //        String array[] = new String[2];
 //        array = frase.split("x");
 //        System.out.println(array[0] + " - " + array[1]); 
-    JOptionPane.showMessageDialog(null, "As informações foram atualizadas, as alterações serão carregadas no próximo acesso");
+//    JOptionPane.showMessageDialog(null, "As informações foram atualizadas, as alterações serão carregadas no próximo acesso");
 //        List<String> times = new ArrayList<>();
 //        
 //        ControlTime.getInstance();
@@ -64,5 +65,34 @@ public class Main {
 //            iterator.remove();
 //
 //        }
+//        Date data = new Date();
+//        DateFormat formataData = DateFormat.getDateInstance();
+//        GregorianCalendar gc = new GregorianCalendar();
+//        gc.add(GregorianCalendar.DATE, 1);
+//        
+//        data = gc.getTime();
+//        
+//        System.out.println(formataData.format(data));
+        int cont = 0;
+        int day = 0;
+
+        for (int i = 0; i < 10; i++) {
+            DateFormat formataData = DateFormat.getDateInstance();
+            GregorianCalendar gc = new GregorianCalendar();
+            if (cont < 5) {
+                gc.add(GregorianCalendar.DATE, day);
+                cont++;
+            } else {
+                day++;
+                cont = 0;
+                gc.add(GregorianCalendar.DATE, day);
+
+            }
+
+            Date data = gc.getTime();
+
+            System.out.println(formataData.format(data));
+        }
+
     }
 }

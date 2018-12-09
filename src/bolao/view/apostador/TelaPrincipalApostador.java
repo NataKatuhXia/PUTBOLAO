@@ -12,7 +12,6 @@ import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
-import bolao.view.TelaCriacaoAposta;
 import bolao.view.TelaLogin;
 import bolao.view.TelaMyAccount;
 import java.util.List;
@@ -53,7 +52,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario");
+        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();

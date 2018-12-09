@@ -13,7 +13,9 @@ import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
-import bolao.view.TelaCriacaoAposta;
+import bolao.view.apostador.TelaCriacaoAposta;
+import bolao.view.TelaLogin;
+import bolao.view.TelaMyAccount;
 import bolao.view.apostador.TelaListaAposta;
 import java.util.List;
 import java.util.ListIterator;
@@ -53,7 +55,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario");
+        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();
@@ -96,7 +98,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         }
 
         jLabelName.setText(User.getPessoa().getNome());
-        
+
         jLabelPontuacao.setText("Ranking");
 
     }
@@ -125,8 +127,14 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         ImageFundo = new javax.swing.JLabel(new ImageIcon("view\\ImageFundo.jpg"));
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -288,15 +296,63 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jMenuBar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         jMenu1.setText("Jogos");
+        jMenu1.setIcon(new ImageIcon("view\\aposta.png"));
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        jMenuItem1.setText("Gerar Partidas");
+        jMenuItem1.setIcon(new ImageIcon("view\\money.png"));
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Gerar resultados");
+        jMenuItem2.setIcon(new ImageIcon("view\\result.png"));
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Histórico");
+        jMenu2.setText("Sistema");
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        jMenuItem3.setText("Usuarios");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Permissões");
+        jMenuItem4.setIcon(new ImageIcon("view\\options.png"));
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText("Ajuda");
+        jMenu5.setIcon(new ImageIcon("view\\information.png"));
         jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        jMenuItem5.setText("Minha conta");
+        jMenuItem5.setIcon(new ImageIcon("view\\myAccount.png"));
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem5);
+
+        jMenuItem6.setText("Sair");
+        jMenuItem6.setIcon(new ImageIcon("view\\door_out.png"));
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem6);
+
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -320,11 +376,31 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             if (jTableJogosAbertos.getSelectedRow() != -1) {
-                 new TelaListaAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
-                this.dispose();
+                new TelaListaAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
             }
         }
     }//GEN-LAST:event_jTableJogosAbertosMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        User.deslogarUser();
+        this.dispose();
+        new TelaLogin(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        new TelaMyAccount(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        new TelaPermissao().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public void setInformacoes() {
         readJTableJogos();
@@ -381,6 +457,12 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -114,7 +114,7 @@ public class ControlBolao implements Subject, Command {
         JogoDAO jogodado = new JogoDAO();
 
         boolean gerar = true;
-        List<Jogo> jogos = jogodado.searchAll("Todos");
+        List<Jogo> jogos = jogodado.searchAll("Todos", null);
 
         if (jogos.isEmpty()) {
             for (Jogo jogo : jogos) {

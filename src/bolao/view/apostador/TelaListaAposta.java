@@ -10,7 +10,6 @@ import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
-import bolao.view.TelaCriacaoAposta;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;

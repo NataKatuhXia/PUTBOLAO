@@ -26,7 +26,7 @@ public class Apostador extends Pessoa {
         ValidationField.resultFields.add(senha);
         ValidationField.resultFields.add(pontos);
 
-        if (new ValidationField().execute()) {
+        if (ValidationField.execute()) {
 
             Pessoa pessoa = new Apostador();
             pessoa.setNome(nome);
@@ -51,12 +51,10 @@ public class Apostador extends Pessoa {
         ApostaDAO apostadao = new ApostaDAO();
         PessoaDAO pessoadao = new PessoaDAO();
         JogoDAO jogodao = new JogoDAO();
-        
-        apostadao.create(aposta);
-        pessoadao.update("Realizar aposta", usuario.getUsuario());
-        jogodao.update("Realizar aposta", aposta.getIdentificador());
-        
-        
-    }
 
+        apostadao.create(aposta);
+        pessoadao.updateAposta("Realizar aposta", usuario.getUsuario());
+        jogodao.update("Realizar aposta", aposta.getIdentificador());
+
+    }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bolao.view;
+package bolao.view.adm;
 
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Administrador;

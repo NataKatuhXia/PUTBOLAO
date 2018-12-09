@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bolao.view;
+package bolao.view.apostador;
 
 import bolao.controler.ControlTime;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
-import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
+import bolao.view.TelaCriacaoAposta;
+import bolao.view.TelaLogin;
+import bolao.view.TelaMyAccount;
 import java.util.List;
 import java.util.ListIterator;
 import javax.swing.ImageIcon;
@@ -25,14 +27,14 @@ import javax.swing.table.TableRowSorter;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class TelaPrincipalAdministrador extends javax.swing.JFrame {
+public class TelaPrincipalApostador extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
 
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipalAdministrador() {
+    public TelaPrincipalApostador() {
         initComponents();
 
         ControlTime.getInstance();
@@ -78,24 +80,25 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
     }
 
     private void readJTableInformacao() {
-        modelo = (DefaultTableModel) jTableRanking.getModel();
+        modelo = (DefaultTableModel) jTableInformacaoUsuario.getModel();
         modelo.setNumRows(0);
 
-        PessoaDAO pessoadao = new PessoaDAO();
-        List<Pessoa> pessoas = pessoadao.ranking();
+        ApostaDAO apostadao = new ApostaDAO();
+        List<Aposta> apostas = apostadao.readForUser(User.getPessoa().getUsuario());
 
-        for (Pessoa pessoa : pessoas) {
+        for (Aposta aposta : apostas) {
             modelo.addRow(new Object[]{
-                pessoa.getNome(),
-                pessoa.getUsuario(),
-                pessoa.getPontos()
+                aposta.getIdentificador(),
+                aposta.getPalpite(),
+                aposta.getStatus()
 
             });
         }
 
         jLabelName.setText(User.getPessoa().getNome());
-        
-        jLabelPontuacao.setText("Ranking");
+        PessoaDAO pessoadao = new PessoaDAO();
+        String pontos = pessoadao.checkLogin("", User.getPessoa().getUsuario(), User.getPessoa().getSenha()).getPontos();
+        jLabelPontuacao.setText("Pontuação Atual: " + pontos);
 
     }
 
@@ -118,13 +121,16 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jLabelName = new javax.swing.JLabel();
         jLabelPontuacao = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableRanking = new javax.swing.JTable();
+        jTableInformacaoUsuario = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
         ImageFundo = new javax.swing.JLabel(new ImageIcon("view\\ImageFundo.jpg"));
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -133,6 +139,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -174,7 +181,18 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableJogosAbertos);
         if (jTableJogosAbertos.getColumnModel().getColumnCount() > 0) {
-            jTableJogosAbertos.getColumnModel().getColumn(0).setPreferredWidth(3);
+            jTableJogosAbertos.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableJogosAbertos.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableJogosAbertos.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTableJogosAbertos.getColumnModel().getColumn(1).setMinWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(2).setMinWidth(250);
+            jTableJogosAbertos.getColumnModel().getColumn(2).setPreferredWidth(250);
+            jTableJogosAbertos.getColumnModel().getColumn(2).setMaxWidth(250);
+            jTableJogosAbertos.getColumnModel().getColumn(3).setMinWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTableJogosAbertos.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -184,13 +202,13 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jLabelName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelName.setText("<Nome do Usuario>");
 
-        jLabelPontuacao.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabelPontuacao.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabelPontuacao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPontuacao.setText("<Pontuação>");
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTableRanking.setModel(new javax.swing.table.DefaultTableModel(
+        jTableInformacaoUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -198,7 +216,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nome", "Usuario", "Pontuação"
+                "Identificador", "Palpite", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -216,8 +234,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableRanking.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTableRanking);
+        jTableInformacaoUsuario.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableInformacaoUsuario);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -273,16 +291,48 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenu1.setText("Jogos");
+        jMenu1.setText("Apostas");
+        jMenu1.setIcon(new ImageIcon("view\\aposta.png"));
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Histórico");
-        jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu2);
+        jMenuItem1.setText("Meus Palpites");
+        jMenuItem1.setIcon(new ImageIcon("view\\money.png"));
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Resultados");
+        jMenuItem2.setIcon(new ImageIcon("view\\result.png"));
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
 
         jMenu5.setText("Ajuda");
         jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        jMenuItem3.setText("Minha Conta");
+        jMenuItem3.setIcon(new ImageIcon("view\\myAccount.png"));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem3);
+
+        jMenuItem4.setText("Sair");
+        jMenuItem4.setIcon(new ImageIcon("view\\door_out.png"));
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem4);
+
+        jMenu5.setIcon(new ImageIcon("view\\information.png"));
+
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -306,11 +356,27 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             if (jTableJogosAbertos.getSelectedRow() != -1) {
-                new TelaCriacaoAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
-                this.dispose();
+                new TelaListaAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
             }
         }
     }//GEN-LAST:event_jTableJogosAbertosMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+
+        User.deslogarUser();
+        this.dispose();
+        new TelaLogin(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        new TelaMyAccount(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public void setInformacoes() {
         readJTableJogos();
@@ -334,23 +400,21 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipalAdministrador().setVisible(true);
+                new TelaPrincipalApostador().setVisible(true);
             }
         });
     }
@@ -361,17 +425,20 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelPontuacao;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableInformacaoUsuario;
     private javax.swing.JTable jTableJogosAbertos;
-    private javax.swing.JTable jTableRanking;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,12 +5,14 @@
  */
 package bolao.view;
 
+import bolao.view.apostador.TelaPrincipalApostador;
 import bolao.controler.ControlBolao;
 import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.User;
+import bolao.view.apostador.TelaListaAposta;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,16 +27,30 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCriacaoAposta
+     *
      * @param identificador // Identificador da partida
-     * @param p
      */
-    public TelaCriacaoAposta(String identificador, JFrame p) {
+    public TelaCriacaoAposta(String identificador, JFrame listagem, JFrame principal) {
 
-        this.parent = p;
+        this.list = listagem;
+        this.principal = principal;
         initComponents();
         String[] array = identificador.split(" x ");
         jLabelTimeA.setText(array[0]);
         jLabelTimeB.setText(array[1]);
+    }
+
+    public TelaCriacaoAposta(String identificador, JFrame listagem, JFrame principal, String resultado) {
+
+        this.list = listagem;
+        initComponents();
+        String[] array = identificador.split(" x ");
+        jLabelTimeA.setText(array[0]);
+        jLabelTimeB.setText(array[1]);
+
+        array = resultado.split("x");
+        jSpinnerPlacarA.setValue(Integer.parseInt(array[0]));
+        jSpinnerPlacarB.setValue(Integer.parseInt(array[1]));
     }
 
     /**
@@ -47,7 +63,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        image = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
+        image = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
         jLabelTimeA = new javax.swing.JLabel();
         jLabelTimeB = new javax.swing.JLabel();
         SpinnerModel smA = new SpinnerNumberModel(0, 0, Integer.parseInt(PROP.getProperty("MAX_GOLS")), 1); //default value,lower bound,upper bound,increment by
@@ -58,7 +74,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         jButtonSalvar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -159,14 +175,19 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
         if (ControlBolao.validationAposta(identificador, User.getPessoa().getUsuario())) {
             if (!User.getPessoa().isContaADM() || PROP.getProperty("ADM_APOSTA").equals("true")) {
-                Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, Integer.parseInt(jSpinnerPlacarA.getValue().toString()), Integer.parseInt(jSpinnerPlacarB.getValue().toString()), "A definir");
+
+                String placar = jSpinnerPlacarA.getValue().toString() + "x" + jSpinnerPlacarB.getValue().toString();
+
+                Aposta aposta = new Aposta(User.getPessoa().getUsuario(), identificador, placar, "A definir");
 
                 Apostador.createAposta(aposta, User.getPessoa());
 
-                TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
+                TelaPrincipalApostador framePrincipalApostador = (TelaPrincipalApostador) principal;
+                framePrincipalApostador.setInformacoes();// Atribui os valores atuais
+
+                TelaListaAposta frame = (TelaListaAposta) list;
                 frame.setInformacoes();// Atribui os valores atuais
-                frame.repaint();
-                frame.setVisible(true);  // agora torna ele visivel
+
 
                 this.dispose();
 
@@ -209,12 +230,13 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCriacaoAposta("", null).setVisible(true);
+                new TelaCriacaoAposta("", new javax.swing.JFrame(), new javax.swing.JFrame()).setVisible(true);
             }
         });
     }
 
-    private javax.swing.JFrame parent;
+    private javax.swing.JFrame list;
+    private javax.swing.JFrame principal;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel image;
     private javax.swing.JButton jButtonCancelar;

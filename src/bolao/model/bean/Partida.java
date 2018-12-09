@@ -13,19 +13,12 @@ import java.util.List;
  */
 public class Partida {
 
-    static List<Partida> partidas;
-
     private String jogo;
-    private String placarA;
-    private String placarB;
+    private String placar;
 
     public Partida(String jogo, String placar) {
         this.jogo = jogo;
-
-        String array[] = new String[2];
-        array = placar.split("x");
-        this.placarA = array[0];
-        this.placarB = array[1];
+        this.placar = placar;
     }
 
     public String getJogo() {
@@ -36,20 +29,12 @@ public class Partida {
         this.jogo = jogo;
     }
 
-    public String getPlacarA() {
-        return placarA;
+    public String getPlacar() {
+        return placar;
     }
 
-    public void setPlacarA(String placarA) {
-        this.placarA = placarA;
-    }
-
-    public String getPlacarB() {
-        return placarB;
-    }
-
-    public void setPlacarB(String placarB) {
-        this.placarB = placarB;
+    public void setPlacar(String placar) {
+        this.placar = placar;
     }
 
 }

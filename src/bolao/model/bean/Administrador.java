@@ -35,7 +35,7 @@ public class Administrador extends Pessoa {
         ValidationField.resultFields.add(senha);
         ValidationField.resultFields.add(pontos);
 
-        if (new ValidationField().execute()) {
+        if (ValidationField.execute()) {
             Pessoa pessoa = new Administrador();
 
             pessoa.setNome(nome);
@@ -59,7 +59,7 @@ public class Administrador extends Pessoa {
 
         ValidationField.resultFields.addAll(permissoes.keySet());
 
-        if (new ValidationField().execute()) {
+        if (ValidationField.execute()) {
             GetProperties.store("MAX_GOLS", permissoes.get("maximoGols"), "Numero de Gols");
             GetProperties.store("DRIVER_DATE", permissoes.get("driver"), "Local Driver Banco");
             GetProperties.store("URL_DATE", permissoes.get("url"), "URL Banco");
@@ -122,6 +122,7 @@ public class Administrador extends Pessoa {
 
         List<Jogo> jogos = jogodado.searchAll("Gerar resultados totais");
 
+        int cont = 0;
         for (Jogo jogo : jogos) {
             ControlBolao bolao = new ControlBolao(jogo);
 
@@ -131,6 +132,10 @@ public class Administrador extends Pessoa {
 
             Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
             bolao.setMeasurements(partida);
+            if (cont == 4) {
+                break;
+            }
+            cont++;
         }
 
     }
@@ -171,9 +176,9 @@ public class Administrador extends Pessoa {
     }
 
     public static void main(String[] args) {
-        Administrador usuariodao = new Administrador();
-
-        usuariodao.generateResult("2018");
+//        Administrador usuariodao = new Administrador();
+//
+//        usuariodao.generateResult("2018");
 //        User.getInstance("rafael", "123");
 //        
 //       Jogo jogo = new Jogo("8877", 2, "", "");
@@ -187,5 +192,6 @@ public class Administrador extends Pessoa {
 //        String teste = "Texte1 x Teste2";
 //        String[] array = teste.split(" x ");
 //        System.out.println(array[0]);
+
     }
 }

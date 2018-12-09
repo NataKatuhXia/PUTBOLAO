@@ -10,6 +10,7 @@ import bolao.model.bean.Administrador;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
+import bolao.util.Observer;
 import connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class PessoaDAO {
+public class PessoaDAO implements Observer {
 
     Pessoa pessoa;
 
@@ -135,7 +136,7 @@ public class PessoaDAO {
         }
     }
 
-    public void update(String comando, String usuario) {
+    public void updateAposta(String comando, String usuario) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -150,6 +151,27 @@ public class PessoaDAO {
                 stmt.setInt(1, Integer.parseInt(PROP.getProperty("PONTOS_APOSTA")));
                 stmt.setString(2, usuario);
             }
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+
+    public void updateAccount(String nome, String senha, String usuario) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+
+            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = ? WHERE usuario = ?");
+            stmt.setString(1, nome);
+            stmt.setString(2, senha);
+            stmt.setString(3, usuario);
 
             stmt.executeUpdate();
 
@@ -175,7 +197,7 @@ public class PessoaDAO {
 
             while (rs.next()) {
 
-                Pessoa apostador = new Apostador().createAccount( "Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
 
                 pessoas.add(apostador);
             }

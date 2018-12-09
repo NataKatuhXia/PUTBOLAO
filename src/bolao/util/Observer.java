@@ -15,5 +15,5 @@ import java.util.Map;
  */
 public interface Observer {
 
-    public void update(Partida partida);
+    public void updateAposta(String comando, String user);
 }

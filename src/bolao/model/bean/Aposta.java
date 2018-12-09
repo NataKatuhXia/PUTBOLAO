@@ -13,20 +13,26 @@ public class Aposta {
 
     private String usuario;
     private String identificador;
-    private int placarA;
-    private int plcarB;
+    private String palpite;
     private String status;
 
-    public Aposta(String usuario, String identificador, int placarA, int plcarB, String status) {
+    public Aposta(String usuario, String identificador, String palpite, String status) {
         this.usuario = usuario;
         this.identificador = identificador;
-        this.placarA = placarA;
-        this.plcarB = plcarB;
+        this.palpite = palpite;
         this.status = status;
     }
 
     public Aposta() {
 
+    }
+
+    public String getPalpite() {
+        return palpite;
+    }
+
+    public void setPalpite(String palpite) {
+        this.palpite = palpite;
     }
 
     public String getStatus() {
@@ -52,21 +58,4 @@ public class Aposta {
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
     }
-
-    public int getPlacarA() {
-        return placarA;
-    }
-
-    public void setPlacarA(int placarA) {
-        this.placarA = placarA;
-    }
-
-    public int getPlacarB() {
-        return plcarB;
-    }
-
-    public void setPlcarB(int plcarB) {
-        this.plcarB = plcarB;
-    }
-
 }

@@ -5,6 +5,8 @@
  */
 package bolao.view;
 
+import bolao.view.apostador.TelaPrincipalApostador;
+import bolao.view.adm.TelaPrincipalAdministrador;
 import bolao.model.bean.User;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -20,7 +22,7 @@ public class TelaLogin extends javax.swing.JDialog {
      */
     public String login;
     public String senha;
-    
+
     public TelaLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -155,16 +157,21 @@ public class TelaLogin extends javax.swing.JDialog {
         // TODO add your handling code here:
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
-        
+
         if (User.getInstance(usuario, senha) != null) {
-            
+
             this.dispose();
+
             if (User.getPessoa().isContaADM()) {
+
                 new TelaPrincipalAdministrador().setVisible(true);
+
             } else {
+
                 new TelaPrincipalApostador().setVisible(true);
+
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Usuario nao encontrado");
         }

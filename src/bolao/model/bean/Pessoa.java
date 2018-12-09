@@ -5,7 +5,9 @@
  */
 package bolao.model.bean;
 
+import bolao.controler.ValidationField;
 import bolao.model.dao.ApostaDAO;
+import bolao.model.dao.PessoaDAO;
 import bolao.util.Observer;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import java.util.Map;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public abstract class Pessoa implements Observer {
+public abstract class Pessoa {
 
     private String nome;
     private String usuario;
@@ -32,10 +34,19 @@ public abstract class Pessoa implements Observer {
      */
     protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, String ponto);
 
-    @Override
-    public void update(Partida partida) {
+    public static boolean modifyInformation(String nome, String senha, String usuario) {
+        ValidationField.resultFields.add(nome);
+        ValidationField.resultFields.add(senha);
+        ValidationField.resultFields.add(usuario);
 
-        System.out.println("Jogo: " + partida.getJogo() + " - " + partida.getPlacarA() + " x " + partida.getPlacarB());
+        if (ValidationField.execute()) {
+            PessoaDAO pessoadao = new PessoaDAO();
+            pessoadao.updateAccount(nome, senha, usuario);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public void setContaADM(boolean contaADM) {

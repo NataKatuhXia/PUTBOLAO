@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bolao.view;
+package bolao.view.adm;
 
 import bolao.controler.ControlTime;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
+import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
+import bolao.view.TelaCriacaoAposta;
+import bolao.view.apostador.TelaListaAposta;
 import java.util.List;
 import java.util.ListIterator;
 import javax.swing.ImageIcon;
@@ -24,14 +27,14 @@ import javax.swing.table.TableRowSorter;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class TelaPrincipalApostador extends javax.swing.JFrame {
+public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
 
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipalApostador() {
+    public TelaPrincipalAdministrador() {
         initComponents();
 
         ControlTime.getInstance();
@@ -77,25 +80,24 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
     }
 
     private void readJTableInformacao() {
-        modelo = (DefaultTableModel) jTableInformacaoUsuario.getModel();
+        modelo = (DefaultTableModel) jTableRanking.getModel();
         modelo.setNumRows(0);
 
-        ApostaDAO apostadao = new ApostaDAO();
-        List<Aposta> apostas = apostadao.readForUser(User.getPessoa().getUsuario());
+        PessoaDAO pessoadao = new PessoaDAO();
+        List<Pessoa> pessoas = pessoadao.ranking();
 
-        for (Aposta aposta : apostas) {
+        for (Pessoa pessoa : pessoas) {
             modelo.addRow(new Object[]{
-                aposta.getIdentificador(),
-                String.valueOf(aposta.getPlacarA() + " x " + aposta.getPlacarB()),
-                aposta.getStatus()
+                pessoa.getNome(),
+                pessoa.getUsuario(),
+                pessoa.getPontos()
 
             });
         }
 
         jLabelName.setText(User.getPessoa().getNome());
-        PessoaDAO pessoadao = new PessoaDAO();
-        String pontos = pessoadao.checkLogin("", User.getPessoa().getUsuario(), User.getPessoa().getSenha()).getPontos();
-        jLabelPontuacao.setText("Pontuação Atual: " + pontos);
+        
+        jLabelPontuacao.setText("Ranking");
 
     }
 
@@ -118,7 +120,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         jLabelName = new javax.swing.JLabel();
         jLabelPontuacao = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableInformacaoUsuario = new javax.swing.JTable();
+        jTableRanking = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
         ImageFundo = new javax.swing.JLabel(new ImageIcon("view\\ImageFundo.jpg"));
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -133,6 +135,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,13 +198,13 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         jLabelName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelName.setText("<Nome do Usuario>");
 
-        jLabelPontuacao.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabelPontuacao.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabelPontuacao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPontuacao.setText("<Pontuação>");
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTableInformacaoUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        jTableRanking.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -209,7 +212,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Identificador", "Placar", "Status"
+                "Nome", "Usuario", "Pontuação"
             }
         ) {
             Class[] types = new Class [] {
@@ -227,8 +230,8 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableInformacaoUsuario.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTableInformacaoUsuario);
+        jTableRanking.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableRanking);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -253,8 +256,6 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        ImageFundo.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -319,7 +320,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             if (jTableJogosAbertos.getSelectedRow() != -1) {
-                new TelaCriacaoAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
+                 new TelaListaAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
                 this.dispose();
             }
         }
@@ -347,21 +348,23 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalApostador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipalApostador().setVisible(true);
+                new TelaPrincipalAdministrador().setVisible(true);
             }
         });
     }
@@ -382,7 +385,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableInformacaoUsuario;
     private javax.swing.JTable jTableJogosAbertos;
+    private javax.swing.JTable jTableRanking;
     // End of variables declaration//GEN-END:variables
 }

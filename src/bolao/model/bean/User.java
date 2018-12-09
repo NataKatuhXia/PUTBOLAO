@@ -29,7 +29,7 @@ public class User {
 
         Pessoa aux = usuariodao.checkLogin("Consulta", user, senha);
 
-        if ((aux != null) && (new ValidationField().execute())) {
+        if ((aux != null) && (ValidationField.execute())) {
 
             User.setUsuario(aux);
 

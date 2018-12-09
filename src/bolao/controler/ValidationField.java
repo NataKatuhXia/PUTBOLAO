@@ -12,13 +12,13 @@ import java.util.List;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class ValidationField {
+public abstract class ValidationField {
 
     private static boolean validation = true;
     public static List<String> resultFields = new ArrayList<>();
 
 
-    public boolean execute() {
+    public static boolean execute() {
         validation = true;
         
         validationEmpty();
@@ -29,7 +29,7 @@ public class ValidationField {
         return validation;
     }
 
-    private void validationEmpty() {
+    private static void validationEmpty() {
         for (String resultField : resultFields) {
             if (resultField.equals("")) {
                 validation = false;
@@ -38,7 +38,7 @@ public class ValidationField {
         }
     }
 
-    private void validationSecurity() {
+    private static void validationSecurity() {
         for (String resultField : resultFields) {
             if (resultField.contains(";") || resultField.contains("'") || resultField.contains(",")) {
                 validation = false;

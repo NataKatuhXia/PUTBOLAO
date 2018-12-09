@@ -59,21 +59,20 @@ public class ControlBolao implements Subject, Command {
 
         for (int i = 0; i < observers.size(); i++) {
             PessoaDAO pessoa = new PessoaDAO();
-            pessoa.update("vencendor", observers.get(i).toString());
+            pessoa.updateAposta("vencendor", observers.get(i).toString());
             removeObserver(observers.get(i).toString());
         }
     }
 
-    public void measurementsChanged(String jogo, String placarA, String placarB) {
+    public void measurementsChanged(String jogo, String placar) {
 
         List<Aposta> apostas = new ArrayList<>();
 
         ApostaDAO apostadao = new ApostaDAO();
-        String resultado = placarA + "x" + placarB;
-        apostas = apostadao.read("Todos", jogo, resultado);
+        apostas = apostadao.read("Todos", jogo, placar);
 
         for (Aposta aposta : apostas) {
-            if (String.valueOf(aposta.getPlacarA()).equals(placarA) && String.valueOf(aposta.getPlacarB()).equals(placarB)) {
+            if (String.valueOf(aposta.getPalpite()).equals(placar)) {
                 aposta.setStatus("Venceu");
                 registerObserver(aposta.getUsuario());
             } else {
@@ -87,7 +86,7 @@ public class ControlBolao implements Subject, Command {
     }
 
     public void setMeasurements(Partida partida) {
-        measurementsChanged(partida.getJogo(), partida.getPlacarA(), partida.getPlacarB());
+        measurementsChanged(partida.getJogo(), partida.getPlacar());
     }
 
     @Override

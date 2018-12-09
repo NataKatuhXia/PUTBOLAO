@@ -29,11 +29,10 @@ public class ApostaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO aposta (identificador,placarA,placarB,usuario)VALUES(?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO aposta (identificador,placar,usuario)VALUES(?,?,?)");
             stmt.setString(1, aposta.getIdentificador());
-            stmt.setInt(2, aposta.getPlacarA());
-            stmt.setInt(3, aposta.getPlacarB());
-            stmt.setString(4, aposta.getUsuario());
+            stmt.setString(2, aposta.getPalpite());
+            stmt.setString(3, aposta.getUsuario());
 
             stmt.executeUpdate();
 
@@ -69,7 +68,7 @@ public class ApostaDAO {
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"), rs.getString("status"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getString("placar"), rs.getString("status"));
 
                 apostas.add(aposta);
             }
@@ -90,13 +89,15 @@ public class ApostaDAO {
         List<Aposta> apostas = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? order by identificador");
+            stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status = ? order by placar");
             stmt.setString(1, identificador);
+            stmt.setString(2, "A definir");
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"), rs.getString("status"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getString("placar"), rs.getString("status"));
 
                 apostas.add(aposta);
             }
@@ -164,7 +165,7 @@ public class ApostaDAO {
 
             while (rs.next()) {
 
-                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getInt("placarA"), rs.getInt("placarB"), rs.getString("status"));
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getString("placar"), rs.getString("status"));
 
                 apostas.add(aposta);
             }

@@ -292,7 +292,7 @@ public class viewJTable extends javax.swing.JFrame {
             aposta.setIdentificador((String) jTProdutos.getValueAt(jTProdutos.getSelectedRow(), 0));
 
             ApostaDAO produtodao = new ApostaDAO();
-            produtodao.delete(aposta);
+            produtodao.delete(aposta.getIdentificador());
 
             txtIdentificador.setText("");
             txtPlacarA.setText("");

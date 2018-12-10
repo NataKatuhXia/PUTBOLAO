@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bolao.view.adm;
+package bolao.view.apostador;
 
-
+import bolao.controler.ControlTime;
+import bolao.model.bean.Aposta;
 import bolao.model.bean.Pessoa;
+import bolao.model.bean.User;
+import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.PessoaDAO;
-import java.util.List;;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,14 +20,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class TelaGerenciarUser extends javax.swing.JFrame {
+public class TelaPalpites extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
+    JFrame parent;
 
     /**
      * Creates new form TelaGerarResultado
      */
-    public TelaGerenciarUser() {
+    public TelaPalpites(javax.swing.JFrame p) {
+        this.parent = p;
         initComponents();
         readJTable();
     }
@@ -42,13 +47,13 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         jButtonBuscar = new javax.swing.JButton();
         jButtonAlterar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
-        jTextFieldNome = new javax.swing.JTextField();
-        jLabelUsuario1 = new javax.swing.JLabel();
-        jTextFieldUser = new javax.swing.JTextField();
-        jLabelUsuario = new javax.swing.JLabel();
+        jLabelIdentificador = new javax.swing.JLabel();
+        jTextFieldIdentificador = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUsers = new javax.swing.JTable();
+        jTablePalpite = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel();
+        jLabelPlacar = new javax.swing.JLabel();
+        jTextFieldPlacar = new javax.swing.JTextField();
         imageFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -80,65 +85,59 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         });
         jPanel1.add(jButtonExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 160, 40));
 
-        jTextFieldNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNomeActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 150, -1));
+        jLabelIdentificador.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabelIdentificador.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelIdentificador.setText("Identificador:");
+        jPanel1.add(jLabelIdentificador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        jPanel1.add(jTextFieldIdentificador, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 150, -1));
 
-        jLabelUsuario1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabelUsuario1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelUsuario1.setText("Usuario:");
-        jPanel1.add(jLabelUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
-        jPanel1.add(jTextFieldUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 150, -1));
-
-        jLabelUsuario.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabelUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelUsuario.setText("Nome:");
-        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
-
-        jTableUsers.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePalpite.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Usuário", "Nome", "Pontos"
+                "ID", "Identificador", "Jogo", "Placar", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTablePalpite.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableUsersMouseClicked(evt);
+                jTablePalpiteMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableUsers);
-        if (jTableUsers.getColumnModel().getColumnCount() > 0) {
-            jTableUsers.getColumnModel().getColumn(0).setMinWidth(50);
-            jTableUsers.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTableUsers.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTableUsers.getColumnModel().getColumn(1).setMinWidth(100);
-            jTableUsers.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTableUsers.getColumnModel().getColumn(1).setMaxWidth(100);
-            jTableUsers.getColumnModel().getColumn(2).setMinWidth(250);
-            jTableUsers.getColumnModel().getColumn(2).setPreferredWidth(250);
-            jTableUsers.getColumnModel().getColumn(2).setMaxWidth(250);
+        jScrollPane1.setViewportView(jTablePalpite);
+        if (jTablePalpite.getColumnModel().getColumnCount() > 0) {
+            jTablePalpite.getColumnModel().getColumn(0).setMinWidth(50);
+            jTablePalpite.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTablePalpite.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTablePalpite.getColumnModel().getColumn(1).setMinWidth(100);
+            jTablePalpite.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTablePalpite.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTablePalpite.getColumnModel().getColumn(2).setMinWidth(250);
+            jTablePalpite.getColumnModel().getColumn(2).setPreferredWidth(250);
+            jTablePalpite.getColumnModel().getColumn(2).setMaxWidth(250);
         }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 590, 190));
 
         imageLogo.setIcon(new javax.swing.ImageIcon("view\\Logo.png"));
         jPanel1.add(imageLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 0, 270, 190));
+
+        jLabelPlacar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabelPlacar.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPlacar.setText("Placar:");
+        jPanel1.add(jLabelPlacar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+        jPanel1.add(jTextFieldPlacar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 150, -1));
 
         imageFundo.setIcon(new javax.swing.ImageIcon("view\\ImageFundo.jpg"));
         jPanel1.add(imageFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 624, 410));
@@ -160,71 +159,100 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         // TODO add your handling code here:
-        if (jTableUsers.getSelectedRow() != -1) {
-            PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.delete((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
-            readJTable();
+
+        String status = (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 4);
+
+        if (jTablePalpite.getSelectedRow() != -1) {
+
+            if (status.equals("A definir")) {
+                ApostaDAO pessoadao = new ApostaDAO();
+                pessoadao.delete((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
+                readJTable();
+
+                TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
+                frame.setInformacoes();
+                frame.setVisible(true);
+
+                this.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Este palpite não pode ser alterado, pois já tem resultado!");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um usuário para Excluir");
+            JOptionPane.showMessageDialog(null, "Selecione um palpite para Excluir");
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-        readJTableForDesc(jTextFieldNome.getText(), jTextFieldUser.getText());
+        readJTableForDesc(jTextFieldIdentificador.getText(), User.getPessoa().getUsuario());
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     public void readJTableForDesc(String nome, String usuario) {
-        modelo = (DefaultTableModel) jTableUsers.getModel();
+        modelo = (DefaultTableModel) jTablePalpite.getModel();
         modelo.setNumRows(0);
-        PessoaDAO pessoadao = new PessoaDAO();
+
+        ApostaDAO apostadao = new ApostaDAO();
 
         int cont = 1;
-        for (Pessoa pessoa : pessoadao.search(nome, usuario)) {
+        for (Aposta aposta : apostadao.readForUser(nome, usuario)) {
             modelo.addRow(new Object[]{
                 cont++,
-                pessoa.getUsuario(),
-                pessoa.getNome(),
-                pessoa.getPontos()
+                aposta.getIdentificador(),
+                ControlTime.parseTime(aposta.getIdentificador()),
+                aposta.getPalpite(),
+                aposta.getStatus()
             });
         }
     }
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         // TODO add your handling code here:
-        if (jTableUsers.getSelectedRow() != -1) {
-            PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.updateAccount(jTextFieldNome.getText(), jTextFieldUser.getText(), (String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
-            readJTable();
+        String status = (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 4);
+
+        if (jTablePalpite.getSelectedRow() != -1) {
+
+            if (status.equals("A definir")) {
+                ApostaDAO apostadao = new ApostaDAO();
+                apostadao.modifyAposta((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1), jTextFieldPlacar.getText());
+                readJTable();
+
+                TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
+                frame.setInformacoes();
+                frame.setVisible(true);
+
+                this.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Este palpite não pode ser alterado, pois já tem resultado!");
+            }
+
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um usuário para alterar");
+            JOptionPane.showMessageDialog(null, "Selecione um palpite para alterar");
         }
 
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
-    private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
+    private void jTablePalpiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePalpiteMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNomeActionPerformed
-
-    private void jTableUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsersMouseClicked
-        // TODO add your handling code here:
-        jTextFieldNome.setText((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 2));
-        jTextFieldUser.setText((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
-    }//GEN-LAST:event_jTableUsersMouseClicked
+        jTextFieldIdentificador.setText((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
+        jTextFieldPlacar.setText((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 3));
+    }//GEN-LAST:event_jTablePalpiteMouseClicked
 
     private void readJTable() {
 
-        modelo = (DefaultTableModel) jTableUsers.getModel();
+        modelo = (DefaultTableModel) jTablePalpite.getModel();
         modelo.setNumRows(0);
-        PessoaDAO pessoadao = new PessoaDAO();
-        List<Pessoa> pessoas = pessoadao.ranking();
+
+        ApostaDAO apostadao = new ApostaDAO();
+        List<Aposta> apostas = apostadao.readForUser(User.getPessoa().getUsuario());
 
         int cont = 1;
-        for (Pessoa pessoa : pessoas) {
+        for (Aposta aposta : apostas) {
             modelo.addRow(new Object[]{
                 cont++,
-                pessoa.getUsuario(),
-                pessoa.getNome(),
-                pessoa.getPontos()
+                aposta.getIdentificador(),
+                ControlTime.parseTime(aposta.getIdentificador()),
+                aposta.getPalpite(),
+                aposta.getStatus()
+
             });
         }
     }
@@ -246,13 +274,25 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaGerenciarUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPalpites.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -261,7 +301,7 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaGerenciarUser().setVisible(true);
+                new TelaPalpites(new JFrame()).setVisible(true);
             }
         });
     }
@@ -272,12 +312,12 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonExcluir;
-    private javax.swing.JLabel jLabelUsuario;
-    private javax.swing.JLabel jLabelUsuario1;
+    private javax.swing.JLabel jLabelIdentificador;
+    private javax.swing.JLabel jLabelPlacar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableUsers;
-    private javax.swing.JTextField jTextFieldNome;
-    private javax.swing.JTextField jTextFieldUser;
+    private javax.swing.JTable jTablePalpite;
+    private javax.swing.JTextField jTextFieldIdentificador;
+    private javax.swing.JTextField jTextFieldPlacar;
     // End of variables declaration//GEN-END:variables
 }

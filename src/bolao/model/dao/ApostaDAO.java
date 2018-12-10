@@ -56,13 +56,12 @@ public class ApostaDAO {
                 stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? order by identificador");
                 stmt.setString(1, identificador);
             } else if (comando.equals("Vencedores")) {
-                String array[] = new String[2];
-                array = resultado.split("x");
-                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and placara = ? and placarb = ? order by identificador");
+
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and resultado = ? order by identificador");
 
                 stmt.setString(1, identificador);
-                stmt.setInt(2, Integer.parseInt(array[0]));
-                stmt.setInt(3, Integer.parseInt(array[1]));
+                stmt.setString(2, resultado);
+
             }
             rs = stmt.executeQuery();
 
@@ -135,7 +134,28 @@ public class ApostaDAO {
         }
     }
 
-    public void delete(Aposta aposta) {
+    public void modifyAposta(String identificador, String placar) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("UPDATE aposta SET placar = ? WHERE identificador = ? and status = ?");
+
+            stmt.setString(1, placar);
+            stmt.setString(2, identificador);
+            stmt.setString(3, "A definir");
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+
+    public void delete(String identificador) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -143,7 +163,7 @@ public class ApostaDAO {
         try {
             stmt = con.prepareStatement("DELETE FROM aposta WHERE identificador = ?");
 
-            stmt.setString(1, aposta.getIdentificador());
+            stmt.setString(1, identificador);
 
             stmt.executeUpdate();
 
@@ -165,6 +185,34 @@ public class ApostaDAO {
         try {
             stmt = con.prepareStatement("SELECT * FROM aposta WHERE usuario = ? order by status");
             stmt.setString(1, usuario);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Aposta aposta = new Aposta(rs.getString("usuario"), rs.getString("identificador"), rs.getString("placar"), rs.getString("status"));
+
+                apostas.add(aposta);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return apostas;
+    }
+
+    public List<Aposta> readForUser(String identificador, String usuario) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        ResultSet rs = null;
+        List<Aposta> apostas = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM aposta WHERE usuario = ? and identificador LIKE ? order by status");
+            stmt.setString(1, usuario);
+            stmt.setString(2, "%" + identificador + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {

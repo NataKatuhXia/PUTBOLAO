@@ -90,7 +90,7 @@ public class Administrador extends Pessoa {
         apostas = apostadao.readForDesc(idJogo, "A definir");
 
         for (Aposta aposta : apostas) {
-            apostadao.delete(aposta);
+            apostadao.delete(aposta.getIdentificador());
         }
 
     }

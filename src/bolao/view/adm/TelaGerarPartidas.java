@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -123,13 +124,18 @@ public class TelaGerarPartidas extends javax.swing.JFrame {
     private void jButtonGerarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarPartidaActionPerformed
         // TODO add your handling code here:
 
-        Administrador.generateNewPartidas();
-        readJTable();
+        if (Administrador.generateNewPartidas()) {
+            readJTable();
+            JOptionPane.showMessageDialog(null, "Jogos criados com sucesso!");
+            TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
+            frame.setInformacoes();// Atribui os valores atuais
+            this.dispose();
+            frame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ainda há jogos sem resultados");
 
-        TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
-        frame.setInformacoes();// Atribui os valores atuais
-        this.dispose();
-        frame.setVisible(true);
+        }
+
     }//GEN-LAST:event_jButtonGerarPartidaActionPerformed
 
     private void readJTable() {

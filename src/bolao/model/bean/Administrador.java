@@ -191,10 +191,11 @@ public class Administrador extends Pessoa {
                 JogoDAO jogadao = new JogoDAO();
                 jogadao.create(jogo);
             }
-            JOptionPane.showMessageDialog(null, "Jogos criados com sucesso!");
-        }
 
-        return new ControlBolao().generatePartidas();
+            return true;
+        } else {
+            return false;
+        }
 
         /* modelar mais aqui */
     }

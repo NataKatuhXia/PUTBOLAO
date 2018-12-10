@@ -72,7 +72,7 @@ public class Administrador extends Pessoa {
             GetProperties.store("PONTOS_APOSTA", permissoes.get("pontos_aposta"), "Valor de pontos para realizar uma aposta");
             GetProperties.store("PONTUACAO_INICIAL_USER", permissoes.get("pontos_inicial"), "Valor de pontos para novos usuarios");
 
-            for (String key : permissoes.keySet()) {
+            for (String key : permissoes.values()) {
                 permissoes.remove(key);
             }
 

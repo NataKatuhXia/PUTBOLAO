@@ -43,6 +43,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     public TelaCriacaoAposta(String identificador, JFrame listagem, JFrame principal, String resultado) {
 
         this.list = listagem;
+        this.principal = principal; 
         initComponents();
         String[] array = identificador.split(" x ");
         jLabelTimeA.setText(array[0]);

@@ -239,6 +239,11 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         });
         jTableRanking.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jTableRanking);
+        if (jTableRanking.getColumnModel().getColumnCount() > 0) {
+            jTableRanking.getColumnModel().getColumn(0).setMinWidth(100);
+            jTableRanking.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jTableRanking.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -319,9 +324,16 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Sistema");
+        jMenu2.setIcon(new ImageIcon("view\\system.png"));
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         jMenuItem3.setText("Usuarios");
+        jMenuItem3.setIcon(new ImageIcon("view\\users.png"));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Permissões");
@@ -411,6 +423,11 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
         new TelaGerarResultado(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        new TelaGerenciarUser().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public void setInformacoes() {
         readJTableJogos();

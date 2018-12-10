@@ -135,6 +135,7 @@ public class PessoaDAO implements Observer {
         }
     }
 
+    @Override
     public void updateAposta(String comando, String usuario) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -167,13 +168,14 @@ public class PessoaDAO implements Observer {
 
         try {
 
-            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = ? WHERE usuario = ?");
+            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = ?, usuario = ? WHERE usuario = ?");
             stmt.setString(1, nome);
             stmt.setString(2, senha);
             stmt.setString(3, usuario);
+            stmt.setString(4, usuario);
 
             stmt.executeUpdate();
-
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
         } finally {
@@ -207,5 +209,46 @@ public class PessoaDAO implements Observer {
         }
 
         return pessoas;
+    }
+
+    public List<Pessoa> search(String nome, String usuario) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        ResultSet rs = null;
+
+        List<Pessoa> pessoas = new ArrayList<>();
+
+        try {
+            if (!nome.equals("") && !usuario.equals("")) {
+                stmt = con.prepareStatement("SELECT * FROM pessoa WHERE adm = false and usuario LIKE ? and nome LIKE ? order by pontos desc");
+                stmt.setString(1, usuario);
+                stmt.setString(2, "%" + nome + "%");
+            } else if (nome.equals("") && !usuario.equals("")) {
+                stmt = con.prepareStatement("SELECT * FROM pessoa WHERE adm = false and usuario LIKE ? order by pontos desc");
+                stmt.setString(1, usuario);
+            } else if (usuario.equals("") && !nome.equals("")) {
+                stmt = con.prepareStatement("SELECT * FROM pessoa WHERE adm = false and nome LIKE ? order by pontos desc");
+                stmt.setString(1, "%" + nome + "%");
+            } else {
+                stmt = con.prepareStatement("SELECT * FROM pessoa WHERE adm = false order by pontos desc");
+            }
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+
+                pessoas.add(apostador);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ApostaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+
+        return pessoas;
+
     }
 }

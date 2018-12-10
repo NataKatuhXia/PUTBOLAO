@@ -24,7 +24,6 @@ public class Apostador extends Pessoa {
         ValidationField.resultFields.add(nome);
         ValidationField.resultFields.add(user);
         ValidationField.resultFields.add(senha);
-        ValidationField.resultFields.add(pontos);
 
         if (ValidationField.execute()) {
 

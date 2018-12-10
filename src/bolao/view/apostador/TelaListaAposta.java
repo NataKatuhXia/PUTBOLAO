@@ -11,7 +11,6 @@ import bolao.model.bean.Aposta;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -198,7 +197,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
 
     private void jButtonNewApostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewApostaActionPerformed
         // TODO add your handling code here:
-        if (!User.getPessoa().isContaADM() || PROP.getProperty("ADM_APOSTA").equals(true)) {
+        if ((PROP.getProperty("ADM_APOSTA").equals("true")) || (!User.getPessoa().isContaADM())) {
             new TelaCriacaoAposta(identificador, this, parent).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Você não tem permissões para fazer uma aposta");

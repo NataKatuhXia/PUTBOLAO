@@ -35,6 +35,7 @@ public class TelaGerarPartidas extends javax.swing.JFrame {
     public TelaGerarPartidas(JFrame p) {
         this.parent = p;
         initComponents();
+        readJTable();
     }
 
     /**

@@ -149,8 +149,7 @@ public class JogoDAO {
             stmt.setString(4, jogo.getIdentificador());
 
             stmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
         } finally {

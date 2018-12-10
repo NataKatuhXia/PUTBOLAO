@@ -49,8 +49,6 @@ public class ControlBolao implements Subject, Command {
         int i = observers.indexOf(usuario);
         if (i >= 0) {
             observers.remove(usuario);
-            PessoaDAO pessoa = new PessoaDAO();
-            pessoa.delete(usuario);
         }
     }
 
@@ -135,7 +133,7 @@ public class ControlBolao implements Subject, Command {
         boolean result = true;
 
         List<Aposta> apostas = new ArrayList<>();
-        apostas = apostadao.readForDesc(identificador);
+        apostas = apostadao.readForDesc(identificador, "A definir");
 
         for (Aposta aposta : apostas) {
             if (aposta.getUsuario().equals(usuario)) {

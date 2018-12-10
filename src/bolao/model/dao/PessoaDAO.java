@@ -7,7 +7,6 @@ package bolao.model.dao;
 
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Administrador;
-import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
 import bolao.util.Observer;

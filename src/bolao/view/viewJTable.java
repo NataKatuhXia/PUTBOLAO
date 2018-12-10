@@ -47,7 +47,7 @@ public class viewJTable extends javax.swing.JFrame {
         modelo.setNumRows(0);
         ApostaDAO PDao = new ApostaDAO();
 
-        for (Aposta aposta : PDao.readForDesc(descricao)) {
+        for (Aposta aposta : PDao.readForDesc(descricao, "A definir")) {
             modelo.addRow(new Object[]{
                 aposta.getIdentificador(),
                 aposta.getPalpite()

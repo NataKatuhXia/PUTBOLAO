@@ -55,7 +55,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
 
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Aposta> apostas = apostadao.readForDesc(ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText()));
+        List<Aposta> apostas = apostadao.readForDesc(ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText()), "A defnir");
 
         Map<Aposta, Integer> combinacao = new HashMap<>();
 

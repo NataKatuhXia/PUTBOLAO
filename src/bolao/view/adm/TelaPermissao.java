@@ -66,7 +66,7 @@ public class TelaPermissao extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jTextFieldPontInicial = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 

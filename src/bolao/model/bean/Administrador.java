@@ -87,7 +87,7 @@ public class Administrador extends Pessoa {
         List<Aposta> apostas = new ArrayList<>();
         ApostaDAO apostadao = new ApostaDAO();
 
-        apostas = apostadao.readForDesc("idJogo");
+        apostas = apostadao.readForDesc(idJogo, "A definir");
 
         for (Aposta aposta : apostas) {
             apostadao.delete(aposta);
@@ -102,7 +102,7 @@ public class Administrador extends Pessoa {
 
     }
 
-    private void generateResult(String idJogo) {
+    public static void generateResult(String idJogo) {
 
         JogoDAO jogodado = new JogoDAO();
 
@@ -118,7 +118,7 @@ public class Administrador extends Pessoa {
 
     }
 
-    private void generareAllResult() {
+    public static List<Jogo> generareAllResult() {
         JogoDAO jogodado = new JogoDAO();
 
         DateFormat formataData = DateFormat.getDateInstance();
@@ -139,15 +139,14 @@ public class Administrador extends Pessoa {
 
             Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
             bolao.setMeasurements(partida);
-            if (cont == 4) {
-                break;
-            }
             cont++;
         }
-
+        
+        JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
+        return jogos;
     }
 
-    private boolean generateNewPartidas() {
+    public static boolean generateNewPartidas() {
 
         if (new ControlBolao().generatePartidas()) {
 

@@ -59,7 +59,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador());
+            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
             for (Aposta aposta : apostas) {
                 if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
                     iterator.remove();
@@ -310,6 +310,11 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         jMenuItem2.setText("Gerar resultados");
         jMenuItem2.setIcon(new ImageIcon("view\\result.png"));
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -383,6 +388,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        new TelaGerarPartidas(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -401,6 +407,11 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
         new TelaPermissao().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        new TelaGerarResultado(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     public void setInformacoes() {
         readJTableJogos();

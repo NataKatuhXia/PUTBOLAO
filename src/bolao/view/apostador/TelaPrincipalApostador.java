@@ -56,7 +56,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador());
+            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
             for (Aposta aposta : apostas) {
                 if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
                     iterator.remove();

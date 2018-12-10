@@ -5,27 +5,33 @@
  */
 package bolao.view.adm;
 
+import bolao.controler.ControlTime;
 import bolao.model.bean.Administrador;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
+import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
+import bolao.model.dao.JogoDAO;
 import bolao.view.apostador.TelaListaAposta;
 import java.util.List;
+import java.util.ListIterator;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
-public class TelaGerarResultado extends javax.swing.JFrame {
+public class TelaGerarPartidas extends javax.swing.JFrame {
 
-    private javax.swing.JFrame parent;
+    DefaultTableModel modelo;
+    private JFrame parent;
 
     /**
      * Creates new form TelaGerarResultado
      */
-    public TelaGerarResultado(javax.swing.JFrame p) {
+    public TelaGerarPartidas(JFrame p) {
         this.parent = p;
         initComponents();
     }
@@ -40,7 +46,7 @@ public class TelaGerarResultado extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonGerarPartida = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUser = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel();
@@ -51,13 +57,13 @@ public class TelaGerarResultado extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Gerar resultados do dia");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGerarPartida.setText("Gerar novas Partidas");
+        jButtonGerarPartida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonGerarPartidaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 160, 40));
+        jPanel1.add(jButtonGerarPartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 160, 40));
 
         jTableUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,10 +73,29 @@ public class TelaGerarResultado extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Identificador", "Usuario", "Status"
+                "ID", "Identificador", "Jogo", "Data"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableUser);
+        if (jTableUser.getColumnModel().getColumnCount() > 0) {
+            jTableUser.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableUser.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableUser.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTableUser.getColumnModel().getColumn(1).setMinWidth(100);
+            jTableUser.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTableUser.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTableUser.getColumnModel().getColumn(2).setMinWidth(250);
+            jTableUser.getColumnModel().getColumn(2).setPreferredWidth(250);
+            jTableUser.getColumnModel().getColumn(2).setMaxWidth(250);
+        }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 590, 190));
 
@@ -95,35 +120,47 @@ public class TelaGerarResultado extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonGerarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarPartidaActionPerformed
         // TODO add your handling code here:
 
-        readJTable(Administrador.generareAllResult());
-        
+        Administrador.generateNewPartidas();
+        readJTable();
+
         TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
         frame.setInformacoes();// Atribui os valores atuais
+        this.dispose();
         frame.setVisible(true);
+    }//GEN-LAST:event_jButtonGerarPartidaActionPerformed
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void readJTable() {
 
-    private void readJTable(List<Jogo> jogos) {
-
-        DefaultTableModel modelo = (DefaultTableModel) jTableUser.getModel();
+        modelo = (DefaultTableModel) jTableUser.getModel();
         modelo.setNumRows(0);
-
-        int cont = 1;
-
+        JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
-        for (Jogo jogo : jogos) {
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "Diferente");
+
+        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
+
+        for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
+            Jogo jogo = iterator.next();
+            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
             for (Aposta aposta : apostas) {
-                modelo.addRow(new Object[]{
-                    cont++,
-                    aposta.getIdentificador(),
-                    aposta.getUsuario(),
-                    aposta.getStatus()
-                });
+                if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
+                    iterator.remove();
+                    break;
+                }
             }
+        }
+
+        int cont = 0;
+
+        for (Jogo jogo : jogosAberto) {
+            modelo.addRow(new Object[]{
+                ++cont,
+                jogo.getIdentificador(),
+                ControlTime.parseTime(jogo.getIdentificador()),
+                jogo.getData()
+            });
         }
 
     }
@@ -145,20 +182,21 @@ public class TelaGerarResultado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaGerarResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerarPartidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaGerarResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerarPartidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaGerarResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerarPartidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaGerarResultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerarPartidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaGerarResultado(new javax.swing.JFrame()).setVisible(true);
+                new TelaGerarPartidas(new JFrame()).setVisible(true);
             }
         });
     }
@@ -166,7 +204,7 @@ public class TelaGerarResultado extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imageFundo;
     private javax.swing.JLabel imageLogo;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonGerarPartida;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUser;

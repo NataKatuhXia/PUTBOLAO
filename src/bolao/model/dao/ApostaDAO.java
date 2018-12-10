@@ -81,7 +81,7 @@ public class ApostaDAO {
         return apostas;
     }
 
-    public List<Aposta> readForDesc(String identificador) {
+    public List<Aposta> readForDesc(String identificador, String comando) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -89,7 +89,12 @@ public class ApostaDAO {
         List<Aposta> apostas = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status = ? order by placar");
+            if (comando.equals("Diferente")) {
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status != ? order by placar");
+            } else {
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status = ? order by placar");
+            }
+
             stmt.setString(1, identificador);
             stmt.setString(2, "A definir");
 
@@ -123,7 +128,6 @@ public class ApostaDAO {
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
         } finally {

@@ -79,7 +79,7 @@ public class BolaoDAO {
             if (filtro.equals("time")) {
                 stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador LIKE ? order by data");
             }
-            
+
             stmt.setString(1, "%" + identificador + "%");
             rs = stmt.executeQuery();
 
@@ -97,26 +97,4 @@ public class BolaoDAO {
 
         return boloes;
     }
-
-    public void Update(Bolao bolao) {
-
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
-
-        try {
-            stmt = con.prepareStatement("UPDATE aposta SET apostadores = ? WHERE identificador = ?");
-
-            stmt.setInt(1, bolao.getApostadores());
-            stmt.setString(2, bolao.getIdentificador());
-
-            stmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt);
-        }
-    }
-
 }

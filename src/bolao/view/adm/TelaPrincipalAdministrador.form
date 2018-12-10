@@ -50,6 +50,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gerar resultados"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jMenuItem2.setIcon(new ImageIcon(&quot;view\\result.png&quot;));"/>
               </AuxValues>

@@ -12,7 +12,6 @@ import bolao.model.bean.Jogo;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
-import bolao.view.apostador.TelaListaAposta;
 import java.util.List;
 import java.util.ListIterator;
 import javax.swing.ImageIcon;

@@ -129,8 +129,9 @@ public class TelaGerarPartidas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Jogos criados com sucesso!");
             TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
             frame.setInformacoes();// Atribui os valores atuais
-            this.dispose();
             frame.setVisible(true);
+            
+            this.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Ainda há jogos sem resultados");
 

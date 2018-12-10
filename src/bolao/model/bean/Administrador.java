@@ -196,8 +196,6 @@ public class Administrador extends Pessoa {
         } else {
             return false;
         }
-
-        /* modelar mais aqui */
     }
 
     public static void main(String[] args) {

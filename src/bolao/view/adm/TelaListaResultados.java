@@ -8,6 +8,7 @@ package bolao.view.adm;
 import bolao.controler.ControlTime;
 import bolao.model.bean.Administrador;
 import bolao.model.bean.Aposta;
+import bolao.model.bean.Apostador;
 import bolao.model.bean.Jogo;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
@@ -30,14 +31,14 @@ public class TelaListaResultados extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
     private JFrame parent;
+    private String data = null;
 
     /**
      * Creates new form TelaGerarResultado
      */
-    public TelaListaResultados(JFrame p) {
-        this.parent = p;
+    public TelaListaResultados() {
         initComponents();
-        readJTable();
+        readJTable(data);
     }
 
     /**
@@ -54,14 +55,11 @@ public class TelaListaResultados extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUser = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         try {
             MaskFormatter mascara = new MaskFormatter("##/##/####");
             mascara.setPlaceholderCharacter('_');
             jFormattedTextField1 = new javax.swing.JFormattedTextField(mascara);
-            jLabel2 = new javax.swing.JLabel();
-            jLabel3 = new javax.swing.JLabel();
+            logo = new javax.swing.JLabel();
             imageFundo = new javax.swing.JLabel();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -85,7 +83,7 @@ public class TelaListaResultados extends javax.swing.JFrame {
                     {null, null, null, null}
                 },
                 new String [] {
-                    "ID", "Identificador", "Jogo", "Data"
+                    "Identificador", "Jogo", "Placar", "Data"
                 }
             ) {
                 boolean[] canEdit = new boolean [] {
@@ -98,15 +96,12 @@ public class TelaListaResultados extends javax.swing.JFrame {
             });
             jScrollPane1.setViewportView(jTableUser);
             if (jTableUser.getColumnModel().getColumnCount() > 0) {
-                jTableUser.getColumnModel().getColumn(0).setMinWidth(50);
-                jTableUser.getColumnModel().getColumn(0).setPreferredWidth(50);
-                jTableUser.getColumnModel().getColumn(0).setMaxWidth(50);
-                jTableUser.getColumnModel().getColumn(1).setMinWidth(100);
-                jTableUser.getColumnModel().getColumn(1).setPreferredWidth(100);
-                jTableUser.getColumnModel().getColumn(1).setMaxWidth(100);
-                jTableUser.getColumnModel().getColumn(2).setMinWidth(250);
-                jTableUser.getColumnModel().getColumn(2).setPreferredWidth(250);
-                jTableUser.getColumnModel().getColumn(2).setMaxWidth(250);
+                jTableUser.getColumnModel().getColumn(0).setMinWidth(100);
+                jTableUser.getColumnModel().getColumn(0).setPreferredWidth(100);
+                jTableUser.getColumnModel().getColumn(0).setMaxWidth(100);
+                jTableUser.getColumnModel().getColumn(1).setMinWidth(250);
+                jTableUser.getColumnModel().getColumn(1).setPreferredWidth(250);
+                jTableUser.getColumnModel().getColumn(1).setMaxWidth(250);
             }
 
             jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 590, 190));
@@ -114,30 +109,17 @@ public class TelaListaResultados extends javax.swing.JFrame {
             jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
             jLabel1.setForeground(new java.awt.Color(255, 255, 255));
             jLabel1.setText("Data:");
-            jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, -1, 30));
-            jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 190, -1));
-
-            jTextField3.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jTextField3ActionPerformed(evt);
-                }
-            });
-            jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 190, -1));
+            jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, 30));
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 120, -1));
+        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 120, -1));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Identificador:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, 30));
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Time:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 30));
+        logo.setIcon(new ImageIcon("view\\Logo.png"));
+        jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 5, -1, -1));
 
         imageFundo.setIcon(new javax.swing.ImageIcon("view\\ImageFundo.jpg"));
         jPanel1.add(imageFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 624, 410));
@@ -159,40 +141,20 @@ public class TelaListaResultados extends javax.swing.JFrame {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-
+        data = jFormattedTextField1.getText();
+        readJTable(data);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void readJTable() {
+    private void readJTable(String data) {
 
         modelo = (DefaultTableModel) jTableUser.getModel();
         modelo.setNumRows(0);
-        JogoDAO jogodao = new JogoDAO();
-        ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
-
-        for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
-            Jogo jogo = iterator.next();
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
-            for (Aposta aposta : apostas) {
-                if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
-
-        int cont = 0;
-
-        for (Jogo jogo : jogosAberto) {
+        for (Jogo jogo : Apostador.verifyResult(data)) {
             modelo.addRow(new Object[]{
-                ++cont,
                 jogo.getIdentificador(),
                 ControlTime.parseTime(jogo.getIdentificador()),
+                jogo.getResultado(),
                 jogo.getData()
             });
         }
@@ -232,7 +194,7 @@ public class TelaListaResultados extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaListaResultados(new JFrame()).setVisible(true);
+                new TelaListaResultados().setVisible(true);
             }
         });
     }
@@ -242,12 +204,9 @@ public class TelaListaResultados extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUser;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }

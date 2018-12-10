@@ -89,7 +89,7 @@ public class ApostaDAO {
 
         try {
             if (comando.equals("Diferente")) {
-                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status != ? order by status desc, identificar");
+                stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status != ? order by status desc, identificador");
             } else {
                 stmt = con.prepareStatement("SELECT * FROM aposta WHERE identificador = ? and status = ? order by placar");
             }

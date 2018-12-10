@@ -15,5 +15,5 @@ import java.util.Map;
  */
 public interface Observer {
 
-    public void updateAposta(String comando, String user);
+    public void updateAposta(String comando, String user, int pontos);
 }

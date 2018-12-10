@@ -5,10 +5,12 @@
  */
 package bolao.model.bean;
 
+import static bolao.controler.GetProperties.PROP;
 import bolao.controler.ValidationField;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
+import java.util.List;
 
 /**
  *
@@ -52,8 +54,16 @@ public class Apostador extends Pessoa {
         JogoDAO jogodao = new JogoDAO();
 
         apostadao.create(aposta);
-        pessoadao.updateAposta("Realizar aposta", usuario.getUsuario());
+        pessoadao.updateAposta("Realizar aposta", usuario.getUsuario(), Integer.parseInt(PROP.getProperty("PONTOS_APOSTA")));
         jogodao.update("Realizar aposta", aposta.getIdentificador());
 
+    }
+
+    public static List<Jogo> verifyResult(String data) {
+
+        JogoDAO jogodao = new JogoDAO();
+        List<Jogo> jogos = jogodao.searchAll("Fechado", data);
+
+        return jogos;
     }
 }

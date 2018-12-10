@@ -127,7 +127,7 @@ public class Administrador extends Pessoa {
         gc.add(GregorianCalendar.DATE, 0);
         Date data = gc.getTime();
 
-        List<Jogo> jogos = jogodado.searchAll("Gerar resultados totais", formataData.format(data));
+        List<Jogo> jogos = jogodado.searchAll("Todos", formataData.format(data));
         if (!jogos.isEmpty()) {
             int cont = 0;
             for (Jogo jogo : jogos) {
@@ -144,7 +144,7 @@ public class Administrador extends Pessoa {
 
             JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
         } else {
-            JOptionPane.showMessageDialog(null, "Não há partidas que vão ocorrer hoje!");
+            JOptionPane.showMessageDialog(null, "Não há partidas que irão ocorrer hoje!");
         }
         return jogos;
     }

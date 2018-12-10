@@ -136,7 +136,7 @@ public class PessoaDAO implements Observer {
     }
 
     @Override
-    public void updateAposta(String comando, String usuario) {
+    public void updateAposta(String comando, String usuario, int pontos) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -144,11 +144,11 @@ public class PessoaDAO implements Observer {
         try {
             if (comando.equals("vencendor")) {
                 stmt = con.prepareStatement("UPDATE pessoa SET pontos = pontos + ? WHERE usuario = ?");
-                stmt.setInt(1, Integer.parseInt(PROP.getProperty("PONTOS_VITORIA")));
+                stmt.setInt(1, pontos);
                 stmt.setString(2, usuario);
             } else if (comando.equals("Realizar aposta")) {
                 stmt = con.prepareStatement("UPDATE pessoa SET pontos = pontos - ? WHERE usuario = ?");
-                stmt.setInt(1, Integer.parseInt(PROP.getProperty("PONTOS_APOSTA")));
+                stmt.setInt(1, pontos);
                 stmt.setString(2, usuario);
             }
 

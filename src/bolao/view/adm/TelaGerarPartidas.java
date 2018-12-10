@@ -146,7 +146,7 @@ public class TelaGerarPartidas extends javax.swing.JFrame {
         JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
+        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();

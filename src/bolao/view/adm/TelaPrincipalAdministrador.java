@@ -54,7 +54,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
+        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();
@@ -312,7 +312,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Gerar resultados");
+        jMenuItem2.setText("Gerar Resultados");
         jMenuItem2.setIcon(new ImageIcon("view\\result.png"));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

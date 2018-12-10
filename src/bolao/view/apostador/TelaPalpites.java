@@ -10,6 +10,7 @@ import bolao.model.bean.Aposta;
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
+import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import java.util.List;
 import javax.swing.JFrame;
@@ -165,8 +166,11 @@ public class TelaPalpites extends javax.swing.JFrame {
         if (jTablePalpite.getSelectedRow() != -1) {
 
             if (status.equals("A definir")) {
-                ApostaDAO pessoadao = new ApostaDAO();
-                pessoadao.delete((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
+                ApostaDAO apostadao = new ApostaDAO();
+                JogoDAO jogodao = new JogoDAO();
+
+                apostadao.delete((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
+                jogodao.update("Excluir aposta", (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
                 readJTable();
 
                 TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;

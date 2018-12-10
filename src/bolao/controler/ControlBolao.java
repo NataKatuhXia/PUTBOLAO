@@ -55,9 +55,13 @@ public class ControlBolao implements Subject, Command {
     @Override
     public void notifyObservers() {
 
+        int pontos = observers.size() / Integer.parseInt(PROP.getProperty("PONTOS_VITORIA"));
+        if (pontos < 3) {
+            pontos = 3;
+        }
         for (int i = 0; i < observers.size(); i++) {
             PessoaDAO pessoa = new PessoaDAO();
-            pessoa.updateAposta("vencendor", observers.get(i).toString());
+            pessoa.updateAposta("vencendor", observers.get(i).toString(), pontos);
             removeObserver(observers.get(i).toString());
         }
     }

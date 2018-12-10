@@ -79,13 +79,15 @@ public class JogoDAO {
         List<Jogo> jogos = new ArrayList<>();
 
         try {
-            if (comando.equals("Gerar resultados totais")) {
+            if (null != day && comando.equals("Todos")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null and date = ? order by apostadores desc");
                 stmt.setString(1, day);
-            } else if (comando.equals("Todos") && day == null) {
+            } else if (comando.equals("Todos")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo");
-            } else if (comando.equals("Gerar Abertos para Usuario") && day == null) {
+            } else if (comando.equals("Abertos")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null order by date, apostadores desc");
+            } else if (comando.equals("Fechado")) {
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is not null order by date, apostadores desc");
             }
             rs = stmt.executeQuery();
 
@@ -149,7 +151,7 @@ public class JogoDAO {
             stmt.setString(4, jogo.getIdentificador());
 
             stmt.executeUpdate();
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
         } finally {
@@ -165,6 +167,8 @@ public class JogoDAO {
         try {
             if (comando.equals("Realizar aposta")) {
                 stmt = con.prepareStatement("UPDATE jogo SET apostadores = apostadores + 1 WHERE identificador = ?");
+            } else if (comando.equals("Excluir aposta")) {
+                stmt = con.prepareStatement("UPDATE jogo SET apostadores = apostadores - 1 WHERE identificador = ?");
             }
             stmt.setString(1, identificador);
 

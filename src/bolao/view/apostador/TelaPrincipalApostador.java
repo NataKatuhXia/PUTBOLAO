@@ -14,6 +14,7 @@ import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import bolao.view.TelaLogin;
 import bolao.view.TelaMyAccount;
+import bolao.view.adm.TelaListaResultados;
 import java.util.List;
 import java.util.ListIterator;
 import javax.swing.ImageIcon;
@@ -52,7 +53,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Gerar Abertos para Usuario", null);
+        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
             Jogo jogo = iterator.next();
@@ -305,6 +306,11 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
         jMenuItem2.setText("Resultados");
         jMenuItem2.setIcon(new ImageIcon("view\\result.png"));
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -377,6 +383,11 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         // TODO add your handling code here:
         new TelaMyAccount(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        new TelaListaResultados().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     public void setInformacoes() {
         readJTableJogos();

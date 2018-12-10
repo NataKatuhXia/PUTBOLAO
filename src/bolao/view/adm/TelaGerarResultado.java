@@ -99,11 +99,11 @@ public class TelaGerarResultado extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         readJTable(Administrador.generareAllResult());
-        
+
         TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
         frame.setInformacoes();// Atribui os valores atuais
         frame.setVisible(true);
-        
+
         this.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed

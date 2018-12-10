@@ -103,6 +103,8 @@ public class TelaGerarResultado extends javax.swing.JFrame {
         TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
         frame.setInformacoes();// Atribui os valores atuais
         frame.setVisible(true);
+        
+        this.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

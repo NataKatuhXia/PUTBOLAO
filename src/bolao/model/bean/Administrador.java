@@ -128,21 +128,24 @@ public class Administrador extends Pessoa {
         Date data = gc.getTime();
 
         List<Jogo> jogos = jogodado.searchAll("Gerar resultados totais", formataData.format(data));
+        if (!jogos.isEmpty()) {
+            int cont = 0;
+            for (Jogo jogo : jogos) {
+                ControlBolao bolao = new ControlBolao(jogo);
 
-        int cont = 0;
-        for (Jogo jogo : jogos) {
-            ControlBolao bolao = new ControlBolao(jogo);
+                jogo.setResultado(bolao.execute());
 
-            jogo.setResultado(bolao.execute());
+                jogodado.update(jogo);
 
-            jogodado.update(jogo);
+                Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
+                bolao.setMeasurements(partida);
+                cont++;
+            }
 
-            Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
-            bolao.setMeasurements(partida);
-            cont++;
+            JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não há partidas que vão ocorrer hoje!");
         }
-        
-        JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
         return jogos;
     }
 

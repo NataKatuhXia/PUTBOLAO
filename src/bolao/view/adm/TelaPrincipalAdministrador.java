@@ -13,7 +13,6 @@ import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
-import bolao.view.apostador.TelaCriacaoAposta;
 import bolao.view.TelaLogin;
 import bolao.view.TelaMyAccount;
 import bolao.view.apostador.TelaListaAposta;

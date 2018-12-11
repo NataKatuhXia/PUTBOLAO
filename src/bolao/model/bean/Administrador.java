@@ -197,24 +197,4 @@ public class Administrador extends Pessoa {
             return false;
         }
     }
-
-    public static void main(String[] args) {
-//        Administrador usuariodao = new Administrador();
-//
-//        usuariodao.generateResult("2018");
-//        User.getInstance("rafael", "123");
-//        
-//       Jogo jogo = new Jogo("8877", 2, "", "");
-//
-//        JogoDAO jogodao = new JogoDAO();
-//        
-//        jogodao.create(jogo);
-//
-//        usuariodao.generareAllResult();
-//
-//        String teste = "Texte1 x Teste2";
-//        String[] array = teste.split(" x ");
-//        System.out.println(array[0]);
-
-    }
 }

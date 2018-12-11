@@ -57,15 +57,4 @@ public class LoadUtil {
         }
         writeFile.close();
     }
-
-//    public static void main(String[] args) {
-//
-//        Equipe times = Equipe.build();
-//
-//        List<Equipe> equipes = times.getEquipes();
-//
-//        for (Equipe equipe : equipes) {
-//            System.out.println("Time: " + equipe.getEquipe() + ", codigo: " + equipe.getIdentificador());
-//        }
-//    }
 }

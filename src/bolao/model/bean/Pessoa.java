@@ -41,7 +41,7 @@ public abstract class Pessoa {
 
         if (ValidationField.execute()) {
             PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.updateAccount(nome, senha, usuario);
+            pessoadao.updateAccount(nome, senha, usuario, false);
             return true;
         } else {
             return false;

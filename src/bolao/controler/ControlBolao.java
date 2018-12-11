@@ -148,23 +148,4 @@ public class ControlBolao implements Subject, Command {
 
         return result;
     }
-
-//    public static void main(String[] args) {
-//        User.getInstance("teste", "321");
-//        new TelaCriacaoAposta().setVisible(true);
-//        JogoDAO jogodado = new JogoDAO();
-//        Jogo aux = new Jogo("Test", 0, "", "");
-//        jogodado.create(aux);
-//
-//        boolean gerar = true;
-//        List<Jogo> jogos = jogodado.searchAll("Todos");
-//
-//        for (Jogo jogo : jogos) {
-//            if (null == jogo.getResultado()) {
-//                System.out.println("salve");
-//            } else {
-//                System.out.println("Teste");
-//            }
-//        }
-//    }
 }

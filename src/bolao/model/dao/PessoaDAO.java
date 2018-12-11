@@ -161,18 +161,19 @@ public class PessoaDAO implements Observer {
         }
     }
 
-    public void updateAccount(String nome, String senha, String usuario) {
+    public void updateAccount(String nome, String senha, String usuario, boolean adm) {
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
 
-            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = ?, usuario = ? WHERE usuario = ?");
+            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = ?, usuario = ?, adm = ? WHERE usuario = ?");
             stmt.setString(1, nome);
             stmt.setString(2, senha);
             stmt.setString(3, usuario);
-            stmt.setString(4, usuario);
+            stmt.setBoolean(4, adm);
+            stmt.setString(5, usuario);
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");

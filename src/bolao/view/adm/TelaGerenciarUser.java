@@ -46,12 +46,14 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         jLabelUsuario1 = new javax.swing.JLabel();
         jTextFieldUser = new javax.swing.JTextField();
         jLabelUsuario = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUsers = new javax.swing.JTable();
         imageLogo = new javax.swing.JLabel();
         imageFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gerenciamento Usuários");
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -97,6 +99,16 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         jLabelUsuario.setForeground(new java.awt.Color(255, 255, 255));
         jLabelUsuario.setText("Nome:");
         jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        jCheckBox1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setText("Conta Administrativa");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
 
         jTableUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -193,7 +205,7 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTableUsers.getSelectedRow() != -1) {
             PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.updateAccount(jTextFieldNome.getText(), jTextFieldUser.getText(), (String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
+            pessoadao.updateAccount(jTextFieldNome.getText(), jTextFieldUser.getText(), (String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1), jCheckBox1.isSelected());
             readJTable();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um usuário para alterar");
@@ -210,6 +222,10 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         jTextFieldNome.setText((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 2));
         jTextFieldUser.setText((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
     }//GEN-LAST:event_jTableUsersMouseClicked
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void readJTable() {
 
@@ -272,6 +288,7 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLabelUsuario1;
     private javax.swing.JPanel jPanel1;

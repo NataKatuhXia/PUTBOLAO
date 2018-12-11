@@ -139,6 +139,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tela Principal");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

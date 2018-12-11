@@ -97,11 +97,12 @@ public class PessoaDAO implements Observer {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO pessoa (usuario,senha,nome,adm)VALUES(?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO pessoa (usuario,senha,nome,adm,pontos)VALUES(?,?,?,?,?)");
             stmt.setString(1, pessoa.getUsuario());
             stmt.setString(2, pessoa.getSenha());
             stmt.setString(3, pessoa.getNome());
             stmt.setBoolean(4, pessoa.isContaADM());
+            stmt.setString(5, pessoa.getPontos());
 
             stmt.executeUpdate();
 

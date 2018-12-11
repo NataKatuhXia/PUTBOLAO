@@ -7,9 +7,10 @@ package bolao.model.bean;
 
 import bolao.controler.ValidationField;
 import bolao.model.dao.ApostaDAO;
+import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
-import bolao.util.Observer;
-import java.util.Map;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  *
@@ -26,14 +27,19 @@ public abstract class Pessoa {
 
     /**
      *
-     * @param comando
+     * @param comando pode ser Consultar, para verificar se existe Login, ou
+     * Criar usuário
      * @param nome
      * @param user
      * @param senha
+     * @param ponto
      * @return
      */
     protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, String ponto);
 
+    /*
+    Caso o usuário mude alguma informação em seu perfil, na tela MyAccount
+     */
     public static boolean modifyInformation(String nome, String senha, String usuario) {
         ValidationField.resultFields.add(nome);
         ValidationField.resultFields.add(senha);
@@ -46,7 +52,28 @@ public abstract class Pessoa {
         } else {
             return false;
         }
+    }
 
+    public static List<Jogo> verifyJogosAbertos() {
+        
+        JogoDAO jogodao = new JogoDAO();
+        ApostaDAO apostadao = new ApostaDAO();
+
+        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
+
+        for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
+            
+            Jogo jogo = iterator.next();
+            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
+            
+            for (Aposta aposta : apostas) {
+                if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
+        return jogosAberto;
     }
 
     public void setContaADM(boolean contaADM) {

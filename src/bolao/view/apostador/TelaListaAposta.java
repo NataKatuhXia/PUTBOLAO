@@ -5,13 +5,10 @@
  */
 package bolao.view.apostador;
 
-import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
+import bolao.model.bean.Apostador;
 import bolao.model.bean.User;
-import bolao.model.dao.ApostaDAO;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -44,6 +41,9 @@ public class TelaListaAposta extends javax.swing.JFrame {
         readJTableApostas();
     }
 
+    /* 
+    Atualiza a tabela sempre que chamada
+    */
     public void setInformacoes() {
         readJTableApostas();
     }
@@ -52,38 +52,15 @@ public class TelaListaAposta extends javax.swing.JFrame {
         modelo = (DefaultTableModel) jTableAposta.getModel();
         modelo.setNumRows(0);
 
-        ApostaDAO apostadao = new ApostaDAO();
-
-        List<Aposta> apostas = apostadao.readForDesc(ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText()), "A defnir");
-
-        Map<Aposta, Integer> combinacao = new HashMap<>();
-
-        int contador = 0;
-        if (!apostas.isEmpty()) {
-            String placar = apostas.get(0).getPalpite();
-            for (int i = 0; i < apostas.size(); i++) {
-
-                if (apostas.get(i).getPalpite().equals(placar)) {
-                    contador++;
-                } else {
-                    combinacao.put(apostas.get(i - 1), contador);
-                    placar = apostas.get(i).getPalpite();
-                    contador = 1;
-                }
-
-                if (i == apostas.size() - 1) {
-                    combinacao.put(apostas.get(i), contador);
-                }
-            }
-            int cont = 0;
-
-            for (Aposta aposta : combinacao.keySet()) {
-                modelo.addRow(new Object[]{
-                    ++cont,
-                    aposta.getPalpite(),
-                    combinacao.get(aposta)
-                });
-            }
+        int cont = 0;
+        Map<Aposta, Integer> combinacao = Apostador.viewListApostas(jLabelTimeA.getText(), jLabelTimeB.getText());
+        
+        for (Aposta aposta : combinacao.keySet()) {
+            modelo.addRow(new Object[]{
+                ++cont,
+                aposta.getPalpite(),
+                combinacao.get(aposta)
+            });
         }
     }
 
@@ -242,7 +219,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaListaAposta("Vitoria x Sport", new javax.swing.JFrame()).setVisible(true);
+                new TelaListaAposta("", new javax.swing.JFrame()).setVisible(true);
             }
         });
     }

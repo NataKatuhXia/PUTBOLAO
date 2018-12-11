@@ -9,7 +9,6 @@ import bolao.model.bean.Administrador;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
 import bolao.model.dao.ApostaDAO;
-import bolao.view.apostador.TelaListaAposta;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;

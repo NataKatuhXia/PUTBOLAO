@@ -7,7 +7,6 @@ package bolao.view;
 
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
-import bolao.model.dao.PessoaDAO;
 import bolao.view.apostador.TelaPrincipalApostador;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

@@ -7,7 +7,6 @@ package bolao.view;
 
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Apostador;
-import bolao.model.bean.User;
 import bolao.model.dao.PessoaDAO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;

@@ -5,12 +5,15 @@
  */
 package bolao.model.bean;
 
+import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.controler.ValidationField;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -65,5 +68,33 @@ public class Apostador extends Pessoa {
         List<Jogo> jogos = jogodao.searchAll("Fechado", data);
 
         return jogos;
+    }
+
+    public static Map<Aposta, Integer> viewListApostas(String timeA, String timeB) {
+        ApostaDAO apostadao = new ApostaDAO();
+
+        List<Aposta> apostas = apostadao.readForDesc(ControlTime.parseIdentificador(timeA, timeB), "A defnir");
+        Map<Aposta, Integer> combinacao = new HashMap<>();
+
+        int contador = 0;
+        if (!apostas.isEmpty()) {
+            String placar = apostas.get(0).getPalpite();
+            for (int i = 0; i < apostas.size(); i++) {
+
+                if (apostas.get(i).getPalpite().equals(placar)) {
+                    contador++;
+                } else {
+                    combinacao.put(apostas.get(i - 1), contador);
+                    placar = apostas.get(i).getPalpite();
+                    contador = 1;
+                }
+
+                if (i == apostas.size() - 1) {
+                    combinacao.put(apostas.get(i), contador);
+                }
+            }
+        }
+
+        return combinacao;
     }
 }

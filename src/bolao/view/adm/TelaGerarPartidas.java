@@ -9,6 +9,7 @@ import bolao.controler.ControlTime;
 import bolao.model.bean.Administrador;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
+import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
@@ -125,12 +126,15 @@ public class TelaGerarPartidas extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (Administrador.generateNewPartidas()) {
+            /* Atualiza a JTable com as novas partidas */
             readJTable();
             JOptionPane.showMessageDialog(null, "Jogos criados com sucesso!");
+
+            /* Atualiza a Tela Principal para as novas informações */
             TelaPrincipalAdministrador frame = (TelaPrincipalAdministrador) parent;
             frame.setInformacoes();// Atribui os valores atuais
             frame.setVisible(true);
-            
+
             this.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Ainda há jogos sem resultados");
@@ -143,21 +147,8 @@ public class TelaGerarPartidas extends javax.swing.JFrame {
 
         modelo = (DefaultTableModel) jTableUser.getModel();
         modelo.setNumRows(0);
-        JogoDAO jogodao = new JogoDAO();
-        ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
-
-        for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
-            Jogo jogo = iterator.next();
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
-            for (Aposta aposta : apostas) {
-                if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
+        List<Jogo> jogosAberto = Pessoa.verifyJogosAbertos();
 
         int cont = 0;
 

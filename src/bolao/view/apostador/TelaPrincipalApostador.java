@@ -6,8 +6,10 @@
 package bolao.view.apostador;
 
 import bolao.controler.ControlTime;
+import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
+import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
@@ -18,6 +20,7 @@ import bolao.view.adm.TelaListaResultados;
 import java.util.List;
 import java.util.ListIterator;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -50,21 +53,8 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
     private void readJTableJogos() {
         modelo = (DefaultTableModel) jTableJogosAbertos.getModel();
         modelo.setNumRows(0);
-        JogoDAO jogodao = new JogoDAO();
-        ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
-
-        for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
-            Jogo jogo = iterator.next();
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
-            for (Aposta aposta : apostas) {
-                if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
+        List<Jogo> jogosAberto = Pessoa.verifyJogosAbertos();
 
         int cont = 0;
 
@@ -360,10 +350,15 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
     private void jTableJogosAbertosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableJogosAbertosMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
+        String apostadores = PROP.getProperty("QNTD_USER_APOSTA");
+        String atual = jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 3).toString();
+
+        if (evt.getClickCount() == 2 && (!atual.equals(apostadores))) {
             if (jTableJogosAbertos.getSelectedRow() != -1) {
                 new TelaListaAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "O jogo já está com o número máximo de apostas!");
         }
     }//GEN-LAST:event_jTableJogosAbertosMouseClicked
 

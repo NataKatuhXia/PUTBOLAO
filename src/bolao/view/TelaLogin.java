@@ -5,8 +5,6 @@
  */
 package bolao.view;
 
-import bolao.view.apostador.TelaPrincipalApostador;
-import bolao.view.adm.TelaPrincipalAdministrador;
 import bolao.model.bean.User;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;

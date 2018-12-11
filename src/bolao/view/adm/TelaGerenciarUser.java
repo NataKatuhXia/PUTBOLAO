@@ -8,8 +8,7 @@ package bolao.view.adm;
 
 import bolao.model.bean.Pessoa;
 import bolao.model.dao.PessoaDAO;
-import java.util.List;;
-import javax.swing.JFrame;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

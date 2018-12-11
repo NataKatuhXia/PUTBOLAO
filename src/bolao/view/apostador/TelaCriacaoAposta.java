@@ -43,7 +43,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     public TelaCriacaoAposta(String identificador, JFrame listagem, JFrame principal, String resultado) {
 
         this.list = listagem;
-        this.principal = principal; 
+        this.principal = principal;
         initComponents();
         String[] array = identificador.split(" x ");
         jLabelTimeA.setText(array[0]);
@@ -183,10 +183,12 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
                 Apostador.createAposta(aposta, User.getPessoa());
 
+                /* Atualiza a tela Principal, por conta da nova Aposta */
                 TelaPrincipalApostador framePrincipalApostador = (TelaPrincipalApostador) principal;
                 framePrincipalApostador.setInformacoes();// Atribui os valores atuais
                 framePrincipalApostador.setVisible(true);
 
+                /* Atualiza a lista da aposta, para acrescentar a nova aposta */
                 TelaListaAposta frame = (TelaListaAposta) list;
                 frame.setInformacoes();// Atribui os valores atuais
                 frame.setVisible(true);

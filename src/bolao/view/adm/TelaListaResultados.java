@@ -6,20 +6,11 @@
 package bolao.view.adm;
 
 import bolao.controler.ControlTime;
-import bolao.model.bean.Administrador;
-import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Jogo;
-import bolao.model.bean.User;
-import bolao.model.dao.ApostaDAO;
-import bolao.model.dao.JogoDAO;
-import bolao.view.apostador.TelaListaAposta;
 import java.text.ParseException;
-import java.util.List;
-import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 

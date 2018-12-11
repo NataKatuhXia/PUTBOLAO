@@ -6,18 +6,14 @@
 package bolao.view.adm;
 
 import bolao.controler.ControlTime;
-import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
-import bolao.model.dao.ApostaDAO;
-import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import bolao.view.TelaLogin;
 import bolao.view.TelaMyAccount;
 import bolao.view.apostador.TelaListaAposta;
 import java.util.List;
-import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -51,21 +47,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
     private void readJTableJogos() {
         modelo = (DefaultTableModel) jTableJogosAbertos.getModel();
         modelo.setNumRows(0);
-        JogoDAO jogodao = new JogoDAO();
-        ApostaDAO apostadao = new ApostaDAO();
 
-        List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
-
-        for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
-            Jogo jogo = iterator.next();
-            List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
-            for (Aposta aposta : apostas) {
-                if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
+        List<Jogo> jogosAberto = Pessoa.verifyJogosAbertos();
 
         int cont = 0;
 

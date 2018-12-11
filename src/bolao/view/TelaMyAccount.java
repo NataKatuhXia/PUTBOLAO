@@ -50,6 +50,8 @@ public class TelaMyAccount extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Minha Conta");
+        setIconImage(new ImageIcon("view\\frame.png").getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

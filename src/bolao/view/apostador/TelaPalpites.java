@@ -7,12 +7,11 @@ package bolao.view.apostador;
 
 import bolao.controler.ControlTime;
 import bolao.model.bean.Aposta;
-import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
-import bolao.model.dao.PessoaDAO;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -59,6 +58,7 @@ public class TelaPalpites extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Palpites");
+        setIconImage(new ImageIcon("view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

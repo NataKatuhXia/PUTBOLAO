@@ -10,6 +10,7 @@ import bolao.model.bean.Administrador;
 import bolao.model.bean.User;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -67,7 +68,9 @@ public class TelaPermissao extends javax.swing.JFrame {
         jTextFieldPontInicial = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Permissões");
         setBackground(new java.awt.Color(255, 255, 255));
+        setIconImage(new ImageIcon("view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

@@ -9,6 +9,7 @@ package bolao.view.adm;
 import bolao.model.bean.Pessoa;
 import bolao.model.dao.PessoaDAO;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -53,6 +54,7 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento Usuários");
+        setIconImage(new ImageIcon("view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

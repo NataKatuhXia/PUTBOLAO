@@ -23,6 +23,7 @@ public class TelaLogin extends javax.swing.JDialog {
 
     public TelaLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
         initComponents();
         this.setDefaultCloseOperation(0);
     }
@@ -48,7 +49,7 @@ public class TelaLogin extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
-        setIconImage(null);
+        setIconImage(new ImageIcon("view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

@@ -55,6 +55,7 @@ public class TelaListaResultados extends javax.swing.JFrame {
 
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             setTitle("Resultados");
+            setIconImage(new ImageIcon("view\\frame.png").getImage());
             setResizable(false);
 
             jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

@@ -351,15 +351,11 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
     private void jTableJogosAbertosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableJogosAbertosMouseClicked
         // TODO add your handling code here:
-        String apostadores = PROP.getProperty("QNTD_USER_APOSTA");
-        String atual = jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 3).toString();
 
-        if (evt.getClickCount() == 2 && (!atual.equals(apostadores))) {
+        if (evt.getClickCount() == 2) {
             if (jTableJogosAbertos.getSelectedRow() != -1) {
                 new TelaListaAposta(jTableJogosAbertos.getValueAt(jTableJogosAbertos.getSelectedRow(), 2).toString(), this).setVisible(true);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "O jogo já está com o número máximo de apostas!");
         }
     }//GEN-LAST:event_jTableJogosAbertosMouseClicked
 

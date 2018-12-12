@@ -8,7 +8,9 @@ package bolao.view.apostador;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
+import bolao.model.bean.Jogo;
 import bolao.model.bean.User;
+import bolao.model.dao.JogoDAO;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -43,7 +45,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
 
     /* 
     Atualiza a tabela sempre que chamada
-    */
+     */
     public void setInformacoes() {
         readJTableApostas();
     }
@@ -54,7 +56,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
 
         int cont = 0;
         Map<Aposta, Integer> combinacao = Apostador.viewListApostas(jLabelTimeA.getText(), jLabelTimeB.getText());
-        
+
         for (Aposta aposta : combinacao.keySet()) {
             modelo.addRow(new Object[]{
                 ++cont,
@@ -166,16 +168,25 @@ public class TelaListaAposta extends javax.swing.JFrame {
 
     private void jTableApostaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableApostaMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
+        String apostadores = PROP.getProperty("QNTD_USER_APOSTA");
+        String atual = jTableAposta.getValueAt(jTableAposta.getSelectedRow(), 2).toString();
+
+        if (evt.getClickCount() == 2 && (!atual.equals(apostadores))) {
             if (jTableAposta.getSelectedRow() != -1) {
                 new TelaCriacaoAposta(identificador, this, parent, jTableAposta.getValueAt(jTableAposta.getSelectedRow(), 1).toString()).setVisible(true);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "O jogo já está com o número máximo de apostas!");
         }
     }//GEN-LAST:event_jTableApostaMouseClicked
 
     private void jButtonNewApostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewApostaActionPerformed
         // TODO add your handling code here:
-        if ((PROP.getProperty("ADM_APOSTA").equals("true")) || (!User.getPessoa().isContaADM())) {
+        String apostadores = PROP.getProperty("QNTD_USER_APOSTA");
+        JogoDAO jogodao = new JogoDAO();
+        String atual = String.valueOf(jogodao.searchJogo("", identificador).getApostadores());
+
+        if ((PROP.getProperty("ADM_APOSTA").equals("true")) || (!User.getPessoa().isContaADM()) && (!atual.equals(apostadores))) {
             new TelaCriacaoAposta(identificador, this, parent).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Você não tem permissões para fazer uma aposta");

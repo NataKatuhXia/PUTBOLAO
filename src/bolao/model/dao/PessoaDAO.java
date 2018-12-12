@@ -172,12 +172,34 @@ public class PessoaDAO implements Observer {
 
         try {
 
-            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = ?, usuario = ?, adm = ? WHERE usuario = ?");
+            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, senha = md5(?), usuario = ?, adm = ? WHERE usuario = ?");
             stmt.setString(1, nome);
             stmt.setString(2, senha);
             stmt.setString(3, usuario);
             stmt.setBoolean(4, adm);
             stmt.setString(5, usuario);
+
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+    
+    public void updateAccount(String nome, String usuario, boolean adm) {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+
+            stmt = con.prepareStatement("UPDATE pessoa SET nome = ?, usuario = ?, adm = ? WHERE usuario = ?");
+            stmt.setString(1, nome);
+            stmt.setString(2, usuario);
+            stmt.setBoolean(3, adm);
+            stmt.setString(4, usuario);
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");

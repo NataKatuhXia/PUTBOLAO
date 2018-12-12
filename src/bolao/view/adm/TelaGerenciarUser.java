@@ -5,8 +5,8 @@
  */
 package bolao.view.adm;
 
-
 import bolao.model.bean.Pessoa;
+import bolao.model.bean.User;
 import bolao.model.dao.PessoaDAO;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -88,18 +88,18 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
                 jTextFieldNomeActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 150, -1));
+        jPanel1.add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 150, -1));
 
         jLabelUsuario1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabelUsuario1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelUsuario1.setText("Usuario:");
-        jPanel1.add(jLabelUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
-        jPanel1.add(jTextFieldUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 150, -1));
+        jPanel1.add(jLabelUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        jPanel1.add(jTextFieldUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 150, -1));
 
         jLabelUsuario.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabelUsuario.setForeground(new java.awt.Color(255, 255, 255));
         jLabelUsuario.setText("Nome:");
-        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         jCheckBox1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
@@ -109,7 +109,7 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         jTableUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -177,6 +177,9 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
             PessoaDAO pessoadao = new PessoaDAO();
             pessoadao.delete((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
             readJTable();
+            jTextFieldNome.setText("");
+            jTextFieldUser.setText("");
+            jCheckBox1.setSelected(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um usuário para Excluir");
         }
@@ -206,8 +209,12 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTableUsers.getSelectedRow() != -1) {
             PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.updateAccount(jTextFieldNome.getText(), jTextFieldUser.getText(), (String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1), jCheckBox1.isSelected());
+            pessoadao.updateAccount(jTextFieldNome.getText(), jTextFieldUser.getText(), jCheckBox1.isSelected());
+            jTextFieldNome.setText("");
+            jTextFieldUser.setText("");
+            jCheckBox1.setSelected(false);
             readJTable();
+
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um usuário para alterar");
         }
@@ -269,7 +276,7 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

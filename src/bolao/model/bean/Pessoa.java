@@ -20,6 +20,7 @@ public abstract class Pessoa {
 
     private String nome;
     private String usuario;
+    private String email;
     private String senha;
     private String pontos;
 
@@ -35,7 +36,7 @@ public abstract class Pessoa {
      * @param ponto
      * @return
      */
-    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, String ponto);
+    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, String ponto, String email);
 
     /*
     Caso o usuário mude alguma informação em seu perfil, na tela MyAccount
@@ -55,17 +56,17 @@ public abstract class Pessoa {
     }
 
     public static List<Jogo> verifyJogosAbertos() {
-        
+
         JogoDAO jogodao = new JogoDAO();
         ApostaDAO apostadao = new ApostaDAO();
 
         List<Jogo> jogosAberto = jogodao.searchAll("Abertos", null);
 
         for (ListIterator<Jogo> iterator = jogosAberto.listIterator(); iterator.hasNext();) {
-            
+
             Jogo jogo = iterator.next();
             List<Aposta> apostas = apostadao.readForDesc(jogo.getIdentificador(), "A definir");
-            
+
             for (Aposta aposta : apostas) {
                 if (User.getPessoa().getUsuario().equals(aposta.getUsuario())) {
                     iterator.remove();
@@ -90,6 +91,14 @@ public abstract class Pessoa {
 
     public boolean isContaADM() {
         return contaADM;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNome() {

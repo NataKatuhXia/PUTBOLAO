@@ -24,11 +24,12 @@ public class Apostador extends Pessoa {
     private Aposta aposta;
 
     @Override
-    public Pessoa createAccount(String comando, String nome, String user, String senha, String pontos) {
+    public Pessoa createAccount(String comando, String nome, String user, String senha, String pontos, String email) {
 
         ValidationField.resultFields.add(nome);
         ValidationField.resultFields.add(user);
         ValidationField.resultFields.add(senha);
+        ValidationField.resultFields.add(email);
 
         if (ValidationField.execute()) {
 
@@ -37,6 +38,7 @@ public class Apostador extends Pessoa {
             pessoa.setUsuario(user);
             pessoa.setSenha(senha);
             pessoa.setPontos(pontos);
+            pessoa.setEmail(email);
             pessoa.setContaADM(false);
 
             if (comando.equals("Cadastro")) {

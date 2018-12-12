@@ -5,7 +5,6 @@
  */
 package bolao.model.dao;
 
-import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Administrador;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
@@ -29,11 +28,12 @@ public class PessoaDAO implements Observer {
 
     Pessoa pessoa;
 
-    public static boolean validationLogin(String usuario) {
+    public static Pessoa validationLogin(String usuario) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         ResultSet rs = null;
+        Pessoa apostador = null;
         boolean check = true;
         try {
             stmt = con.prepareStatement("SELECT * FROM pessoa WHERE usuario = ?");
@@ -42,7 +42,7 @@ public class PessoaDAO implements Observer {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-
+                apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
                 /* Usuario nao liberado por isso false */
                 check = false;
 
@@ -53,7 +53,7 @@ public class PessoaDAO implements Observer {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
 
-        return check;
+        return apostador;
     }
 
     public Pessoa checkLogin(String comando, String usuario, String senha) {
@@ -76,9 +76,9 @@ public class PessoaDAO implements Observer {
             }
             if (check) {
                 if (rs.getBoolean("adm")) {
-                    pessoa = new Administrador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+                    pessoa = new Administrador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
                 } else {
-                    pessoa = new Apostador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+                    pessoa = new Apostador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
                 }
             } else {
                 pessoa = null;
@@ -97,12 +97,13 @@ public class PessoaDAO implements Observer {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO pessoa (usuario,senha,nome,adm,pontos)VALUES(?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO pessoa (usuario,senha,nome,adm,pontos,email)VALUES(?,?,?,?,?,?)");
             stmt.setString(1, pessoa.getUsuario());
             stmt.setString(2, pessoa.getSenha());
             stmt.setString(3, pessoa.getNome());
             stmt.setBoolean(4, pessoa.isContaADM());
-            stmt.setString(5, pessoa.getPontos());
+            stmt.setInt(5, Integer.parseInt(pessoa.getPontos()));
+            stmt.setString(6, pessoa.getEmail());
 
             stmt.executeUpdate();
 
@@ -200,7 +201,7 @@ public class PessoaDAO implements Observer {
 
             while (rs.next()) {
 
-                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
 
                 pessoas.add(apostador);
             }
@@ -240,7 +241,7 @@ public class PessoaDAO implements Observer {
 
             while (rs.next()) {
 
-                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"));
+                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
 
                 pessoas.add(apostador);
             }

@@ -9,11 +9,13 @@ import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
 import bolao.model.bean.Partida;
+import bolao.model.bean.Pessoa;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import bolao.util.Subject;
 import bolao.util.Command;
+import connection.MailApp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +27,7 @@ import java.util.Random;
 public class ControlBolao implements Subject, Command {
 
     private static final String MAX_GOLS = PROP.getProperty("MAX_GOLS");
+    List<Pessoa> pessoas = new ArrayList<>();
 
     private Jogo jogo;
     private ArrayList observers;
@@ -55,6 +58,9 @@ public class ControlBolao implements Subject, Command {
     @Override
     public void notifyObservers() {
 
+        MailApp.sendMessages(pessoas);
+        pessoas.removeAll(pessoas);
+
         int pontos = observers.size() / Integer.parseInt(PROP.getProperty("PONTOS_VITORIA"));
         if (pontos < 3) {
             pontos = 3;
@@ -68,10 +74,9 @@ public class ControlBolao implements Subject, Command {
 
     public void measurementsChanged(String jogo, String placar) {
 
-        List<Aposta> apostas = new ArrayList<>();
-
         ApostaDAO apostadao = new ApostaDAO();
-        apostas = apostadao.read("Todos", jogo, placar);
+
+        List<Aposta> apostas = apostadao.read("Todos", jogo, placar);
 
         for (Aposta aposta : apostas) {
             if (String.valueOf(aposta.getPalpite()).equals(placar)) {
@@ -81,7 +86,7 @@ public class ControlBolao implements Subject, Command {
                 aposta.setStatus("Perdeu");
             }
             apostadao.update(aposta);
-
+            pessoas.add(PessoaDAO.validationLogin(aposta.getUsuario()));
         }
 
         notifyObservers();

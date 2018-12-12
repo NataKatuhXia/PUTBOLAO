@@ -34,7 +34,6 @@ public class PessoaDAO implements Observer {
 
         ResultSet rs = null;
         Pessoa apostador = null;
-        boolean check = true;
         try {
             stmt = con.prepareStatement("SELECT * FROM pessoa WHERE usuario = ?");
             stmt.setString(1, usuario);
@@ -44,7 +43,6 @@ public class PessoaDAO implements Observer {
             if (rs.next()) {
                 apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
                 /* Usuario nao liberado por isso false */
-                check = false;
 
             }
         } catch (SQLException ex) {
@@ -63,7 +61,11 @@ public class PessoaDAO implements Observer {
         ResultSet rs = null;
         boolean check = false;
         try {
-            stmt = con.prepareStatement("SELECT * FROM pessoa WHERE usuario = ? and senha = ?");
+            if (comando.equals("Consulta")) {
+                stmt = con.prepareStatement("SELECT * FROM pessoa WHERE usuario = ? and senha = md5(?)");
+            } else {
+                stmt = con.prepareStatement("SELECT * FROM pessoa WHERE usuario = ? and senha = ?");
+            }
             stmt.setString(1, usuario);
             stmt.setString(2, senha);
 
@@ -97,7 +99,7 @@ public class PessoaDAO implements Observer {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO pessoa (usuario,senha,nome,adm,pontos,email)VALUES(?,?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO pessoa (usuario,senha,nome,adm,pontos,email)VALUES(?,md5(?),?,?,?,?)");
             stmt.setString(1, pessoa.getUsuario());
             stmt.setString(2, pessoa.getSenha());
             stmt.setString(3, pessoa.getNome());

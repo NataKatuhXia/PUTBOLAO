@@ -44,7 +44,7 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         txtNome = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
+        jImage = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         jUsuario1 = new javax.swing.JLabel();
         jButtonCadastrar1 = new javax.swing.JButton();
@@ -53,7 +53,7 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Criação de Login");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -74,6 +74,8 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
                 jButtonSairActionPerformed(evt);
             }
         });
+
+        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
 
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

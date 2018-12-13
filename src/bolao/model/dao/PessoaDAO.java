@@ -9,7 +9,7 @@ import bolao.model.bean.Administrador;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.Pessoa;
 import bolao.util.Observer;
-import connection.ConnectionFactory;
+import bolao.connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

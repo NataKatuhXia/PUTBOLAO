@@ -64,7 +64,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        image = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
+        image = new javax.swing.JLabel();
         jLabelTimeA = new javax.swing.JLabel();
         jLabelTimeB = new javax.swing.JLabel();
         SpinnerModel smA = new SpinnerNumberModel(0, 0, Integer.parseInt(PROP.getProperty("MAX_GOLS")), 1); //default value,lower bound,upper bound,increment by
@@ -77,10 +77,12 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Criar Aposta");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
 
         jLabelTimeA.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabelTimeA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

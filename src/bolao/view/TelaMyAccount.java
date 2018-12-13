@@ -45,13 +45,13 @@ public class TelaMyAccount extends javax.swing.JFrame {
         jPasswordSenha = new javax.swing.JPasswordField();
         jPasswordConfirmSenha = new javax.swing.JPasswordField();
         jButtonSalvar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel(new ImageIcon("view\\usuario.jpg"));
+        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Minha Conta");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -73,6 +73,8 @@ public class TelaMyAccount extends javax.swing.JFrame {
                 jButtonSalvarActionPerformed(evt);
             }
         });
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/usuario.jpg"))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

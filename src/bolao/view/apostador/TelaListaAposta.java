@@ -87,7 +87,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Apostas");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(null);
@@ -149,7 +149,7 @@ public class TelaListaAposta extends javax.swing.JFrame {
         });
         jPanel1.add(jButtonNewAposta, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, -1));
 
-        jLabel1.setIcon(new ImageIcon("view\\ImageFundo.jpg"));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/ImageFundo.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 420));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

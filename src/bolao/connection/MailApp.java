@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package connection;
+package bolao.connection;
 
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Pessoa;

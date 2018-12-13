@@ -105,8 +105,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         jLabelPontuacao = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableRanking = new javax.swing.JTable();
-        imageLogo = new javax.swing.JLabel(new ImageIcon("view\\Logo.png"));
-        ImageFundo = new javax.swing.JLabel(new ImageIcon("view\\ImageFundo.jpg"));
+        imageLogo = new javax.swing.JLabel();
+        ImageFundo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -126,7 +126,7 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela Principal");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -254,6 +254,10 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        imageLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+
+        ImageFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/ImageFundo.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -284,12 +288,12 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/aposta.png"))); // NOI18N
         jMenu1.setText("Jogos");
-        jMenu1.setIcon(new ImageIcon("view\\aposta.png"));
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/money.png"))); // NOI18N
         jMenuItem1.setText("Gerar Partidas");
-        jMenuItem1.setIcon(new ImageIcon("view\\money.png"));
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -297,8 +301,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/result.png"))); // NOI18N
         jMenuItem2.setText("Gerar Resultados");
-        jMenuItem2.setIcon(new ImageIcon("view\\result.png"));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -308,12 +312,12 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/system.png"))); // NOI18N
         jMenu2.setText("Sistema");
-        jMenu2.setIcon(new ImageIcon("view\\system.png"));
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/users.png"))); // NOI18N
         jMenuItem3.setText("Usuarios");
-        jMenuItem3.setIcon(new ImageIcon("view\\users.png"));
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -321,8 +325,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/options.png"))); // NOI18N
         jMenuItem4.setText("Permissões");
-        jMenuItem4.setIcon(new ImageIcon("view\\options.png"));
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -332,12 +336,12 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/information.png"))); // NOI18N
         jMenu5.setText("Ajuda");
-        jMenu5.setIcon(new ImageIcon("view\\information.png"));
         jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/myAccount.png"))); // NOI18N
         jMenuItem5.setText("Minha conta");
-        jMenuItem5.setIcon(new ImageIcon("view\\myAccount.png"));
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -345,8 +349,8 @@ public class TelaPrincipalAdministrador extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem5);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/door_out.png"))); // NOI18N
         jMenuItem6.setText("Sair");
-        jMenuItem6.setIcon(new ImageIcon("view\\door_out.png"));
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);

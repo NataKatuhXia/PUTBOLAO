@@ -43,13 +43,13 @@ public class TelaLogin extends javax.swing.JDialog {
         txtUsuario = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
         jButtonSair = new javax.swing.JButton();
-        jImage = new javax.swing.JLabel(new ImageIcon("view\\Simbolo.jpg"));
+        jImage = new javax.swing.JLabel();
         jButtonCreate = new javax.swing.JButton();
         jButtonEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -70,6 +70,8 @@ public class TelaLogin extends javax.swing.JDialog {
                 jButtonSairActionPerformed(evt);
             }
         });
+
+        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
 
         jButtonCreate.setText("Criar conta");
         jButtonCreate.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +131,7 @@ public class TelaLogin extends javax.swing.JDialog {
                     .addComponent(jButtonSair)
                     .addComponent(jButtonEntrar)
                     .addComponent(jButtonCreate))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

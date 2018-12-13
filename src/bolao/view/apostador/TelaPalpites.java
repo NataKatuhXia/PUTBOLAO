@@ -58,7 +58,7 @@ public class TelaPalpites extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Palpites");
-        setIconImage(new ImageIcon("view\\frame.png").getImage());
+        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -132,7 +132,7 @@ public class TelaPalpites extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 590, 190));
 
-        imageLogo.setIcon(new javax.swing.ImageIcon("view\\Logo.png"));
+        imageLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
         jPanel1.add(imageLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 0, 270, 190));
 
         jLabelPlacar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -141,7 +141,7 @@ public class TelaPalpites extends javax.swing.JFrame {
         jPanel1.add(jLabelPlacar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
         jPanel1.add(jTextFieldPlacar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 150, -1));
 
-        imageFundo.setIcon(new javax.swing.ImageIcon("view\\ImageFundo.jpg"));
+        imageFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/ImageFundo.jpg"))); // NOI18N
         jPanel1.add(imageFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 624, 410));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

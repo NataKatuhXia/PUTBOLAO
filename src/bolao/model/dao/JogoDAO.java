@@ -6,7 +6,7 @@
 package bolao.model.dao;
 
 import bolao.model.bean.Jogo;
-import connection.ConnectionFactory;
+import bolao.connection.ConnectionFactory;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;

@@ -24,7 +24,7 @@ public class Equipe {
         Equipe equipe = new Equipe();
         try {
 
-            List<Equipe> equipes = LoadUtil.loadListObjects("Json/ListaTimes", Equipe[].class);
+            List<Equipe> equipes = LoadUtil.loadListObjects("src\\Json\\ListaTimes", Equipe[].class);
 
             equipe.setEquipes(equipes);
 

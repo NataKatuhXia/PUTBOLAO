@@ -15,7 +15,7 @@ import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
 import bolao.util.Subject;
 import bolao.util.Command;
-import connection.MailApp;
+import bolao.connection.MailApp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

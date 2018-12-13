@@ -22,7 +22,7 @@ public abstract class Pessoa {
     private String usuario;
     private String email;
     private String senha;
-    private String pontos;
+    private int pontos;
 
     private boolean contaADM;
 
@@ -34,9 +34,10 @@ public abstract class Pessoa {
      * @param user
      * @param senha
      * @param ponto
+     * @param email
      * @return
      */
-    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, String ponto, String email);
+    protected abstract Pessoa createAccount(String comando, String nome, String user, String senha, int ponto, String email);
 
     /*
     Caso o usuário mude alguma informação em seu perfil, na tela MyAccount
@@ -81,11 +82,11 @@ public abstract class Pessoa {
         this.contaADM = contaADM;
     }
 
-    public void setPontos(String pontos) {
+    public void setPontos(int pontos) {
         this.pontos = pontos;
     }
 
-    public String getPontos() {
+    public int getPontos() {
         return pontos;
     }
 

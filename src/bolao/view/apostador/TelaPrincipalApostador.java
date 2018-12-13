@@ -87,7 +87,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
         jLabelName.setText(User.getPessoa().getNome());
         PessoaDAO pessoadao = new PessoaDAO();
-        String pontos = pessoadao.checkLogin("", User.getPessoa().getUsuario(), User.getPessoa().getSenha()).getPontos();
+        String pontos = String.valueOf(pessoadao.checkLogin("", User.getPessoa().getUsuario(), User.getPessoa().getSenha()).getPontos());
         jLabelPontuacao.setText("Pontuação Atual: " + pontos);
 
     }

@@ -41,7 +41,7 @@ public class PessoaDAO implements Observer {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
+                apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getInt("pontos"), rs.getString("email"));
                 /* Usuario nao liberado por isso false */
 
             }
@@ -78,9 +78,9 @@ public class PessoaDAO implements Observer {
             }
             if (check) {
                 if (rs.getBoolean("adm")) {
-                    pessoa = new Administrador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
+                    pessoa = new Administrador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getInt("pontos"), rs.getString("email"));
                 } else {
-                    pessoa = new Apostador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
+                    pessoa = new Apostador().createAccount(comando, rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getInt("pontos"), rs.getString("email"));
                 }
             } else {
                 pessoa = null;
@@ -104,7 +104,7 @@ public class PessoaDAO implements Observer {
             stmt.setString(2, pessoa.getSenha());
             stmt.setString(3, pessoa.getNome());
             stmt.setBoolean(4, pessoa.isContaADM());
-            stmt.setInt(5, Integer.parseInt(pessoa.getPontos()));
+            stmt.setInt(5, pessoa.getPontos());
             stmt.setString(6, pessoa.getEmail());
 
             stmt.executeUpdate();
@@ -187,7 +187,7 @@ public class PessoaDAO implements Observer {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-    
+
     public void updateAccount(String nome, String usuario, boolean adm) {
 
         Connection con = ConnectionFactory.getConnection();
@@ -225,7 +225,7 @@ public class PessoaDAO implements Observer {
 
             while (rs.next()) {
 
-                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
+                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getInt("pontos"), rs.getString("email"));
 
                 pessoas.add(apostador);
             }
@@ -265,7 +265,7 @@ public class PessoaDAO implements Observer {
 
             while (rs.next()) {
 
-                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getString("pontos"), rs.getString("email"));
+                Pessoa apostador = new Apostador().createAccount("Consulta", rs.getString("nome"), rs.getString("usuario"), rs.getString("senha"), rs.getInt("pontos"), rs.getString("email"));
 
                 pessoas.add(apostador);
             }

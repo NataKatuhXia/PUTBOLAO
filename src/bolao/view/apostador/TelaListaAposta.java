@@ -5,6 +5,7 @@
  */
 package bolao.view.apostador;
 
+import bolao.controler.ControlTime;
 import static bolao.controler.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
@@ -169,28 +170,37 @@ public class TelaListaAposta extends javax.swing.JFrame {
     private void jTableApostaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableApostaMouseClicked
         // TODO add your handling code here:
         String apostadores = PROP.getProperty("QNTD_USER_APOSTA");
-        String atual = jTableAposta.getValueAt(jTableAposta.getSelectedRow(), 2).toString();
+        String codigo = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
+        JogoDAO jogodao = new JogoDAO();
+        String atual = String.valueOf(jogodao.searchJogo("", codigo).getApostadores());
 
-        if (evt.getClickCount() == 2 && (!atual.equals(apostadores))) {
+        if (evt.getClickCount() == 2 || (!atual.equals(apostadores))) {
             if (jTableAposta.getSelectedRow() != -1) {
                 new TelaCriacaoAposta(identificador, this, parent, jTableAposta.getValueAt(jTableAposta.getSelectedRow(), 1).toString()).setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "O jogo já está com o número máximo de apostas!");
+            JOptionPane.showMessageDialog(null, "Essa partida já tem o número máximo de apostas!");
         }
     }//GEN-LAST:event_jTableApostaMouseClicked
 
     private void jButtonNewApostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewApostaActionPerformed
         // TODO add your handling code here:
         String apostadores = PROP.getProperty("QNTD_USER_APOSTA");
+        String codigo = ControlTime.parseIdentificador(jLabelTimeA.getText(), jLabelTimeB.getText());
         JogoDAO jogodao = new JogoDAO();
-        String atual = String.valueOf(jogodao.searchJogo("", identificador).getApostadores());
+        String atual = String.valueOf(jogodao.searchJogo("", codigo).getApostadores());
 
-        if ((PROP.getProperty("ADM_APOSTA").equals("true")) || (!User.getPessoa().isContaADM()) && (!atual.equals(apostadores))) {
-            new TelaCriacaoAposta(identificador, this, parent).setVisible(true);
+        if ((!atual.equals(apostadores))) {
+            if ((PROP.getProperty("ADM_APOSTA").equals("true")) || (!User.getPessoa().isContaADM())) {
+                new TelaCriacaoAposta(identificador, this, parent).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não tem permissões para fazer uma aposta");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Você não tem permissões para fazer uma aposta");
+            JOptionPane.showMessageDialog(null, "Essa partida já tem o número máximo de apostas!");
         }
+
+
     }//GEN-LAST:event_jButtonNewApostaActionPerformed
 
     /**

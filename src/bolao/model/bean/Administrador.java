@@ -29,12 +29,12 @@ import javax.swing.JOptionPane;
 public class Administrador extends Pessoa {
 
     @Override
-    public Pessoa createAccount(String comando, String nome, String user, String senha, String email, String pontos) {
+    public Pessoa createAccount(String comando, String nome, String user, String senha, int pontos, String email) {
 
         ValidationField.resultFields.add(nome);
         ValidationField.resultFields.add(user);
         ValidationField.resultFields.add(senha);
-        ValidationField.resultFields.add(pontos);
+        ValidationField.resultFields.add(String.valueOf(pontos));
         ValidationField.resultFields.add(email);
 
         if (ValidationField.execute()) {

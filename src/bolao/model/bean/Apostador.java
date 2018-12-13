@@ -24,7 +24,7 @@ public class Apostador extends Pessoa {
     private Aposta aposta;
 
     @Override
-    public Pessoa createAccount(String comando, String nome, String user, String senha, String pontos, String email) {
+    public Pessoa createAccount(String comando, String nome, String user, String senha, int pontos, String email) {
 
         ValidationField.resultFields.add(nome);
         ValidationField.resultFields.add(user);

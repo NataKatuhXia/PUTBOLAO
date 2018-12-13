@@ -198,7 +198,7 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
         String usuario = txtUsuario.getText();
         String senha = String.valueOf(txtSenha.getPassword());
         String email = jTextFieldEmail.getText();
-        String pontuacao = PROP.getProperty("PONTUACAO_INICIAL_USER");
+        int pontuacao = Integer.parseInt(PROP.getProperty("PONTUACAO_INICIAL_USER"));
 
         if (PessoaDAO.validationLogin(usuario) == null) {
             if ((new Apostador().createAccount("Cadastro", nome, usuario, senha, pontuacao, email) != null)) {

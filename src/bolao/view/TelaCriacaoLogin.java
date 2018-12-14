@@ -75,7 +75,7 @@ public class TelaCriacaoLogin extends javax.swing.JDialog {
             }
         });
 
-        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+        jImage.setIcon(new javax.swing.ImageIcon("src/view/Logo.png")); // NOI18N
 
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

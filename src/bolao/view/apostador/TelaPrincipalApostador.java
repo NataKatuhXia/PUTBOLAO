@@ -135,9 +135,9 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        ImageFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/ImageFundo.jpg"))); // NOI18N
+        ImageFundo.setIcon(new javax.swing.ImageIcon("src/view/ImageFundo.jpg")); // NOI18N
 
-        imageLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+        imageLogo.setIcon(new javax.swing.ImageIcon("src/view/Logo.png")); // NOI18N
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -287,11 +287,11 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/aposta.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon("src/view/aposta.png")); // NOI18N
         jMenu1.setText("Apostas");
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/money.png"))); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon("src/view/money.png")); // NOI18N
         jMenuItem1.setText("Meus Palpites");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,7 +300,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/result.png"))); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon("src/view/result.png")); // NOI18N
         jMenuItem2.setText("Resultados");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,11 +311,11 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/information.png"))); // NOI18N
+        jMenu5.setIcon(new javax.swing.ImageIcon("src/view/information.png")); // NOI18N
         jMenu5.setText("Ajuda");
         jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/myAccount.png"))); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon("src/view/myAccount.png")); // NOI18N
         jMenuItem3.setText("Minha Conta");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,7 +324,7 @@ public class TelaPrincipalApostador extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem3);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/door_out.png"))); // NOI18N
+        jMenuItem4.setIcon(new javax.swing.ImageIcon("src/view/door_out.png")); // NOI18N
         jMenuItem4.setText("Sair");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

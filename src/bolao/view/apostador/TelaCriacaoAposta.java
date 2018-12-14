@@ -82,7 +82,7 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+        image.setIcon(new javax.swing.ImageIcon("src/view/Logo.png")); // NOI18N
 
         jLabelTimeA.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabelTimeA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

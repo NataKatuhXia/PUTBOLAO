@@ -74,7 +74,7 @@ public class TelaMyAccount extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/usuario.jpg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("src/view/usuario.jpg")); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

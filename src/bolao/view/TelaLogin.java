@@ -71,7 +71,7 @@ public class TelaLogin extends javax.swing.JDialog {
             }
         });
 
-        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+        jImage.setIcon(new javax.swing.ImageIcon("src/view/Logo.png")); // NOI18N
 
         jButtonCreate.setText("Criar conta");
         jButtonCreate.addActionListener(new java.awt.event.ActionListener() {

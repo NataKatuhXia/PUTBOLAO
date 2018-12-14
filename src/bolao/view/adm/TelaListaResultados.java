@@ -111,10 +111,10 @@ public class TelaListaResultados extends javax.swing.JFrame {
         jFormattedTextField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 120, -1));
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/Logo.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon("src/view/Logo.png")); // NOI18N
         jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 5, -1, -1));
 
-        imageFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/ImageFundo.jpg"))); // NOI18N
+        imageFundo.setIcon(new javax.swing.ImageIcon("src/view/ImageFundo.jpg")); // NOI18N
         jPanel1.add(imageFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 624, 410));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

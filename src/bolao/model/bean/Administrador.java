@@ -132,6 +132,7 @@ public class Administrador extends Pessoa {
         List<Jogo> jogos = jogodado.searchAll("Todos", formataData.format(data));
         if (!jogos.isEmpty()) {
             int cont = 0;
+
             for (Jogo jogo : jogos) {
                 ControlBolao bolao = new ControlBolao(jogo);
 

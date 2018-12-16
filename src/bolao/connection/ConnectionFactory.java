@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Responsável pela conexão com o Banco de Dados
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
@@ -25,6 +26,12 @@ public abstract class ConnectionFactory {
     private static final String USER = PROP.getProperty("USER_DATE");
     private static final String PASS = PROP.getProperty("PASSWORD_DATE");
 
+    /**
+     * Realiza conexão através das chaves do Properties, definida pelo
+     * Administrador do Sistema
+     *
+     * @return, a conexão criada pelo método
+     */
     public static Connection getConnection() {
 
         try {
@@ -36,6 +43,11 @@ public abstract class ConnectionFactory {
         }
     }
 
+    /**
+     * Método para finalizar uma conexão após toda conexão criada
+     *
+     * @param con, Conexão aberta
+     */
     public static void closeConnection(Connection con) {
         try {
             if (con != null) {
@@ -46,6 +58,12 @@ public abstract class ConnectionFactory {
         }
     }
 
+    /**
+     * Método para finalizar uma conexão após toda conexão criada
+     *
+     * @param con, Conexão aberta
+     * @param stmt , resultados que o banco retorna
+     */
     public static void closeConnection(Connection con, PreparedStatement stmt) {
 
         closeConnection(con);
@@ -58,6 +76,13 @@ public abstract class ConnectionFactory {
         }
     }
 
+    /**
+     * Método para finalizar uma conexão após toda conexão criada
+     *
+     * @param con , Conexão aberta
+     * @param stmt , resultados que o banco retorna
+     * @param rs , resultados que o banco retorna
+     */
     public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
 
         closeConnection(con, stmt);

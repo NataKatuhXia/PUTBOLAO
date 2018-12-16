@@ -5,19 +5,17 @@
  */
 package bolao.connection;
 
-import bolao.model.bean.Aposta;
 import bolao.model.bean.Pessoa;
 import java.util.*;
 import java.io.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
-import javax.swing.JFrame;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Classe responsável pelo envio de emails para o Usuário
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
@@ -25,12 +23,24 @@ public class MailApp {
 
     private static Session session;
 
+    /**
+     * Método utilizado para iniciar o processo de envio. Inicialmente abre uma
+     * sessão com o sistema de Email, que no caso é o Gmail, e depois começa o
+     * envio.
+     *
+     * @param pessoas, a lista de Usuários que irão receber o email
+     */
     public static void sendMessages(List<Pessoa> pessoas) {
         MailApp.session = inicializarSecao();
         sendMessage(session, pessoas);
 
     }
 
+    /**
+     * Inicializa uma sessão, conectando o sistema com o Gmail
+     *
+     * @return Sessão criada
+     */
     private static Session inicializarSecao() {
         Properties props = new Properties();
 
@@ -55,6 +65,13 @@ public class MailApp {
         return session;
     }
 
+    /**
+     * Aqui monta a mensagem em HTML e depois seleciona os usuários que irão
+     * receber a mensagem
+     *
+     * @param session, sessão criada anteriormente
+     * @param pessoas, a lista de pessoas
+     */
     private static void sendMessage(Session session, List<Pessoa> pessoas) {
         try {
             // cria a mensagem

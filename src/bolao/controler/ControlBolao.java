@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * Classe para controlar a maioria das Operações do Bolão Implementa duas
+ * interfaces para utilizar os Padrões Observer e Command
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
@@ -32,6 +34,9 @@ public class ControlBolao implements Subject, Command {
     private Jogo jogo;
     private ArrayList observers;
 
+    /**
+     * Inicializa a lista de Observadores
+     */
     public ControlBolao() {
         observers = new ArrayList<>();
     }
@@ -41,11 +46,21 @@ public class ControlBolao implements Subject, Command {
         this.jogo = jogo;
     }
 
+    /**
+     * Registra o Usuário na lista de Observadores
+     *
+     * @param usuario, o login do Usuário
+     */
     @Override
     public void registerObserver(String usuario) {
         observers.add(usuario);
     }
 
+    /**
+     * Remove o Usuário da lista de Observadores
+     *
+     * @param usuario
+     */
     @Override
     public void removeObserver(String usuario) {
 
@@ -55,6 +70,11 @@ public class ControlBolao implements Subject, Command {
         }
     }
 
+    /**
+     * Notifica os Usuários que apostaram nos determinados Jogos, enviando
+     * email, e caso o usuário tenha acertado o palpite acrescenta os pontos ao
+     * usuario
+     */
     @Override
     public void notifyObservers() {
 
@@ -72,6 +92,13 @@ public class ControlBolao implements Subject, Command {
         }
     }
 
+    /**
+     * Método faz a separação dos perdedores e ganhadores do Jogos
+     *
+     * @param jogo , o identificador do jogo que ele deverá realizar essa
+     * separação
+     * @param placar , o placar do jogo para que ele seja utilizado como Filtro
+     */
     public void measurementsChanged(String jogo, String placar) {
 
         ApostaDAO apostadao = new ApostaDAO();
@@ -96,6 +123,11 @@ public class ControlBolao implements Subject, Command {
         measurementsChanged(partida.getJogo(), partida.getPlacar());
     }
 
+    /**
+     * Implementação do Padrão Command
+     *
+     * @return , retorna o placar desses jogos
+     */
     @Override
     public String execute() {
 
@@ -109,6 +141,11 @@ public class ControlBolao implements Subject, Command {
 //        setMeasurements(generatePartidas());
     }
 
+    /**
+     * Gerar placar dos jogos de forma aleatória
+     *
+     * @return , o valor do placar de um time
+     */
     private int generatePlacar() {
         Random gerador = new Random();
 
@@ -117,6 +154,12 @@ public class ControlBolao implements Subject, Command {
         return valor;
     }
 
+    /**
+     * Gerar as partidas da rodada
+     *
+     * @return , boolean caso as partidas forem geradas, se estiver partidas sem
+     * resultado gerado, o Administrador não consegue gerar
+     */
     public boolean generatePartidas() {
         JogoDAO jogodado = new JogoDAO();
 
@@ -135,6 +178,14 @@ public class ControlBolao implements Subject, Command {
         return gerar;
     }
 
+    /**
+     * Validação das apostas realizadas pelos usuários
+     *
+     * @param identificador , identificador da partida
+     * @param usuario , o login do usuário para verificar se ele realizou já
+     * aposta naquele jogo
+     * @return , Booleano para caso essa aposta seja validada
+     */
     public static boolean validationAposta(String identificador, String usuario) {
 
         ApostaDAO apostadao = new ApostaDAO();

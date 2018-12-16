@@ -5,15 +5,20 @@
  */
 package bolao.util;
 
-import bolao.model.bean.Partida;
-import java.util.List;
-import java.util.Map;
-
 /**
+ * Classe para implementar o padrão Observer no sistema
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
 public interface Observer {
 
+    /**
+     * Classe para dar a atualização na lista de Observadores
+     *
+     * @param comando, o tipo de Atualização que será feita nos Observadores
+     * @param user, o Usuário que recebrá a atualização
+     * @param pontos, caso seja uma atualização de aumento ou decremento de
+     * pontos, este parâmentro recebe o valor do ponto
+     */
     public void updateAposta(String comando, String user, int pontos);
 }

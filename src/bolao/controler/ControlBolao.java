@@ -5,7 +5,7 @@
  */
 package bolao.controler;
 
-import static bolao.controler.GetProperties.PROP;
+import static bolao.util.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Jogo;
 import bolao.model.bean.Partida;

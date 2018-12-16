@@ -5,7 +5,7 @@
  */
 package bolao.connection;
 
-import static bolao.controler.GetProperties.PROP;
+import static bolao.util.GetProperties.PROP;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

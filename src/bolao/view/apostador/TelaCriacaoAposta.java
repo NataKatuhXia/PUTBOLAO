@@ -8,7 +8,7 @@ package bolao.view.apostador;
 import bolao.view.apostador.TelaPrincipalApostador;
 import bolao.controler.ControlBolao;
 import bolao.controler.ControlTime;
-import static bolao.controler.GetProperties.PROP;
+import static bolao.util.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.User;

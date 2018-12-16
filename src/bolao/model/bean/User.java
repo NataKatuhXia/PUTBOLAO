@@ -5,7 +5,7 @@
  */
 package bolao.model.bean;
 
-import bolao.controler.ValidationField;
+import bolao.util.ValidationField;
 import bolao.model.dao.PessoaDAO;
 
 /**

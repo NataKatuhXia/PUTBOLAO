@@ -5,7 +5,7 @@
  */
 package bolao.view.adm;
 
-import static bolao.controler.GetProperties.PROP;
+import static bolao.util.GetProperties.PROP;
 import bolao.model.bean.Administrador;
 import bolao.model.bean.User;
 import java.util.HashMap;

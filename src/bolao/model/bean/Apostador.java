@@ -6,8 +6,8 @@
 package bolao.model.bean;
 
 import bolao.controler.ControlTime;
-import static bolao.controler.GetProperties.PROP;
-import bolao.controler.ValidationField;
+import static bolao.util.GetProperties.PROP;
+import bolao.util.ValidationField;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;

@@ -10,6 +10,7 @@ import bolao.model.bean.Aposta;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
+import bolao.util.ValidationField;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * @author RAFAELDEOLIVEIRABAHI
  */
 public class TelaPalpites extends javax.swing.JFrame {
-
+    
     DefaultTableModel modelo;
     JFrame parent;
 
@@ -163,21 +164,21 @@ public class TelaPalpites extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String status = (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 4);
-
+        
         if (jTablePalpite.getSelectedRow() != -1) {
-
+            
             if (status.equals("A definir")) {
                 ApostaDAO apostadao = new ApostaDAO();
                 JogoDAO jogodao = new JogoDAO();
-
+                
                 apostadao.delete((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
                 jogodao.update("Excluir aposta", (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
                 readJTable();
-
+                
                 TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
                 frame.setInformacoes();
                 frame.setVisible(true);
-
+                
                 this.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Este palpite não pode ser alterado, pois já tem resultado!");
@@ -191,13 +192,13 @@ public class TelaPalpites extends javax.swing.JFrame {
         // TODO add your handling code here:
         readJTableForDesc(jTextFieldIdentificador.getText(), User.getPessoa().getUsuario());
     }//GEN-LAST:event_jButtonBuscarActionPerformed
-
+    
     public void readJTableForDesc(String nome, String usuario) {
         modelo = (DefaultTableModel) jTablePalpite.getModel();
         modelo.setNumRows(0);
-
+        
         ApostaDAO apostadao = new ApostaDAO();
-
+        
         int cont = 1;
         for (Aposta aposta : apostadao.readForUser(nome, usuario)) {
             modelo.addRow(new Object[]{
@@ -212,23 +213,23 @@ public class TelaPalpites extends javax.swing.JFrame {
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         // TODO add your handling code here:
         String status = (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 4);
-
+        
         if (jTablePalpite.getSelectedRow() != -1) {
-
-            if (status.equals("A definir")) {
+            
+            if (status.equals("A definir") && ValidationField.validationPlacar(jTextFieldPlacar.getText())) {
                 ApostaDAO apostadao = new ApostaDAO();
                 apostadao.modifyAposta((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1), jTextFieldPlacar.getText());
                 readJTable();
-
+                
                 TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
                 frame.setInformacoes();
                 frame.setVisible(true);
-
+                
                 this.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Este palpite não pode ser alterado, pois já tem resultado!");
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um palpite para alterar");
         }
@@ -240,15 +241,15 @@ public class TelaPalpites extends javax.swing.JFrame {
         jTextFieldIdentificador.setText((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
         jTextFieldPlacar.setText((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 3));
     }//GEN-LAST:event_jTablePalpiteMouseClicked
-
+    
     private void readJTable() {
-
+        
         modelo = (DefaultTableModel) jTablePalpite.getModel();
         modelo.setNumRows(0);
-
+        
         ApostaDAO apostadao = new ApostaDAO();
         List<Aposta> apostas = apostadao.readForUser(User.getPessoa().getUsuario());
-
+        
         int cont = 1;
         for (Aposta aposta : apostas) {
             modelo.addRow(new Object[]{
@@ -257,7 +258,7 @@ public class TelaPalpites extends javax.swing.JFrame {
                 ControlTime.parseTime(aposta.getIdentificador()),
                 aposta.getPalpite(),
                 aposta.getStatus()
-
+            
             });
         }
     }

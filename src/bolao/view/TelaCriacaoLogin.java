@@ -5,7 +5,7 @@
  */
 package bolao.view;
 
-import static bolao.controler.GetProperties.PROP;
+import static bolao.util.GetProperties.PROP;
 import bolao.model.bean.Apostador;
 import bolao.model.dao.PessoaDAO;
 import javax.swing.ImageIcon;

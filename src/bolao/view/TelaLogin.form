@@ -96,7 +96,7 @@
                       <Component id="jButtonEntrar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonCreate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -129,8 +129,8 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jImage">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/view/Logo.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/view/Logo.png&quot;)" type="code"/>
             </Property>
           </Properties>
           <AuxValues>

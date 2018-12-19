@@ -5,6 +5,7 @@
  */
 package bolao.view.adm;
 
+import bolao.model.bean.Administrador;
 import bolao.model.bean.Pessoa;
 import bolao.model.bean.User;
 import bolao.model.dao.PessoaDAO;
@@ -174,8 +175,10 @@ public class TelaGerenciarUser extends javax.swing.JFrame {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         // TODO add your handling code here:
         if (jTableUsers.getSelectedRow() != -1) {
-            PessoaDAO pessoadao = new PessoaDAO();
-            pessoadao.delete((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
+            if (User.getPessoa().isContaADM()) {
+
+                new Administrador().deleteUser((String) jTableUsers.getValueAt(jTableUsers.getSelectedRow(), 1));
+            }
             readJTable();
             jTextFieldNome.setText("");
             jTextFieldUser.setText("");

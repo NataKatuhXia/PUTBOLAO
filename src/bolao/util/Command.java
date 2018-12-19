@@ -7,6 +7,7 @@ package bolao.util;
 
 import bolao.model.bean.Administrador;
 import bolao.model.bean.Jogo;
+import java.util.List;
 
 /**
  * Classe para implementação do Padrão Command
@@ -23,6 +24,6 @@ public interface Command {
      * @see Administrador
      * @return o valor dos resultados Gerados
      */
-    public String execute();
+    public List<Jogo> execute();
 
 }

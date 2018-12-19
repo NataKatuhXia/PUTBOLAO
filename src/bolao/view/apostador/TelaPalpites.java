@@ -7,6 +7,7 @@ package bolao.view.apostador;
 
 import bolao.controler.ControlTime;
 import bolao.model.bean.Aposta;
+import bolao.model.bean.Apostador;
 import bolao.model.bean.User;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
@@ -168,11 +169,9 @@ public class TelaPalpites extends javax.swing.JFrame {
         if (jTablePalpite.getSelectedRow() != -1) {
 
             if (status.equals("A definir")) {
-                ApostaDAO apostadao = new ApostaDAO();
-                JogoDAO jogodao = new JogoDAO();
 
-                apostadao.delete((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
-                jogodao.update("Excluir aposta", (String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
+                new Apostador().deleteAposta((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1));
+
                 readJTable();
 
                 TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
@@ -218,9 +217,8 @@ public class TelaPalpites extends javax.swing.JFrame {
 
             if (status.equals("A definir")) {
 
-                if (ValidationField.validationPlacar(jTextFieldPlacar.getText())) {
-                    ApostaDAO apostadao = new ApostaDAO();
-                    apostadao.modifyAposta((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1), jTextFieldPlacar.getText());
+                if (new Apostador().modifyAposta((String) jTablePalpite.getValueAt(jTablePalpite.getSelectedRow(), 1), jTextFieldPlacar.getText())) {
+
                     readJTable();
 
                     TelaPrincipalApostador frame = (TelaPrincipalApostador) parent;
@@ -231,6 +229,7 @@ public class TelaPalpites extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Preencha o placar corretamente!");
                 }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Este palpite não pode ser alterado, pois já tem resultado!");
             }

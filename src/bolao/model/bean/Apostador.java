@@ -11,17 +11,17 @@ import bolao.util.ValidationField;
 import bolao.model.dao.ApostaDAO;
 import bolao.model.dao.JogoDAO;
 import bolao.model.dao.PessoaDAO;
+import bolao.view.apostador.TelaPrincipalApostador;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author RAFAELDEOLIVEIRABAHI
  */
 public class Apostador extends Pessoa {
-
-    private Aposta aposta;
 
     @Override
     public Pessoa createAccount(String comando, String nome, String user, String senha, int pontos, String email) {
@@ -98,5 +98,27 @@ public class Apostador extends Pessoa {
         }
 
         return combinacao;
+    }
+
+    public void deleteAposta(String identificador) {
+        ApostaDAO apostadao = new ApostaDAO();
+        JogoDAO jogodao = new JogoDAO();
+
+        apostadao.delete(identificador);
+        jogodao.update("Excluir aposta", identificador);
+    }
+
+    public boolean modifyAposta(String identificador, String placar) {
+
+        if (ValidationField.validationPlacar(placar)) {
+
+            ApostaDAO apostadao = new ApostaDAO();
+            apostadao.modifyAposta(identificador, placar);
+
+            return true;
+
+        } else {
+            return false;
+        }
     }
 }

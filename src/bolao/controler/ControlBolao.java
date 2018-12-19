@@ -16,9 +16,13 @@ import bolao.model.dao.PessoaDAO;
 import bolao.util.Subject;
 import bolao.util.Command;
 import bolao.connection.MailApp;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  * Classe para controlar a maioria das Operações do Bolão Implementa duas
@@ -129,16 +133,37 @@ public class ControlBolao implements Subject, Command {
      * @return , retorna o placar desses jogos
      */
     @Override
-    public String execute() {
+    public List<Jogo> execute() {
 
-        int y = generatePlacar();
-        int x = generatePlacar();
+        JogoDAO jogodado = new JogoDAO();
 
-        String resultado = String.valueOf(y) + "x";
-        resultado += String.valueOf(x);
+        DateFormat formataData = DateFormat.getDateInstance();
+        GregorianCalendar gc = new GregorianCalendar();
 
-        return resultado;
-//        setMeasurements(generatePartidas());
+        gc.add(GregorianCalendar.DATE, 0);
+        Date data = gc.getTime();
+
+        List<Jogo> jogos = jogodado.searchAll("Todos", formataData.format(data));
+        if (!jogos.isEmpty()) {
+
+            for (Jogo jogo : jogos) {
+                ControlBolao bolao = new ControlBolao(jogo);
+
+                jogo.setResultado(generatePlacar());
+
+                jogodado.update(jogo);
+
+                Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
+                bolao.setMeasurements(partida);
+
+            }
+
+            JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não há partidas que irão ocorrer hoje!");
+        }
+        return jogos;
+
     }
 
     /**
@@ -146,12 +171,16 @@ public class ControlBolao implements Subject, Command {
      *
      * @return , o valor do placar de um time
      */
-    private int generatePlacar() {
+    private String generatePlacar() {
         Random gerador = new Random();
 
-        int valor = gerador.nextInt(Integer.parseInt(MAX_GOLS));
+        int valorA = gerador.nextInt(Integer.parseInt(MAX_GOLS));
+        int valorB = gerador.nextInt(Integer.parseInt(MAX_GOLS));
 
-        return valor;
+        String resultado = String.valueOf(valorA) + "x";
+        resultado += String.valueOf(valorB);
+
+        return resultado;
     }
 
     /**

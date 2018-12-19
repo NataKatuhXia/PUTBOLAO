@@ -97,59 +97,16 @@ public class Administrador extends Pessoa {
 
     }
 
-    private void deleteUser(Pessoa pessoa) {
+    public void deleteUser(String pessoa) {
 
         PessoaDAO dao = new PessoaDAO();
-        dao.delete(pessoa.getUsuario());
-
-    }
-
-    public static void generateResult(String idJogo) {
-
-        JogoDAO jogodado = new JogoDAO();
-
-        Jogo jogo = jogodado.searchJogo("Gerar Resultado", idJogo);
-        ControlBolao bolao = new ControlBolao(jogo);
-
-        jogo.setResultado(bolao.execute());
-
-        jogodado.update(jogo);
-
-        Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
-        bolao.setMeasurements(partida);
+        dao.delete(pessoa);
 
     }
 
     public static List<Jogo> generareAllResult() {
-        JogoDAO jogodado = new JogoDAO();
 
-        DateFormat formataData = DateFormat.getDateInstance();
-        GregorianCalendar gc = new GregorianCalendar();
-
-        gc.add(GregorianCalendar.DATE, 0);
-        Date data = gc.getTime();
-
-        List<Jogo> jogos = jogodado.searchAll("Todos", formataData.format(data));
-        if (!jogos.isEmpty()) {
-            int cont = 0;
-
-            for (Jogo jogo : jogos) {
-                ControlBolao bolao = new ControlBolao(jogo);
-
-                jogo.setResultado(bolao.execute());
-
-                jogodado.update(jogo);
-
-                Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
-                bolao.setMeasurements(partida);
-                cont++;
-            }
-
-            JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
-        } else {
-            JOptionPane.showMessageDialog(null, "Não há partidas que irão ocorrer hoje!");
-        }
-        return jogos;
+        return new ControlBolao().execute();
     }
 
     public static boolean generateNewPartidas() {

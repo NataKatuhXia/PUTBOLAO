@@ -6,6 +6,7 @@
 package bolao.model.bean;
 
 import bolao.util.LoadUtil;
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,16 +23,8 @@ public class Equipe {
 
     public static Equipe build() {
         Equipe equipe = new Equipe();
-        try {
-
-            List<Equipe> equipes = LoadUtil.loadListObjects("src\\Json\\ListaTimes", Equipe[].class);
-
-            equipe.setEquipes(equipes);
-
-        } catch (Exception ex) {
-            Logger.getLogger(Equipe.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException(ex);
-        }
+        List<Equipe> equipes = LoadUtil.loadListObjects("src//Json//ListaTimes", Equipe[].class);
+        equipe.setEquipes(equipes);
 
         return equipe;
     }
@@ -60,4 +53,7 @@ public class Equipe {
         this.identificador = identificador;
     }
 
+    public static void main(String[] args) {
+        List<Equipe> equipes = LoadUtil.loadListObjects("src/Json/ListaTimes", Equipe[].class);
+    }
 }

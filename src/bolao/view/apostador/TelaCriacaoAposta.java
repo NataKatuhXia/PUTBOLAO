@@ -12,6 +12,7 @@ import static bolao.util.GetProperties.PROP;
 import bolao.model.bean.Aposta;
 import bolao.model.bean.Apostador;
 import bolao.model.bean.User;
+import bolao.view.adm.TelaPrincipalAdministrador;
 import bolao.view.apostador.TelaListaAposta;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -188,9 +189,16 @@ public class TelaCriacaoAposta extends javax.swing.JFrame {
                 Apostador.createAposta(aposta, User.getPessoa());
 
                 /* Atualiza a tela Principal, por conta da nova Aposta */
-                TelaPrincipalApostador framePrincipalApostador = (TelaPrincipalApostador) principal;
-                framePrincipalApostador.setInformacoes();// Atribui os valores atuais
-                framePrincipalApostador.setVisible(true);
+                try {
+                    TelaPrincipalApostador framePrincipalApostador = (TelaPrincipalApostador) principal;
+                    framePrincipalApostador.setInformacoes();
+                    framePrincipalApostador.setVisible(true);
+
+                } catch (java.lang.ClassCastException a) {
+                    TelaPrincipalAdministrador framePrincipalAdministrador = (TelaPrincipalAdministrador) principal;
+                    framePrincipalAdministrador.setInformacoes();
+                    framePrincipalAdministrador.setVisible(true);
+                }
 
                 /* Atualiza a lista da aposta, para acrescentar a nova aposta */
                 TelaListaAposta frame = (TelaListaAposta) list;

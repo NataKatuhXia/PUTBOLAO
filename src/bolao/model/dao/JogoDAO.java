@@ -87,7 +87,8 @@ public class JogoDAO {
             } else if (comando.equals("Abertos")) {
                 stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is null order by date, apostadores desc");
             } else if (comando.equals("Fechado")) {
-                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is not null order by date, apostadores desc");
+                stmt = con.prepareStatement("SELECT * FROM jogo WHERE resultado is not null and date = ? order by apostadores desc");
+                stmt.setString(1, day);
             }
             rs = stmt.executeQuery();
 

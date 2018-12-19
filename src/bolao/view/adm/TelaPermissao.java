@@ -70,7 +70,7 @@ public class TelaPermissao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Permissões");
         setBackground(new java.awt.Color(255, 255, 255));
-        setIconImage(new ImageIcon("src\\view\\frame.png").getImage());
+        setIconImage(new ImageIcon("view\\frame.png").getImage());
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -338,9 +338,9 @@ public class TelaPermissao extends javax.swing.JFrame {
         String pontosVitoria = jTextFieldPontosVitoria.getText();
         String pontosAposta = jTextFieldPontosAposta.getText();
         String pontuacaoInicial = jTextFieldPontInicial.getText();
-
+        
         Map<String, String> permissoes = new HashMap<>();
-
+        
         permissoes.put("driver", driver);
         permissoes.put("url", url);
         permissoes.put("usuarioBanco", usuario);
@@ -351,13 +351,13 @@ public class TelaPermissao extends javax.swing.JFrame {
         permissoes.put("pontos_vitoria", pontosVitoria);
         permissoes.put("pontos_aposta", pontosAposta);
         permissoes.put("pontos_inicial", pontuacaoInicial);
-
+        
         if (User.getPessoa().isContaADM()) {
-
+            
             if (Administrador.modifyPermissions(permissoes)) {
-
+                
                 this.dispose();
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Preecha todos os campos corretamente.");
             }
@@ -458,6 +458,7 @@ public class TelaPermissao extends javax.swing.JFrame {
         jCheckBoxAdmAposta.setSelected(Boolean.parseBoolean(PROP.getProperty("ADM_APOSTA")));
         jTextFieldPontosVitoria.setText(PROP.getProperty("PONTOS_VITORIA"));
         jTextFieldPontosAposta.setText(PROP.getProperty("PONTOS_APOSTA"));
-
+        jTextFieldPontInicial.setText(PROP.getProperty("PONTUACAO_INICIAL_USER"));
+        
     }
 }

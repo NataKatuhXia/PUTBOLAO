@@ -6,10 +6,7 @@
 package bolao.model.bean;
 
 import bolao.util.LoadUtil;
-import java.nio.file.NoSuchFileException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

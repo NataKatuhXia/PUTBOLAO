@@ -35,7 +35,6 @@ public class ControlBolao implements Subject, Command {
     private static final String MAX_GOLS = PROP.getProperty("MAX_GOLS");
     List<Pessoa> pessoas = new ArrayList<>();
 
-    private Jogo jogo;
     private ArrayList observers;
 
     /**
@@ -43,11 +42,6 @@ public class ControlBolao implements Subject, Command {
      */
     public ControlBolao() {
         observers = new ArrayList<>();
-    }
-
-    public ControlBolao(Jogo jogo) {
-        observers = new ArrayList<>();
-        this.jogo = jogo;
     }
 
     /**
@@ -84,13 +78,14 @@ public class ControlBolao implements Subject, Command {
 
         MailApp.sendMessages(pessoas);
         pessoas.removeAll(pessoas);
+        PessoaDAO pessoa = new PessoaDAO();
 
         int pontos = observers.size() / Integer.parseInt(PROP.getProperty("PONTOS_VITORIA"));
         if (pontos < 3) {
             pontos = 3;
         }
         for (int i = 0; i < observers.size(); i++) {
-            PessoaDAO pessoa = new PessoaDAO();
+
             pessoa.updateAposta("vencendor", observers.get(i).toString(), pontos);
             removeObserver(observers.get(i).toString());
         }
@@ -99,32 +94,34 @@ public class ControlBolao implements Subject, Command {
     /**
      * Método faz a separação dos perdedores e ganhadores do Jogos
      *
-     * @param jogo , o identificador do jogo que ele deverá realizar essa
-     * separação
-     * @param placar , o placar do jogo para que ele seja utilizado como Filtro
+     * @param partidas lista de partidas que foram atualizadas
      */
-    public void measurementsChanged(String jogo, String placar) {
+    public void measurementsChanged(List<Partida> partidas) {
 
         ApostaDAO apostadao = new ApostaDAO();
 
-        List<Aposta> apostas = apostadao.read("Todos", jogo, placar);
+        for (Partida partida : partidas) {
 
-        for (Aposta aposta : apostas) {
-            if (String.valueOf(aposta.getPalpite()).equals(placar)) {
-                aposta.setStatus("Venceu");
-                registerObserver(aposta.getUsuario());
-            } else {
-                aposta.setStatus("Perdeu");
+            List<Aposta> apostas = apostadao.read("Todos", partida.getJogo(), partida.getPlacar());
+
+            for (Aposta aposta : apostas) {
+
+                if (String.valueOf(aposta.getPalpite()).equals(partida.getPlacar())) {
+                    aposta.setStatus("Venceu");
+                    registerObserver(aposta.getUsuario());
+                } else {
+                    aposta.setStatus("Perdeu");
+                }
+                apostadao.update(aposta);
+                pessoas.add(PessoaDAO.validationLogin(aposta.getUsuario()));
             }
-            apostadao.update(aposta);
-            pessoas.add(PessoaDAO.validationLogin(aposta.getUsuario()));
         }
 
         notifyObservers();
     }
 
-    public void setMeasurements(Partida partida) {
-        measurementsChanged(partida.getJogo(), partida.getPlacar());
+    public void setMeasurements(List<Partida> partidas) {
+        measurementsChanged(partidas);
     }
 
     /**
@@ -144,19 +141,23 @@ public class ControlBolao implements Subject, Command {
         Date data = gc.getTime();
 
         List<Jogo> jogos = jogodado.searchAll("Todos", formataData.format(data));
+        List<Partida> partidas = new ArrayList<>();
+
         if (!jogos.isEmpty()) {
 
+            ControlBolao bolao = new ControlBolao();
+
             for (Jogo jogo : jogos) {
-                ControlBolao bolao = new ControlBolao(jogo);
 
                 jogo.setResultado(generatePlacar());
 
                 jogodado.update(jogo);
 
-                Partida partida = new Partida(jogo.getIdentificador(), jogo.getResultado());
-                bolao.setMeasurements(partida);
+                partidas.add(new Partida(jogo.getIdentificador(), jogo.getResultado()));
 
             }
+
+            bolao.setMeasurements(partidas);
 
             JOptionPane.showMessageDialog(null, "Jogos atualizados com sucesso");
         } else {
@@ -221,8 +222,7 @@ public class ControlBolao implements Subject, Command {
 
         boolean result = true;
 
-        List<Aposta> apostas = new ArrayList<>();
-        apostas = apostadao.readForDesc(identificador, "A definir");
+        List<Aposta> apostas = apostadao.readForDesc(identificador, "A definir");
 
         for (Aposta aposta : apostas) {
             if (aposta.getUsuario().equals(usuario)) {

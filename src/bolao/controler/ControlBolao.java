@@ -76,8 +76,6 @@ public class ControlBolao implements Subject, Command {
     @Override
     public void notifyObservers() {
 
-        MailApp.sendMessages(pessoas);
-        pessoas.removeAll(pessoas);
         PessoaDAO pessoa = new PessoaDAO();
 
         int pontos = observers.size() / Integer.parseInt(PROP.getProperty("PONTOS_VITORIA"));
@@ -118,6 +116,8 @@ public class ControlBolao implements Subject, Command {
         }
 
         notifyObservers();
+        MailApp.sendMessages(pessoas);
+        pessoas.removeAll(pessoas);
     }
 
     public void setMeasurements(List<Partida> partidas) {

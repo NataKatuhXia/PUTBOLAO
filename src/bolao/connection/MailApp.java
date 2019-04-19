@@ -53,7 +53,7 @@ public class MailApp {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("putbolao@gmail.com", "putbolaotop");
+                return new PasswordAuthentication("email de acesso", "password acesso");
             }
         });
 
